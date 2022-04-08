@@ -1,0 +1,40 @@
+<div style="text-align: center">
+  <div>
+    <webcam
+      [height]="300"
+      [width]="300"
+      [trigger]="triggerObservable"
+      (imageCapture)="handleImage($event)"
+      *ngIf="showWebcam"
+      [allowCameraSwitch]="allowCameraSwitch"
+      [switchCamera]="nextWebcamObservable"
+      [videoOptions]="videoOptions"
+      (cameraSwitched)="cameraWasSwitched($event)"
+      (initError)="handleInitError($event)"
+    ></webcam>
+    <br />
+    <div class="btns">
+      <div>
+        <button
+          type="button"
+          (click)="showNextWebcam(true)"
+          title="Switch Camera"
+          title="Take Picture"
+          class="btn btn-primary"
+        >
+          Tentar novamente
+        </button>
+      </div>
+      <div>
+        <button
+          type="button"
+          (click)="triggerSnapshot()"
+          title="Take Picture"
+          class="btn btn-primary"
+        >
+          Tirar foto
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

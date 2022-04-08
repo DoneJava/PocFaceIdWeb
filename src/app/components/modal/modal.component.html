@@ -1,0 +1,20 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Cadastrar Foto</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <app-camera></app-camera>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Enviar</button>
+  </div>
+  <div>
+    <img id="foto" src="" alt="">
+  </div>
+</ng-template>
+
+<a href="javascript:;" (click)="open(content)">
+  <span aria-hidden="true" class="btn btn-block btn-outline-primary">Tirar Foto</span>
+</a>
+
