@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { ImgService } from './../../services/img.service';
+import { Component, OnInit, Output } from '@angular/core';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-modal',
@@ -9,7 +11,6 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class ModalComponent implements OnInit {
 
-  closeResult = '';
 
   constructor(private modalService: NgbModal) {}
 

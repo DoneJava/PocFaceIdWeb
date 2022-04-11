@@ -1,19 +1,54 @@
+import { AxiosService } from './../../services/axios.service';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ImgService } from './../../services/img.service';
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/interfaces/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
+  constructor(private ImgService: ImgService, private _snackBar: MatSnackBar, private axios: AxiosService) {}
 
-  constructor() { }
+  data: User = {
+    name: '',
+    cpf: '',
+    password: '',
+    img: '',
+  };
 
-  ngOnInit(): void {
+  ngOnInit() {}
+
+  submit() {
+    this.data.img = this.ImgService.webImg;
+    if (this.data.img ==  undefined) {
+      this._snackBar.open('É necessário tirar e salvar a foto.', 'Close');
+    } else if (
+      document.querySelector<HTMLInputElement>('input[id="password"]')?.value !=
+      document.querySelector<HTMLInputElement>(
+        'input[id="passwordConfimation"]'
+      )?.value
+    ) {
+      this._snackBar.open('Confirmação de senha inválida', 'Close');
+    } else if (
+      document.querySelector<HTMLInputElement>('input[id="password"]')?.value ==
+      document.querySelector<HTMLInputElement>(
+        'input[id="passwordConfimation"]'
+      )?.value
+    ) {
+      this.data.name =
+        document.querySelector<HTMLInputElement>('input[id="Nome"]')?.value;
+      this.data.cpf =
+        document.querySelector<HTMLInputElement>('input[id="CPF"]')?.value;
+      this.data.password = document.querySelector<HTMLInputElement>(
+        'input[id="password"]'
+      )?.value;
+
+      this.axios.putUser(this.data)
+
+    }
   }
-
-  CallCamera(): void {
-
-  }
-
 }

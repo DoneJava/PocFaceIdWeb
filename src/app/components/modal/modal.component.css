@@ -1,0 +1,6 @@
+#foto {
+  position: absolute;
+  height: 225px;
+  right: 100px;
+  z-index: 10;
+}

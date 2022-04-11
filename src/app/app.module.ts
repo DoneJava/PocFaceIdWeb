@@ -16,6 +16,10 @@ import { WebcamModule } from 'ngx-webcam';
 import { ModalComponent } from './components/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
+
+
 
 
 
@@ -34,7 +38,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatFormFieldModule,
     WebcamModule,
     MatDialogModule,
-    NgbModule
+    NgbModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,4 @@
+import { ImgService } from './../../services/img.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
@@ -7,9 +8,13 @@ import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
   templateUrl: './camera.component.html',
   styleUrls: ['./camera.component.css'],
 })
+
 export class CameraComponent implements OnInit {
+
+  constructor(private ImgService: ImgService) {
+
+  }
   @Output()
-  public pictureTaken = new EventEmitter<WebcamImage>();
   // toggle webcam on/off
   public showWebcam = true;
   public allowCameraSwitch = true;
@@ -32,6 +37,8 @@ export class CameraComponent implements OnInit {
   }
 
   public triggerSnapshot(): void {
+    let btn = <HTMLInputElement> document.getElementById('TirarFoto')
+    btn.disabled = true
     this.trigger.next();
   }
   public toggleWebcam(): void {
@@ -44,13 +51,15 @@ export class CameraComponent implements OnInit {
     // true => move forward through devices
     // false => move backwards through devices
     // string => move to device with given deviceId
-    this.nextWebcam.next(directionOrDeviceId);
+    let btn = <HTMLInputElement> document.getElementById('TirarFoto')
+    btn.disabled = false
+    let foto = document.getElementById('foto') as HTMLImageElement
+    foto.src = ''
   }
   public handleImage(webcamImage: WebcamImage): void {
-    console.log(webcamImage.imageAsDataUrl)
     let img = document.getElementById('foto') as HTMLImageElement
     img.src = webcamImage.imageAsDataUrl
-    this.pictureTaken.emit(webcamImage);
+    this.ImgService.webImg = webcamImage.imageAsDataUrl;
   }
   public cameraWasSwitched(deviceId: string): void {
     console.log('active device: ' + deviceId);
