@@ -25,14 +25,22 @@ export class RegisterComponent implements OnInit {
   submit() {
     this.data.img = this.ImgService.webImg;
     if (this.data.img ==  undefined) {
-      this._snackBar.open('É necessário tirar e salvar a foto.', 'Close');
+      this._snackBar.open('É necessário tirar e salvar a foto.', 'X', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right'
+      });
     } else if (
       document.querySelector<HTMLInputElement>('input[id="password"]')?.value !=
       document.querySelector<HTMLInputElement>(
         'input[id="passwordConfimation"]'
       )?.value
     ) {
-      this._snackBar.open('Confirmação de senha inválida', 'Close');
+      this._snackBar.open('Confirmação de senha inválida', 'X', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right'
+      });
     } else if (
       document.querySelector<HTMLInputElement>('input[id="password"]')?.value ==
       document.querySelector<HTMLInputElement>(

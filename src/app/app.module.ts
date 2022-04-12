@@ -22,7 +22,6 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +38,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     WebcamModule,
     MatDialogModule,
     NgbModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
