@@ -12,7 +12,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  constructor(private ImgService: ImgService, private _snackBar: MatSnackBar, private axios: AxiosService,  private router: Router) {}
+  constructor(
+    private ImgService: ImgService,
+    private _snackBar: MatSnackBar,
+    private axios: AxiosService,
+    private router: Router
+  ) {}
 
   data: User = {
     name: '',
@@ -25,21 +30,40 @@ export class RegisterComponent implements OnInit {
 
   submit() {
     this.data.img = this.ImgService.webImg;
-    if (this.data.img ==  undefined) {
-      this._snackBar.open('É necessário tirar e salvar a foto.', 'Close');
+    if (this.data.img == undefined) {
+      this._snackBar.open('É necessário tirar e salvar a foto.', 'X', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
     } else if (
       document.querySelector<HTMLInputElement>('input[id="password"]')?.value !=
       document.querySelector<HTMLInputElement>(
         'input[id="passwordConfimation"]'
       )?.value
     ) {
-      this._snackBar.open('Confirmação de senha inválida', 'Close');
+      this._snackBar.open('Confirmação de senha inválida', 'X', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
     } else if (
-      document.querySelector<HTMLInputElement>('input[id="password"]')?.value ==
+      document.querySelector<HTMLInputElement>('input[id="cpf"]')?.value ==
+        '' ||
+      document.querySelector<HTMLInputElement>('input[id="senha"]')?.value ==
+        '' ||
+      document.querySelector<HTMLInputElement>('input[id="Nome"]')?.value ==
+        '' ||
       document.querySelector<HTMLInputElement>(
         'input[id="passwordConfimation"]'
-      )?.value
+      )?.value == ''
     ) {
+      this._snackBar.open('Existem campos vazios!', 'X', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      });
+    } else {
       this.data.name =
         document.querySelector<HTMLInputElement>('input[id="Nome"]')?.value;
       this.data.cpf =
@@ -48,15 +72,15 @@ export class RegisterComponent implements OnInit {
         'input[id="password"]'
       )?.value;
 
-      this.axios.putUser(this.data)
-        .then(x => {
-          this._snackBar
-          .open('Registro feito com sucesso!', 'Close')
-          this.router.navigate([''])
+      this.axios
+        .putUser(this.data)
+        .then((x) => {
+          this._snackBar.open('Registro feito com sucesso!', 'Close');
+          this.router.navigate(['']);
         })
-        .catch(x => this._snackBar.open('Erro ao efetuar registro.', 'Close'))
-
-
+        .catch((x) =>
+          this._snackBar.open('Erro ao efetuar registro.', 'Close')
+        );
     }
   }
 }

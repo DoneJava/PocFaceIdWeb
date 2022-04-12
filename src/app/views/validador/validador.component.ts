@@ -16,6 +16,7 @@ import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 export class ValidadorComponent implements OnInit {
   // toggle webcam on/off
   public Autenticando = 'Autenticando...';
+  public img = this.user.imgBD
   public showWebcam = true;
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = false;
@@ -27,17 +28,12 @@ export class ValidadorComponent implements OnInit {
     boolean | string
   >();
   constructor(private user: ImgService, private axios: AxiosService) {}
-
   ngOnInit(): void {
-    setInterval((webcamImage: WebcamImage) => {
+    setInterval(() => {
       this.trigger.next();
-    }, 3000);
-  }
 
-  tirarFoto() {
-    this.trigger.next();
+    }, 10000);
   }
-
   data: User = {
     name: '',
     cpf: '',
@@ -56,14 +52,13 @@ export class ValidadorComponent implements OnInit {
     this.data.password = this.user.senha
     this.axios
       .postAutenticar(this.data)
-      .then(() => (this.Autenticando = 'Autenticado!!!'))
-      .catch(() => (this.Autenticando = 'Erro ao autenticar.'));
+      .then(res => (this.Autenticando = res.data))
+      .catch(res => (this.Autenticando = res.data));
   }
   public get nextWebcamObservable(): Observable<boolean | string> {
     return this.nextWebcam.asObservable();
   }
   public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
     this.deviceId = deviceId;
   }
   public handleInitError(error: WebcamInitError): void {

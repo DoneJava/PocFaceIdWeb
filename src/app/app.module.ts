@@ -23,7 +23,6 @@ import { ValidadorComponent } from './views/validador/validador.component';
 
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +40,7 @@ import { ValidadorComponent } from './views/validador/validador.component';
     WebcamModule,
     MatDialogModule,
     NgbModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

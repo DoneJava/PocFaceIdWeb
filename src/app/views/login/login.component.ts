@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   constructor(
-    private ImgService: ImgService,
     private _snackBar: MatSnackBar,
     private axios: AxiosService,
     private router: Router,
@@ -28,21 +27,43 @@ export class LoginComponent implements OnInit {
   };
 
   ngOnInit(): void {}
-  logar() {
-    this.data.cpf =
-      document.querySelector<HTMLInputElement>('input[id="cpf"]')?.value;
-    this.user.cpf =
-      document.querySelector<HTMLInputElement>('input[id="cpf"]')?.value;
-    this.data.password =
-      document.querySelector<HTMLInputElement>('input[id="senha"]')?.value;
-    this.user.senha =
-      document.querySelector<HTMLInputElement>('input[id="senha"]')?.value;
-    this.axios
-      .putLogin(this.data)
-      .then((x) => {
-        this._snackBar.open('Login feito com sucesso!', 'Close');
-        this.router.navigate(['autenticar']);
+  async logar() {
+    if (
+      document.querySelector<HTMLInputElement>('input[id="cpf"]')?.value !=
+        '' &&
+      document.querySelector<HTMLInputElement>('input[id="senha"]')?.value != ''
+    ) {
+      this.data.cpf =
+        document.querySelector<HTMLInputElement>('input[id="cpf"]')?.value;
+      this.user.cpf =
+        document.querySelector<HTMLInputElement>('input[id="cpf"]')?.value;
+      this.data.password =
+        document.querySelector<HTMLInputElement>('input[id="senha"]')?.value;
+      this.user.senha =
+        document.querySelector<HTMLInputElement>('input[id="senha"]')?.value;
+      await this.axios
+        .putLogin(this.data)
+        .then((res) => {
+          this._snackBar.open('Login feito com sucesso!', 'Close', {
+            duration: 2000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          });
+          this.router.navigate(['autenticar']);
+        })
+        .catch(() => this._snackBar.open('Usuário ou senha inválido!', 'Close', {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+
+        }));
+    }
+    else{
+      this._snackBar.open('Existem campos vazios!', 'X', {
+        duration: 2000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right'
       })
-      .catch((x) => this._snackBar.open('Erro ao efetuar login.', 'Close'));
+    }
   }
 }

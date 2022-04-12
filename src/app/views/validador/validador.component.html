@@ -1,18 +1,34 @@
-<div style="text-align: center">
-  <div>
-<webcam
-      [height]="400"
-      [width]="400"
-      [trigger]="triggerObservable"
-      (imageCapture)="handleImage($event)"
-      *ngIf="showWebcam"
-      [allowCameraSwitch]="allowCameraSwitch"
-      [switchCamera]="nextWebcamObservable"
-      [videoOptions]="videoOptions"
-      (cameraSwitched)="cameraWasSwitched($event)"
-      (initError)="handleInitError($event)"
-    ></webcam>
-
+<div class="fullPage">
+  <div class="container">
+    <div class="containerimg">
+      <div style="text-align: center;">
+        <img id="imgBD" src="{{ img }}" alt="" />
+        <h1>Imagem do BD</h1>
+      </div>
+      <div style="text-align: center;">
+        <webcam
+          [height]="400"
+          [width]="400"
+          [trigger]="triggerObservable"
+          (imageCapture)="handleImage($event)"
+          *ngIf="showWebcam"
+          [allowCameraSwitch]="allowCameraSwitch"
+          [switchCamera]="nextWebcamObservable"
+          [videoOptions]="videoOptions"
+          (cameraSwitched)="cameraWasSwitched($event)"
+          (initError)="handleInitError($event)"
+        ></webcam>
+        <h1>WEB CAM</h1>
+      </div>
+    </div>
+    <div>
+      <h1 id="autenticando" [ngStyle]="
+        Autenticando.includes('Bem vindo') ? {'color': 'blue'} :
+        Autenticando.includes('Nenhum rosto') ? {'color': 'orange'} :
+        Autenticando.includes('a câmera não é o') ? {'color': 'red'} :
+        Autenticando.includes('Por favor, fique somente 1') ? {'color': 'orange'} :
+        {'color': 'black'}"
+      >{{ Autenticando }}</h1>
+    </div>
   </div>
-  <h1 for="cpf" id ="autenticando">{{Autenticando}}</h1>
 </div>

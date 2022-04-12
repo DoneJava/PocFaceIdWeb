@@ -1,3 +1,4 @@
+import { ImgService } from './img.service';
 import { Injectable } from '@angular/core';
 import axios from 'axios';
 
@@ -8,7 +9,7 @@ export class AxiosService {
   urlApi = 'https://localhost:44388/api/Cadastrar';
   urlApiLogin = 'https://localhost:44388/api/Face';
 
-  constructor() {}
+  constructor(private img: ImgService) {}
 
   putUser(data: any) {
     return axios
@@ -19,8 +20,7 @@ export class AxiosService {
   putLogin(data: any) {
     return axios
       .put(this.urlApiLogin, data)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => this.img.imgBD = "data:image/jpeg;base64," + res.data);
   }
   postAutenticar(data: any) {
     return axios
