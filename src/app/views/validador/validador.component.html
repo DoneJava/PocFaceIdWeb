@@ -1,0 +1,18 @@
+<div style="text-align: center">
+  <div>
+<webcam
+      [height]="400"
+      [width]="400"
+      [trigger]="triggerObservable"
+      (imageCapture)="handleImage($event)"
+      *ngIf="showWebcam"
+      [allowCameraSwitch]="allowCameraSwitch"
+      [switchCamera]="nextWebcamObservable"
+      [videoOptions]="videoOptions"
+      (cameraSwitched)="cameraWasSwitched($event)"
+      (initError)="handleInitError($event)"
+    ></webcam>
+
+  </div>
+  <h1 for="cpf" id ="autenticando">{{Autenticando}}</h1>
+</div>

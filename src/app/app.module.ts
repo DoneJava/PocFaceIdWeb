@@ -17,6 +17,7 @@ import { ModalComponent } from './components/modal/modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ValidadorComponent } from './views/validador/validador.component';
 
 
 
@@ -29,7 +30,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     LoginComponent,
     RegisterComponent,
     CameraComponent,
-    ModalComponent
+    ModalComponent,
+    ValidadorComponent
   ],
   imports: [
     BrowserModule,

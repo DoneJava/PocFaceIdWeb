@@ -4,6 +4,7 @@ import { ImgService } from './../../services/img.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  constructor(private ImgService: ImgService, private _snackBar: MatSnackBar, private axios: AxiosService) {}
+  constructor(private ImgService: ImgService, private _snackBar: MatSnackBar, private axios: AxiosService,  private router: Router) {}
 
   data: User = {
     name: '',
@@ -48,6 +49,13 @@ export class RegisterComponent implements OnInit {
       )?.value;
 
       this.axios.putUser(this.data)
+        .then(x => {
+          this._snackBar
+          .open('Registro feito com sucesso!', 'Close')
+          this.router.navigate([''])
+        })
+        .catch(x => this._snackBar.open('Erro ao efetuar registro.', 'Close'))
+
 
     }
   }

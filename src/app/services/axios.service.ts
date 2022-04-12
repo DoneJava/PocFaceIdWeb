@@ -6,6 +6,7 @@ import axios from 'axios';
 })
 export class AxiosService {
   urlApi = 'https://localhost:44388/api/Cadastrar';
+  urlApiLogin = 'https://localhost:44388/api/Face';
 
   constructor() {}
 
@@ -14,5 +15,15 @@ export class AxiosService {
       .put(this.urlApi, data)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+  }
+  putLogin(data: any) {
+    return axios
+      .put(this.urlApiLogin, data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }
+  postAutenticar(data: any) {
+    return axios
+      .post(this.urlApiLogin, data)
   }
 }
