@@ -37,7 +37,7 @@ export class ModalComponent {
     let img = document.createElement('img')
     img.src = this.imgWeb.webImg
     img.id = 'picture'
-    img.style.width = '500px'
+    img.style.width = '400px'
     document.getElementById('main')?.appendChild(img)
   }
 

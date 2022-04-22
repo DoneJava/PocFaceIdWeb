@@ -1,32 +1,22 @@
 <div style="text-align: center">
   <div>
-    <div style="display: flex; flex-direction: column;">
-      <webcam
-        [height]="500"
-        [width]="500"
-        [trigger]="triggerObservable"
-        (imageCapture)="handleImage($event)"
-        *ngIf="showWebcam"
-        [allowCameraSwitch]="allowCameraSwitch"
-        [switchCamera]="nextWebcamObservable"
-        [videoOptions]="videoOptions"
-        (cameraSwitched)="cameraWasSwitched($event)"
-        (initError)="handleInitError($event)"
-      ></webcam>
-      <img *ngIf="isActivated" src="../../../assets/img/layer.png" style="position: absolute">
-      <p *ngIf="isActivated" style="font-weight: 500;">Centralize seu rosto na local indicado acima.</p>
+
+    <div style="position: relative;">
+      <webcam [height]="400" [width]="400" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+        *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+        [videoOptions]="videoOptions" (cameraSwitched)="cameraWasSwitched($event)"
+        (initError)="handleInitError($event)"></webcam>
+      <div style="position: absolute; top: 50%; left: 50%;transform: translate(-50%, -50%);">
+        <img *ngIf="isActivated" src="../../../assets/img/layer.png">
+      </div>
     </div>
+
+    <p *ngIf="isActivated" style="font-weight: 500;">Centralize seu rosto na local indicado acima.</p>
     <br />
     <div class="btns" *ngIf="isActivated">
-        <button
-          type="button"
-          (click)="triggerSnapshot()"
-          title="Take Picture"
-          class="btn btn-primary"
-          id="TirarFoto"
-        >
-          Tirar foto
-        </button>
+      <button type="button" (click)="triggerSnapshot()" title="Take Picture" class="btn btn-primary" id="TirarFoto">
+        Tirar foto
+      </button>
     </div>
   </div>
 </div>
