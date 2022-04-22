@@ -1,48 +1,40 @@
 import { AxiosService } from './../../services/axios.service';
-import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { ImgService } from './../../services/img.service';
-import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/interfaces/user';
+import { Component, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+  @Output() formFields: any = {
+    inputs: [
+      { show: 'CPF', name: 'cpf', type: 'text', class: 'login', mask: '000.000.000-99' },
+      { show: 'Senha', name: 'password', type: 'password', class: 'password' }
+    ],
+    formGroup: {
+      cpf: [null, Validators.required],
+      password: [null, Validators.required]
+    },
+    buttons: [
+      { show: 'Login', name: 'btn', type: 'submit', class: 'submit' }
+    ]
+  }
+
   constructor(
     private _snackBar: MatSnackBar,
     private axios: AxiosService,
-    private router: Router,
-    private user: ImgService
-  ) {}
+    private router: Router
+  ) { }
 
-  data: User = {
-    name: '',
-    cpf: '',
-    password: '',
-    img: '',
-  };
 
-  ngOnInit(): void {}
-  async logar() {
-    if (
-      document.querySelector<HTMLInputElement>('input[id="cpf"]')?.value !=
-        '' &&
-      document.querySelector<HTMLInputElement>('input[id="senha"]')?.value != ''
-    ) {
-      this.data.cpf =
-        document.querySelector<HTMLInputElement>('input[id="cpf"]')?.value;
-      this.user.cpf =
-        document.querySelector<HTMLInputElement>('input[id="cpf"]')?.value;
-      this.data.password =
-        document.querySelector<HTMLInputElement>('input[id="senha"]')?.value;
-      this.user.senha =
-        document.querySelector<HTMLInputElement>('input[id="senha"]')?.value;
-      await this.axios
-        .putLogin(this.data)
+  listenerForm(event: any) {
+    if (event.valid) {
+      this.axios
+        .putLogin(event.value)
         .then((res) => {
           this._snackBar.open('Login feito com sucesso!', 'Close', {
             duration: 2000,
@@ -55,11 +47,10 @@ export class LoginComponent implements OnInit {
           duration: 2000,
           verticalPosition: 'top',
           horizontalPosition: 'right',
-
         }));
     }
-    else{
-      this._snackBar.open('Existem campos vazios!', 'X', {
+    else {
+      this._snackBar.open('Formulário inválido', 'X', {
         duration: 2000,
         verticalPosition: 'top',
         horizontalPosition: 'right'

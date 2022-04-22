@@ -1,6 +1,27 @@
 <div class="fullPage">
   <div class="container">
-    <form onsubmit="">
+    <h1 style="font-weight: 500;">Cadastro</h1>
+    <div style="margin-top: 10%;">
+      <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>      
+    </div>
+    <div class="webCam">
+      <button mat-stroked-button color="primary" (click)="openDialog()">
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <div>Tirar foto</div>
+          <div *ngIf="returnImg()" style="display: flex; justify-content: center; align-items: center; margin-left: 5px;">
+            <mat-icon style="color: #47c047;">check_circle_outline</mat-icon>
+          </div>
+        </div>
+      </button>
+    </div>
+    <mat-divider style="margin: 20px 0;"></mat-divider>
+    <div class="buttons">
+      <a mat-stroked-button href = '/' type="button" style="text-decoration: none;">Voltar</a>
+      <button form="form" mat-raised-button color="primary" type="submit">Enviar</button>
+    </div>
+  </div>
+</div>
+<!-- <form onsubmit="">
       <div class="form-group">
         <label for="Nome">Nome</label>
         <input type="text" class="form-control" id="Nome" placeholder="Insira aqui o Nome" autocomplete="off">
@@ -25,6 +46,4 @@
         <button type="button" class="btn btn-primary" (click)="submit()">Finalizar</button>
       </div>
 
-    </form>
-  </div>
-</div>
+    </form> -->

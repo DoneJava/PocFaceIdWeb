@@ -1,6 +1,25 @@
-#foto {
-  position: absolute;
-  height: 225px;
-  right: 100px;
-  z-index: 10;
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+#main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#liked {
+  margin-top: 3%;
+  display: flex;
+  justify-content: center;
+}
+
+#liked > h1 {
+  font-weight: 500;
+}
+
+
+::ng-deep .mat-dialog-container {
+  overflow-y: hidden !important;
 }

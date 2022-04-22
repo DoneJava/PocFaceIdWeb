@@ -1,5 +1,18 @@
 <div class="fullPage">
   <div class="container">
+    <mat-grid-list cols="2" rowHeight="5:3">
+      <mat-grid-tile>alou</mat-grid-tile>
+      <mat-grid-tile>
+        <app-camera [isActivated]="false" (Func)="func"></app-camera>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">3</mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
+
+
+<!-- <div class="fullPage">
+  <div class="container">
     <div class="containerimg">
       <div style="text-align: center;">
         <img id="imgBD" src="{{ img }}" alt="" />
@@ -31,4 +44,4 @@
       >{{ Autenticando }}</h1>
     </div>
   </div>
-</div>
+</div> -->

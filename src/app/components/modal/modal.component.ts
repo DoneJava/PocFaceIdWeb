@@ -1,7 +1,6 @@
-import { ImgService } from './../../services/img.service';
 import { Component, OnInit, Output } from '@angular/core';
-
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { MatDialogRef } from '@angular/material/dialog';
+import { ImgService } from 'src/app/services/img.service';
 
 
 @Component({
@@ -9,16 +8,43 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.css']
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent {
 
+  isHidden: boolean = false;
 
-  constructor(private modalService: NgbModal) {}
+  constructor(
+    public dialogRef: MatDialogRef<ModalComponent>,
+    public imgWeb: ImgService
+  ) {}
 
-  ngOnInit(): void {
+  close():void {
+    this.dialogRef.close();
+    this.imgWeb.webImg = null
   }
 
-  open(content:any) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result
+  saveAndClose(): void {
+    this.dialogRef.close();
+  }
+
+  refuse(): void {
+    this.isHidden = false
+    let img: any = document.getElementById('picture')
+    document.getElementById('main')?.removeChild(img)
+    this.imgWeb.webImg = null
+  }
+
+  appendImg(){
+    let img = document.createElement('img')
+    img.src = this.imgWeb.webImg
+    img.id = 'picture'
+    img.style.width = '500px'
+    document.getElementById('main')?.appendChild(img)
+  }
+
+  attPicWasTaken(event: boolean){
+    this.isHidden = true
+    this.appendImg()
+
   }
 
 }

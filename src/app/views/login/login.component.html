@@ -1,23 +1,11 @@
 <div class="fullPage">
   <div class="container">
     <div class="img">
-      <img id="img" src="../../../assets/img/user.png">
+      <img id="img" src="../../../assets/img/logo.png">
     </div>
-    <form>
-      <div class="form-group">
-        <label for="cpf">CPF</label>
-        <input type="text" class="form-control" id="cpf" placeholder="Insira seu CPF" required autocomplete="off">
-      </div>
-      <div class="form-group">
-        <label for="senha">Senha</label>
-        <input type="password" class="form-control" id="senha" placeholder="Insira sua senha" required>
-      </div>
-      <div class="btnLogin">
-        <button type="button" class="btn btn-primary" (click)="logar()">Login</button>
-      </div>
-      <div class="register">
-        <a href="/register">Efetuar Cadastro</a>
-      </div>
-    </form>
+    <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>
+    <div class="register">
+      <a href="register">Efetuar Cadastro</a>
+    </div>
   </div>
 </div>

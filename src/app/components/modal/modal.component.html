@@ -1,20 +1,20 @@
-<ng-template #content let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Cadastrar Foto</h4>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <img id="foto" src="" alt="">
-    <app-camera></app-camera>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Salvar</button>
+<div style="display: flex; justify-content: space-between;">
+  <div>
+    <h1 mat-dialog-title >Cadastrar foto</h1>
   </div>
   <div>
+    <button mat-button (click)="close()" style="width: 2%;">X</button>
   </div>
-</ng-template>
-
-<a href="javascript:;" (click)="open(content)">
-  <span aria-hidden="true" class="btn btn-block btn-outline-primary">Tirar Foto</span>
-</a>
-
+</div>
+<mat-divider style="padding: 2%;"></mat-divider>
+<div mat-dialog-content id="main">
+  <app-camera *ngIf="!isHidden" (PicWasTaken)="attPicWasTaken($event)"></app-camera>
+</div>
+<div *ngIf="isHidden" id="liked">
+  <h1>Gostou da foto?</h1>
+</div>
+<mat-divider *ngIf="isHidden"></mat-divider>
+<div mat-dialog-actions *ngIf="isHidden" class="buttons">
+    <button mat-raised-button (click)="refuse()">Não</button>
+    <button mat-raised-button color="primary" (click)="saveAndClose()">Sim</button>
+</div>

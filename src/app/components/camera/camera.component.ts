@@ -1,5 +1,5 @@
 import { ImgService } from './../../services/img.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 
@@ -13,8 +13,12 @@ export class CameraComponent implements OnInit {
 
   constructor(private ImgService: ImgService) {
 
-  }
-  @Output()
+  }  
+  @Output() PicWasTaken = new EventEmitter();
+
+  @Input() isActivated:boolean = true
+  @Input() timer: boolean = true
+
   // toggle webcam on/off
   public showWebcam = true;
   public allowCameraSwitch = true;
@@ -36,10 +40,14 @@ export class CameraComponent implements OnInit {
     );
   }
 
+  setTimer(event: any): void {
+    if(event)
+      this.triggerSnapshot()
+  }
+
   public triggerSnapshot(): void {
-    let btn = <HTMLInputElement> document.getElementById('TirarFoto')
-    btn.disabled = true
     this.trigger.next();
+    this.PicWasTaken.emit(true)
   }
   public toggleWebcam(): void {
     this.showWebcam = !this.showWebcam;
@@ -47,22 +55,10 @@ export class CameraComponent implements OnInit {
   public handleInitError(error: WebcamInitError): void {
     this.errors.push(error);
   }
-  public showNextWebcam(directionOrDeviceId: boolean | string): void {
-    // true => move forward through devices
-    // false => move backwards through devices
-    // string => move to device with given deviceId
-    let btn = <HTMLInputElement> document.getElementById('TirarFoto')
-    btn.disabled = false
-    let foto = document.getElementById('foto') as HTMLImageElement
-    foto.src = ''
-  }
   public handleImage(webcamImage: WebcamImage): void {
-    let img = document.getElementById('foto') as HTMLImageElement
-    img.src = webcamImage.imageAsDataUrl
     this.ImgService.webImg = webcamImage.imageAsDataUrl;
   }
   public cameraWasSwitched(deviceId: string): void {
-    console.log('active device: ' + deviceId);
     this.deviceId = deviceId;
   }
   public get triggerObservable(): Observable<void> {

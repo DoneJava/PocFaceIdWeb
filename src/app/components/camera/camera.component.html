@@ -1,31 +1,23 @@
 <div style="text-align: center">
   <div>
-    <webcam
-      [height]="300"
-      [width]="300"
-      [trigger]="triggerObservable"
-      (imageCapture)="handleImage($event)"
-      *ngIf="showWebcam"
-      [allowCameraSwitch]="allowCameraSwitch"
-      [switchCamera]="nextWebcamObservable"
-      [videoOptions]="videoOptions"
-      (cameraSwitched)="cameraWasSwitched($event)"
-      (initError)="handleInitError($event)"
-    ></webcam>
+    <div style="display: flex; flex-direction: column;">
+      <webcam
+        [height]="500"
+        [width]="500"
+        [trigger]="triggerObservable"
+        (imageCapture)="handleImage($event)"
+        *ngIf="showWebcam"
+        [allowCameraSwitch]="allowCameraSwitch"
+        [switchCamera]="nextWebcamObservable"
+        [videoOptions]="videoOptions"
+        (cameraSwitched)="cameraWasSwitched($event)"
+        (initError)="handleInitError($event)"
+      ></webcam>
+      <img *ngIf="isActivated" src="../../../assets/img/layer.png" style="position: absolute">
+      <p *ngIf="isActivated" style="font-weight: 500;">Centralize seu rosto na local indicado acima.</p>
+    </div>
     <br />
-    <div class="btns">
-      <div>
-        <button
-          type="button"
-          (click)="showNextWebcam(true)"
-          title="Switch Camera"
-          title="Take Picture"
-          class="btn btn-primary"
-        >
-          Tentar novamente
-        </button>
-      </div>
-      <div>
+    <div class="btns" *ngIf="isActivated">
         <button
           type="button"
           (click)="triggerSnapshot()"
@@ -35,7 +27,6 @@
         >
           Tirar foto
         </button>
-      </div>
     </div>
   </div>
 </div>

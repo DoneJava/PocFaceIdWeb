@@ -16,7 +16,19 @@
   background-color: white;
 }
 
+.webCam {
+  margin-top: 3%;
+  width: 100%;
+}
+.webCam > button{
+  width: 100%;
+}
 
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10%;
+}
 
 
 .Back > button {
