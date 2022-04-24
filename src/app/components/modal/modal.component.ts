@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ImgService } from 'src/app/services/img.service';
 
@@ -41,7 +41,7 @@ export class ModalComponent {
     document.getElementById('main')?.appendChild(img)
   }
 
-  attPicWasTaken(event: boolean){
+  attPicWasTaken(){
     this.isHidden = true
     this.appendImg()
 

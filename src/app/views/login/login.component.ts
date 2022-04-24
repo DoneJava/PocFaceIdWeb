@@ -1,8 +1,9 @@
-import { AxiosService } from './../../services/axios.service';
+import { HttpService } from '../../services/http.service';
 import { Component, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
+import { ImgService } from 'src/app/services/img.service';
 
 @Component({
   selector: 'app-login',
@@ -26,28 +27,30 @@ export class LoginComponent {
 
   constructor(
     private _snackBar: MatSnackBar,
-    private axios: AxiosService,
-    private router: Router
+    private http: HttpService,
+    private router: Router,
+    private img: ImgService
   ) { }
 
 
   listenerForm(event: any) {
     if (event.valid) {
-      this.axios
-        .putLogin(event.value)
-        .then((res) => {
-          this._snackBar.open('Login feito com sucesso!', 'Close', {
-            duration: 2000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
-          this.router.navigate(['autenticar']);
-        })
-        .catch(() => this._snackBar.open('Usuário ou senha inválido!', 'Close', {
+      this.http.putLogin(event.value).subscribe((data) => {
+        this.img.imgBD = "data:image/jpeg;base64," + data.data
+
+        this._snackBar.open('Login feito com sucesso!', 'Close', {
           duration: 2000,
           verticalPosition: 'top',
           horizontalPosition: 'right',
-        }));
+        });
+        this.router.navigate(['autenticar']);
+      }, (error) => {
+        this._snackBar.open('Usuário ou senha inválido!', 'Close', {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        })
+      })
     }
     else {
       this._snackBar.open('Formulário inválido', 'X', {

@@ -8,7 +8,7 @@
 </div>
 <mat-divider style="padding: 2%;"></mat-divider>
 <div mat-dialog-content id="main">
-  <app-camera *ngIf="!isHidden" (PicWasTaken)="attPicWasTaken($event)"></app-camera>
+  <app-camera *ngIf="!isHidden" (PicWasTaken)="attPicWasTaken()"></app-camera>
 </div>
 <div *ngIf="isHidden" id="liked">
   <h1>Gostou da foto?</h1>

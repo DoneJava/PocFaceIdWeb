@@ -1,8 +1,8 @@
-import { AxiosService } from './../../services/axios.service';
-import { ImgService } from './../../services/img.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/interfaces/user';
-import { Subject} from 'rxjs';
+import { HttpService } from 'src/app/services/http.service';
+import { ImgService } from 'src/app/services/img.service';
+import { TakePhotoService } from 'src/app/services/take-photo.service';
 
 @Component({
   selector: 'app-validador',
@@ -10,24 +10,48 @@ import { Subject} from 'rxjs';
   styleUrls: ['./validador.component.css'],
 })
 export class ValidadorComponent implements OnInit {
-  
-  public img = this.user.imgBD
 
-  @Input() func: Function = () => {}
+  constructor(
+    private takingShoot: TakePhotoService,
+    private img: ImgService,
+    private http: HttpService
+  ) { }
   
-  private trigger: Subject<void> = new Subject<void>();
-  constructor(private user: ImgService, private axios: AxiosService) {}
+  meter: number = 0
+  validation: any = ''
+  timeIsOver: boolean = false
+  imgBD: any = this.img.imgBD
+
   ngOnInit(): void {
-    /* setInterval(() => {
-      this.triggerSnapshot();
-      console.log(123)
-    }, 1000); */
-    console.log(this.func)
+    this.takingShoot.loopShoot = true
+
   }
+
   data: User = {
-    name: '',
-    cpf: '',
-    password: '',
-    img: '',
+    name: undefined,
+    cpf: undefined,
+    password: undefined,
+    img: undefined,
   };
+
+  emiter() {
+    if (this.meter <= 3) {
+      this.data.img = this.img.webImg;
+      this.data.cpf = this.img.cpf
+      this.data.password = this.img.senha
+      console.log(this.data)
+
+      this.http.postValidar(this.data).subscribe((data) => {
+        this.validation = data.data
+      }, (error) => {
+        this.timeIsOver = true
+      })
+
+      this.meter++
+    }
+    else {
+      this.timeIsOver = true
+    }
+  }
+
 }

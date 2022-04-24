@@ -1,18 +1,19 @@
 import { Validators } from '@angular/forms';
-import { AxiosService } from './../../services/axios.service';
 import { ImgService } from './../../services/img.service';
-import { Component, Output } from '@angular/core';
+import { Component, Output, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
+import { TakePhotoService } from 'src/app/services/take-photo.service';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
 
   @Output() formFields: any = {
     inputs: [
@@ -33,10 +34,14 @@ export class RegisterComponent {
   constructor(
     private ImgService: ImgService,
     private _snackBar: MatSnackBar,
-    private axios: AxiosService,
+    private http: HttpService,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private takingShoot: TakePhotoService
   ) { }
+  ngOnInit(): void {
+    this.takingShoot.loopShoot = false
+  }
 
   returnImg(): boolean {
     if (this.ImgService.webImg)
@@ -56,22 +61,24 @@ export class RegisterComponent {
     else if (event.valid) {
       event.value.img = this.ImgService.webImg
 
-      this.axios
-        .putUser(event.value)
-        .then((x) => {
-          this._snackBar.open('Registro feito com sucesso!', 'Close');
-          this.router.navigate(['']);
+      this.http.putUser(event.value).subscribe((data) => {
+        console.log(data)
+        this._snackBar.open('Registro feito com sucesso!', 'X');
+        this.router.navigate(['']);
+      }, (error) => {
+        this._snackBar.open('Erro ao efetuar registro.', 'X', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
         })
-        .catch((x) =>
-          this._snackBar.open('Erro ao efetuar registro.', 'Close')
-        );
+      })
     }
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ModalComponent, {
-      width: '800px',
-      height: '550px',
+      width: '600px',
+      height: '500px',
     });
   }
 }

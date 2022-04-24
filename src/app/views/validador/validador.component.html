@@ -1,47 +1,36 @@
 <div class="fullPage">
   <div class="container">
     <mat-grid-list cols="2" rowHeight="5:3">
-      <mat-grid-tile>alou</mat-grid-tile>
       <mat-grid-tile>
-        <app-camera [isActivated]="false" (Func)="func"></app-camera>
+        <div *ngIf="imgBD != ''; else error">
+          <img id="imgBD" src="{{ imgBD }}" alt="" />
+          <h1>Imagem do BD</h1>
+        </div>
+        <ng-template #error>
+          <div *ngIf="!timeIsOver; else broked">
+            <app-spinner></app-spinner>
+          </div>
+          <ng-template #broked>
+            <h1>Sem comunicação com o servidor!</h1>
+          </ng-template>
+        </ng-template>
       </mat-grid-tile>
-      <mat-grid-tile colspan="2">3</mat-grid-tile>
+      <mat-grid-tile>
+        <app-camera [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <div *ngIf="validation != ''; else error">
+          {{validation}}
+        </div>
+        <ng-template #error>
+          <div *ngIf="!timeIsOver; else broked">
+            <app-spinner></app-spinner>
+          </div>
+          <ng-template #broked>
+            <h1>Sem comunicação com o servidor!</h1>
+          </ng-template>
+        </ng-template>
+      </mat-grid-tile>
     </mat-grid-list>
   </div>
 </div>
-
-
-<!-- <div class="fullPage">
-  <div class="container">
-    <div class="containerimg">
-      <div style="text-align: center;">
-        <img id="imgBD" src="{{ img }}" alt="" />
-        <h1>Imagem do BD</h1>
-      </div>
-      <div style="text-align: center;">
-        <webcam
-          [height]="400"
-          [width]="400"
-          [trigger]="triggerObservable"
-          (imageCapture)="handleImage($event)"
-          *ngIf="showWebcam"
-          [allowCameraSwitch]="allowCameraSwitch"
-          [switchCamera]="nextWebcamObservable"
-          [videoOptions]="videoOptions"
-          (cameraSwitched)="cameraWasSwitched($event)"
-          (initError)="handleInitError($event)"
-        ></webcam>
-        <h1>WEB CAM</h1>
-      </div>
-    </div>
-    <div>
-      <h1 id="autenticando" [ngStyle]="
-        Autenticando.includes('Bem vindo') ? {'color': 'blue'} :
-        Autenticando.includes('Nenhum rosto') ? {'color': 'orange'} :
-        Autenticando.includes('a câmera não é o') ? {'color': 'red'} :
-        Autenticando.includes('Por favor, fique somente 1') ? {'color': 'orange'} :
-        {'color': 'black'}"
-      >{{ Autenticando }}</h1>
-    </div>
-  </div>
-</div> -->

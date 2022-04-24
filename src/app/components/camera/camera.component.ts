@@ -2,6 +2,7 @@ import { ImgService } from './../../services/img.service';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { TakePhotoService } from 'src/app/services/take-photo.service';
 
 @Component({
   selector: 'app-camera',
@@ -11,43 +12,44 @@ import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 
 export class CameraComponent implements OnInit {
 
-  constructor(private ImgService: ImgService) {
+  constructor(
+    private ImgService: ImgService, 
+    private takingShoot: TakePhotoService
+    ) {
 
-  }  
+  }
   @Output() PicWasTaken = new EventEmitter();
 
-  @Input() isActivated:boolean = true
-  @Input() timer: boolean = true
+  @Input() isActivated: boolean = true
 
-  // toggle webcam on/off
   public showWebcam = true;
   public allowCameraSwitch = true;
   public multipleWebcamsAvailable = false;
   public deviceId: string = '';
   public videoOptions: MediaTrackConstraints = {};
   public errors: WebcamInitError[] = [];
-  // webcam snapshot trigger
   private trigger: Subject<void> = new Subject<void>();
-  // switch to next / previous / specific webcam; true/false: forward/backwards, string: deviceId
   private nextWebcam: Subject<boolean | string> = new Subject<
     boolean | string
   >();
   public ngOnInit(): void {
+    
     WebcamUtil.getAvailableVideoInputs().then(
       (mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       }
     );
-  }
-
-  setTimer(event: any): void {
-    if(event)
-      this.triggerSnapshot()
+    
+    if (this.takingShoot.loopShoot){
+      setInterval(() => {
+        this.triggerSnapshot()
+      }, 3000);
+    }
   }
 
   public triggerSnapshot(): void {
     this.trigger.next();
-    this.PicWasTaken.emit(true)
+    this.PicWasTaken.emit(WebcamImage)
   }
   public toggleWebcam(): void {
     this.showWebcam = !this.showWebcam;
@@ -57,6 +59,7 @@ export class CameraComponent implements OnInit {
   }
   public handleImage(webcamImage: WebcamImage): void {
     this.ImgService.webImg = webcamImage.imageAsDataUrl;
+    this.PicWasTaken.emit()
   }
   public cameraWasSwitched(deviceId: string): void {
     this.deviceId = deviceId;
