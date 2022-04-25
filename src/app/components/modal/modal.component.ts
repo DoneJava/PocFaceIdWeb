@@ -12,6 +12,8 @@ export class ModalComponent {
 
   isHidden: boolean = false;
 
+  img: any = ''
+
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,
     public imgWeb: ImgService
@@ -28,23 +30,12 @@ export class ModalComponent {
 
   refuse(): void {
     this.isHidden = false
-    let img: any = document.getElementById('picture')
-    document.getElementById('main')?.removeChild(img)
-    this.imgWeb.webImg = null
+    this.img = null
   }
 
-  appendImg(){
-    let img = document.createElement('img')
-    img.src = this.imgWeb.webImg
-    img.id = 'picture'
-    img.style.width = '400px'
-    document.getElementById('main')?.appendChild(img)
-  }
-
-  attPicWasTaken(){
-    this.isHidden = true
-    this.appendImg()
-
+  attPicWasTaken(event: boolean){
+      this.isHidden = true
+      this.img = this.imgWeb.webImg
   }
 
 }

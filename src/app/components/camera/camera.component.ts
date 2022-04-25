@@ -43,6 +43,7 @@ export class CameraComponent implements OnInit {
     if (this.takingShoot.loopShoot){
       setInterval(() => {
         this.triggerSnapshot()
+        console.log('entrei aqui')
       }, 3000);
     }
   }
@@ -59,7 +60,7 @@ export class CameraComponent implements OnInit {
   }
   public handleImage(webcamImage: WebcamImage): void {
     this.ImgService.webImg = webcamImage.imageAsDataUrl;
-    this.PicWasTaken.emit()
+    this.PicWasTaken.emit(true)
   }
   public cameraWasSwitched(deviceId: string): void {
     this.deviceId = deviceId;

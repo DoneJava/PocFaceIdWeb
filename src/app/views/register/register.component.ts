@@ -77,8 +77,7 @@ export class RegisterComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(ModalComponent, {
-      width: '600px',
-      height: '500px',
+      width: '800px',
     });
   }
 }
