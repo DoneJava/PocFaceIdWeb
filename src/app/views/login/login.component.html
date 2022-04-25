@@ -3,6 +3,12 @@
     <div class="img">
       <img id="img" src="../../../assets/img/logo.png">
     </div>
+    <div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" *ngIf="this.Loading.isLoading.getValue(); else isntLoading">
+      <app-spinner [bg]="true"></app-spinner>
+    </div>
+    <ng-template #isntLoading>
+
+    </ng-template>
     <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>
     <div class="register">
       <a href="register">Efetuar Cadastro</a>

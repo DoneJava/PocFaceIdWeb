@@ -1,16 +1,17 @@
 import { HttpService } from '../../services/http.service';
-import { Component, Output } from '@angular/core';
+import { Component, Output, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { ImgService } from 'src/app/services/img.service';
+import { IsloadingService } from 'src/app/services/isloading.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   @Output() formFields: any = {
     inputs: [
       { show: 'CPF', name: 'cpf', type: 'text', class: 'login', mask: '000.000.000-99' },
@@ -29,11 +30,17 @@ export class LoginComponent {
     private _snackBar: MatSnackBar,
     private http: HttpService,
     private router: Router,
-    private img: ImgService
+    private img: ImgService,
+    public Loading: IsloadingService
   ) { }
+
+  ngOnInit(): void {
+  }
 
 
   listenerForm(event: any) {
+    localStorage.setItem('token', 'true')
+    this.Loading.isLoading.next(true)
     if (event.valid) {
       this.http.putLogin(event.value).subscribe((data) => {
         this.img.imgBD = "data:image/jpeg;base64," + data.data
@@ -43,13 +50,26 @@ export class LoginComponent {
           verticalPosition: 'top',
           horizontalPosition: 'right',
         });
+
+        localStorage.setItem('token', 'true')
+        this.Loading.isLoading.next(false)
         this.router.navigate(['autenticar']);
+
       }, (error) => {
-        this._snackBar.open('Usuário ou senha inválido!', 'Close', {
-          duration: 2000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        })
+        this.Loading.isLoading.next(false)
+        if (error.name == 'HttpErrorResponse') {
+          this._snackBar.open('Erro ao tentar conexão com o servidor', 'Close', {
+            duration: 2000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          })
+        } else {
+          this._snackBar.open('Usuário ou senha inválido!', 'Close', {
+            duration: 2000,
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
+          })
+        }
       })
     }
     else {

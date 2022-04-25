@@ -1,3 +1,8 @@
+<div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" *ngIf="this.Loading.isLoading.getValue(); else isntLoading">
+  <app-spinner [bg]="true"></app-spinner>
+</div>
+<ng-template #isntLoading>
+</ng-template>
 <div class="fullPage">
   <div class="container">
     <h1 style="font-weight: 500;">Cadastro</h1>

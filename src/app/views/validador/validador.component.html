@@ -2,21 +2,25 @@
   <div class="container">
     <mat-grid-list cols="2" rowHeight="5:3">
       <mat-grid-tile>
-        <div *ngIf="imgBD != ''; else error">
+        <div *ngIf="imgBD != ''; else errorDB">
           <img id="imgBD" src="{{ imgBD }}" alt="" />
           <h1>Imagem do BD</h1>
         </div>
-        <ng-template #error>
-          <div *ngIf="!timeIsOver; else broked">
+        <ng-template #errorDB>
+          <div *ngIf="!timeIsOver; else brokedBD">
             <app-spinner></app-spinner>
+            <h1>Imagem do BD</h1>
           </div>
-          <ng-template #broked>
+          <ng-template #brokedBD>
             <h1>Sem comunicação com o servidor!</h1>
           </ng-template>
         </ng-template>
       </mat-grid-tile>
-      <mat-grid-tile>
-        <app-camera [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
+      <mat-grid-tile >
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <app-camera [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
+          <h1>Web Cam</h1>
+        </div>
       </mat-grid-tile>
       <mat-grid-tile colspan="2">
         <div *ngIf="validation != ''; else error">

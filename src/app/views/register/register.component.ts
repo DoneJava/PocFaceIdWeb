@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { TakePhotoService } from 'src/app/services/take-photo.service';
 import { HttpService } from 'src/app/services/http.service';
+import { IsloadingService } from 'src/app/services/isloading.service';
 
 @Component({
   selector: 'app-register',
@@ -37,7 +38,8 @@ export class RegisterComponent implements OnInit {
     private http: HttpService,
     private router: Router,
     public dialog: MatDialog,
-    private takingShoot: TakePhotoService
+    private takingShoot: TakePhotoService,
+    public Loading: IsloadingService
   ) { }
   ngOnInit(): void {
     this.takingShoot.loopShoot = false
@@ -59,13 +61,15 @@ export class RegisterComponent implements OnInit {
       })
     }
     else if (event.valid) {
+      this.Loading.isLoading.next(true)
       event.value.img = this.ImgService.webImg
 
       this.http.putUser(event.value).subscribe((data) => {
-        console.log(data)
+        this.Loading.isLoading.next(false)
         this._snackBar.open('Registro feito com sucesso!', 'X');
         this.router.navigate(['']);
       }, (error) => {
+        this.Loading.isLoading.next(false)
         this._snackBar.open('Erro ao efetuar registro.', 'X', {
           duration: 3000,
           horizontalPosition: 'right',

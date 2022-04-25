@@ -43,7 +43,6 @@ export class CameraComponent implements OnInit {
     if (this.takingShoot.loopShoot){
       setInterval(() => {
         this.triggerSnapshot()
-        console.log('entrei aqui')
       }, 3000);
     }
   }
