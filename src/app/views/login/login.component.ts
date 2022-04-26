@@ -39,7 +39,10 @@ export class LoginComponent implements OnInit {
 
 
   listenerForm(event: any) {
-    
+    this.img.cpf = event.value.cpf;
+    this.img.senha = event.value.password
+
+
     this.Loading.isLoading.next(true)
     if (event.valid) {
       this.http.putLogin(event.value).subscribe((data) => {
@@ -50,7 +53,6 @@ export class LoginComponent implements OnInit {
           verticalPosition: 'top',
           horizontalPosition: 'right',
         });
-        console.log(data)
         localStorage.setItem('token', 'true')
         this.Loading.isLoading.next(false)
         this.router.navigate(['autenticar']);

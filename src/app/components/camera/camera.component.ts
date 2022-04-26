@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { TakePhotoService } from 'src/app/services/take-photo.service';
+import { Interceptor } from 'src/app/interceptors/interceptor.service';
 
 @Component({
   selector: 'app-camera',
@@ -14,7 +15,8 @@ export class CameraComponent implements OnInit {
 
   constructor(
     private ImgService: ImgService, 
-    private takingShoot: TakePhotoService
+    private takingShoot: TakePhotoService,
+    private wating: Interceptor
     ) {
 
   }
@@ -42,14 +44,18 @@ export class CameraComponent implements OnInit {
     
     if (this.takingShoot.loopShoot){
       setInterval(() => {
-        this.triggerSnapshot()
-      }, 3000);
+        console.log(this.wating.cont)
+        if(this.wating.cont == 0){
+          console.log('entrei')
+          this.triggerSnapshot()}
+        else
+          console.log('to tentando')
+      }, 2000);
     }
   }
 
   public triggerSnapshot(): void {
     this.trigger.next();
-    this.PicWasTaken.emit(WebcamImage)
   }
   public toggleWebcam(): void {
     this.showWebcam = !this.showWebcam;
@@ -58,6 +64,7 @@ export class CameraComponent implements OnInit {
     this.errors.push(error);
   }
   public handleImage(webcamImage: WebcamImage): void {
+    console.log('emit')
     this.ImgService.webImg = webcamImage.imageAsDataUrl;
     this.PicWasTaken.emit(true)
   }
