@@ -23,7 +23,7 @@ export class CameraComponent implements OnInit {
   @Input() isActivated: boolean = true
 
   public showWebcam = true;
-  public allowCameraSwitch = true;
+  public allowCameraSwitch = false;
   public multipleWebcamsAvailable = false;
   public deviceId: string = '';
   public videoOptions: MediaTrackConstraints = {};

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
-  urlApi = 'https://localhost:44388/api/Cadastrar';
+  urlApi = 'https://localhost:44388/api/Face/Cadastrar';
   urlApiLogin = 'https://localhost:44388/api/Face';
 
   constructor( private http: HttpClient) {}

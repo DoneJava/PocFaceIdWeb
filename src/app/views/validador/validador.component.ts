@@ -35,15 +35,12 @@ export class ValidadorComponent implements OnInit {
   };
 
   emiter() {
-    if (this.meter <= 3) {
-      this.data.img = this.img.webImg;
-      this.data.cpf = this.img.cpf
-      this.data.password = this.img.senha
-
-      this.http.postValidar(this.data).subscribe((data) => {
+    if (this.meter <= 15) {
+      this.http.postValidar(this.img.webImg).subscribe((data) => {
         this.validation = data.data
       }, (error) => {
         this.timeIsOver = true
+        console.log(error)
       })
 
       this.meter++
@@ -54,3 +51,5 @@ export class ValidadorComponent implements OnInit {
   }
 
 }
+
+

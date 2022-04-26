@@ -12,7 +12,10 @@
             <h1>Imagem do BD</h1>
           </div>
           <ng-template #brokedBD>
-            <h1>Sem comunicação com o servidor!</h1>
+            <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;">
+              <img style="max-width: 50px; margin-bottom: 5%;" src="../../../assets/img/x.png" alt="" srcset="">
+              <h1>Sem comunicação com a API!</h1>
+            </div>
           </ng-template>
         </ng-template>
       </mat-grid-tile>
@@ -31,7 +34,7 @@
             <app-spinner></app-spinner>
           </div>
           <ng-template #broked>
-            <h1>Sem comunicação com o servidor!</h1>
+            <h1>Sem comunicação com a API!</h1>
           </ng-template>
         </ng-template>
       </mat-grid-tile>

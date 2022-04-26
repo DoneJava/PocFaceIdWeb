@@ -39,24 +39,25 @@ export class LoginComponent implements OnInit {
 
 
   listenerForm(event: any) {
-    localStorage.setItem('token', 'true')
+    
     this.Loading.isLoading.next(true)
     if (event.valid) {
       this.http.putLogin(event.value).subscribe((data) => {
-        this.img.imgBD = "data:image/jpeg;base64," + data.data
+        this.img.imgBD = "data:image/jpeg;base64," + data.mensagemResposta
 
         this._snackBar.open('Login feito com sucesso!', 'Close', {
           duration: 2000,
           verticalPosition: 'top',
           horizontalPosition: 'right',
         });
-
+        console.log(data)
         localStorage.setItem('token', 'true')
         this.Loading.isLoading.next(false)
         this.router.navigate(['autenticar']);
 
       }, (error) => {
         this.Loading.isLoading.next(false)
+        console.log(error)
         if (error.name == 'HttpErrorResponse') {
           this._snackBar.open('Erro ao tentar conexão com o servidor', 'Close', {
             duration: 2000,
