@@ -6,19 +6,20 @@ import {
     HttpRequest
 }
     from '@angular/common/http';
-import { finalize, Observable } from 'rxjs';
+import { BehaviorSubject, finalize, Observable } from 'rxjs';
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-    public cont: number = 0
+    public cont = new BehaviorSubject<Number>(0)
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if(this.cont === 0)
-            this.cont++
+        if(this.cont.getValue() === 0){
+            this.cont.next(1)
+        }
         
         return next.handle(request).pipe(finalize(() => {
-            this.cont--
+            this.cont.next(0)
         }));
     }
 }

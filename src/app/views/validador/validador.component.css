@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   padding: 10%;
-  background: linear-gradient( to right,skyblue,dodgerblue);
+  background: linear-gradient(to right, skyblue, dodgerblue);
 }
 
 .container {
@@ -23,4 +23,21 @@
 
 #imgBD {
   max-width: 400px;
+}
+
+.classBlue {
+  font-family: 'Roboto', sans-serif;
+  color: rgb(37, 115, 231);
+}
+.classRed {
+  font-family: 'Roboto', sans-serif;
+  color: rgb(231, 37, 37);
+}
+.classYellow {
+  font-family: 'Roboto', sans-serif;
+  color: rgb(231, 212, 37);
+}
+.classGreen {
+  font-family: 'Roboto', sans-serif;
+  color: rgb(43, 231, 37);
 }

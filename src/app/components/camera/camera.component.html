@@ -3,8 +3,8 @@
 
     <div style="position: relative;">
       <webcam 
-        [height]="400" 
-        [width]="400" 
+        [height]="this.Measusres.height" 
+        [width]="this.Measusres.width"
         [trigger]="triggerObservable" 
         (imageCapture)="handleImage($event)"
         *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" 

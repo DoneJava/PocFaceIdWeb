@@ -2,9 +2,9 @@
   <div class="container">
     <mat-grid-list cols="2" rowHeight="5:3">
       <mat-grid-tile>
-        <div *ngIf="imgBD != ''; else errorDB">
+        <div *ngIf="imgBD != ''; else errorDB" style="display: flex; flex-direction: column; align-items: center;">
           <img id="imgBD" src="{{ imgBD }}" alt="" />
-          <h1>Imagem do BD</h1>
+          <h1 style="margin-top: 10%;">Imagem do BD</h1>
         </div>
         <ng-template #errorDB>
           <div *ngIf="!timeIsOver; else brokedBD">
@@ -21,22 +21,26 @@
       </mat-grid-tile>
       <mat-grid-tile >
         <div style="display: flex; flex-direction: column; align-items: center;">
-          <app-camera [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
+          <app-camera [Measusres]="Measures" [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
           <h1>Web Cam</h1>
         </div>
       </mat-grid-tile>
       <mat-grid-tile colspan="2">
-        <div *ngIf="validation != ''; else error">
-          {{validation}}
-        </div>
-        <ng-template #error>
-          <div *ngIf="!timeIsOver; else broked">
-            <app-spinner></app-spinner>
+        <div  id="validacao">
+          <div *ngIf="validation != ''; else error">
+            <div >
+              <h1>{{validation}}</h1>
+            </div>
           </div>
-          <ng-template #broked>
-            <h1>Sem comunicação com a API!</h1>
+          <ng-template #error>
+            <div *ngIf="!timeIsOver; else broked">
+              <app-spinner></app-spinner>
+            </div>
+            <ng-template #broked>
+              <h1>Sem comunicação com a API!</h1>
+            </ng-template>
           </ng-template>
-        </ng-template>
+        </div>
       </mat-grid-tile>
     </mat-grid-list>
   </div>

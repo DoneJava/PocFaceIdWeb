@@ -23,6 +23,7 @@ export class CameraComponent implements OnInit {
   @Output() PicWasTaken = new EventEmitter();
 
   @Input() isActivated: boolean = true
+  @Input() Measusres: any = {}
 
   public showWebcam = true;
   public allowCameraSwitch = false;
@@ -35,22 +36,18 @@ export class CameraComponent implements OnInit {
     boolean | string
   >();
   public ngOnInit(): void {
-    
     WebcamUtil.getAvailableVideoInputs().then(
       (mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       }
+      
     );
     
     if (this.takingShoot.loopShoot){
       setInterval(() => {
-        console.log(this.wating.cont)
-        if(this.wating.cont == 0){
-          console.log('entrei')
+        if(this.wating.cont.getValue() === 0){
           this.triggerSnapshot()}
-        else
-          console.log('to tentando')
-      }, 2000);
+      }, 5000);
     }
   }
 
@@ -64,7 +61,7 @@ export class CameraComponent implements OnInit {
     this.errors.push(error);
   }
   public handleImage(webcamImage: WebcamImage): void {
-    console.log('emit')
+  
     this.ImgService.webImg = webcamImage.imageAsDataUrl;
     this.PicWasTaken.emit(true)
   }

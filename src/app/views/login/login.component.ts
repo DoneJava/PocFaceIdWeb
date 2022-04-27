@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { ImgService } from 'src/app/services/img.service';
 import { IsloadingService } from 'src/app/services/isloading.service';
+import { TakePhotoService } from 'src/app/services/take-photo.service';
 
 @Component({
   selector: 'app-login',
@@ -31,10 +32,12 @@ export class LoginComponent implements OnInit {
     private http: HttpService,
     private router: Router,
     private img: ImgService,
-    public Loading: IsloadingService
+    public Loading: IsloadingService,
+    private takingShoot: TakePhotoService
   ) { }
 
   ngOnInit(): void {
+    this.takingShoot.loopShoot = false
   }
 
 
@@ -46,7 +49,9 @@ export class LoginComponent implements OnInit {
     this.Loading.isLoading.next(true)
     if (event.valid) {
       this.http.putLogin(event.value).subscribe((data) => {
-        this.img.imgBD = "data:image/jpeg;base64," + data.mensagemResposta
+        let foto = "data:image/jpeg;base64," + data.mensagemResposta
+        this.img.imgBD = foto
+        localStorage.setItem('foto', foto)
 
         this._snackBar.open('Login feito com sucesso!', 'Close', {
           duration: 2000,

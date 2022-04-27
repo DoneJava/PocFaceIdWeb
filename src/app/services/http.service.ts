@@ -6,8 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
-  urlApi = 'https://localhost:44388/api/Face/Cadastrar';
-  urlApiLogin = 'https://localhost:44388/api/Face';
+  urlApiCadastrar = 'https://localhost:44388/api/Face/Cadastrar';
+  urlApiLogin = 'https://localhost:44388/api/Face/Login';
+  urlApiValidar = 'https://localhost:44388/api/Face/Validar';
+  urlApiVerificarImg = 'https://localhost:44388/api/Face/VerificarImg';
 
  
 
@@ -20,12 +22,12 @@ export class HttpService {
   };
 
   putUser(data: any): Observable<any> {
-    return this.http.put(this.urlApi, data)
+    return this.http.put(this.urlApiCadastrar, data)
   }
   putLogin(data: any): Observable<any> {
     return this.http.put(this.urlApiLogin, data)
   }
   postValidar(data: any): Observable<any> {
-    return this.http.post(this.urlApiLogin, JSON.stringify(data), this.httpHeader)
+    return this.http.post(this.urlApiValidar, JSON.stringify(data), this.httpHeader)
   }
 }

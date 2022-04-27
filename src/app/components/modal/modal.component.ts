@@ -11,7 +11,7 @@ import { ImgService } from 'src/app/services/img.service';
 export class ModalComponent {
 
   isHidden: boolean = false;
-
+  Measures: any = {height: 500, width: 500}
   img: any = ''
 
   constructor(
