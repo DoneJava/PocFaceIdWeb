@@ -3,9 +3,7 @@ import { Component, Output, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
-import { ImgService } from 'src/app/services/img.service';
-import { IsloadingService } from 'src/app/services/isloading.service';
-import { TakePhotoService } from 'src/app/services/take-photo.service';
+import { HelperService } from 'src/app/services/Helper.service';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +11,7 @@ import { TakePhotoService } from 'src/app/services/take-photo.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  //Output para informar ao formulário quais campos gerar.
   @Output() formFields: any = {
     inputs: [
       { show: 'CPF', name: 'cpf', type: 'text', class: 'login', mask: '000.000.000-99' },
@@ -31,26 +30,25 @@ export class LoginComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private http: HttpService,
     private router: Router,
-    private img: ImgService,
-    public Loading: IsloadingService,
-    private takingShoot: TakePhotoService
+    public helper: HelperService,
   ) { }
 
   ngOnInit(): void {
-    this.takingShoot.loopShoot = false
+    //Informa ao componente camera que ele não precisa iniciar loop de fotos
+    this.helper.loopShoot = false
   }
 
-
+  //Recebe formulário e envia para API
   listenerForm(event: any) {
-    this.img.cpf = event.value.cpf;
-    this.img.senha = event.value.password
+    this.helper.cpf = event.value.cpf;
+    this.helper.senha = event.value.password
 
 
-    this.Loading.isLoading.next(true)
+    this.helper.isLoading.next(true)
     if (event.valid) {
       this.http.putLogin(event.value).subscribe((data) => {
         let foto = "data:image/jpeg;base64," + data.mensagemResposta
-        this.img.imgBD = foto
+        this.helper.imgBD = foto
         localStorage.setItem('foto', foto)
 
         this._snackBar.open('Login feito com sucesso!', 'Close', {
@@ -59,20 +57,21 @@ export class LoginComponent implements OnInit {
           horizontalPosition: 'right',
         });
         localStorage.setItem('token', 'true')
-        this.Loading.isLoading.next(false)
+        this.helper.isLoading.next(false)
         this.router.navigate(['autenticar']);
 
       }, (error) => {
-        this.Loading.isLoading.next(false)
+        this.helper.isLoading.next(false)
         console.log(error)
-        if (error.name == 'HttpErrorResponse') {
-          this._snackBar.open('Erro ao tentar conexão com o servidor', 'Close', {
+        if (error.status == 401 ) {
+          this._snackBar.open('Usuário ou senha inválido!', 'Close', {
             duration: 2000,
             verticalPosition: 'top',
             horizontalPosition: 'right',
           })
+          
         } else {
-          this._snackBar.open('Usuário ou senha inválido!', 'Close', {
+          this._snackBar.open('Erro ao tentar conexão com o servidor', 'Close', {
             duration: 2000,
             verticalPosition: 'top',
             horizontalPosition: 'right',

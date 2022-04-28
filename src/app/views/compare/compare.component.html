@@ -1,0 +1,19 @@
+<app-toolbar></app-toolbar>
+<div class="fullPage">
+    <div class="container">
+        <div *ngIf="imgBD != undefined; else errorDB" style="display: flex; flex-direction: column; align-items: center;">
+            <img id="imgBD" src="{{ imgBD }}" alt="" />
+            <br />
+            <h1>Imagem de referência</h1>
+          </div>
+          <ng-template #errorDB>
+              <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;">
+                <img style="max-width: 50px; margin-bottom: 5%;" src="../../../assets/img/x.png" alt="" srcset="">
+                <h1>Sem comunicação com a API!</h1>
+              </div>
+          </ng-template>
+          <div>
+              <app-files></app-files>
+          </div>
+    </div>
+</div>

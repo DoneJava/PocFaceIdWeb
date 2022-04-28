@@ -1,9 +1,8 @@
-import { ImgService } from './../../services/img.service';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
-import { TakePhotoService } from 'src/app/services/take-photo.service';
 import { Interceptor } from 'src/app/interceptors/interceptor.service';
+import { HelperService } from 'src/app/services/Helper.service';
 
 @Component({
   selector: 'app-camera',
@@ -14,8 +13,7 @@ import { Interceptor } from 'src/app/interceptors/interceptor.service';
 export class CameraComponent implements OnInit {
 
   constructor(
-    private ImgService: ImgService, 
-    private takingShoot: TakePhotoService,
+    private helper: HelperService,
     private wating: Interceptor
     ) {
 
@@ -43,7 +41,7 @@ export class CameraComponent implements OnInit {
       
     );
     
-    if (this.takingShoot.loopShoot){
+    if (this.helper.loopShoot){
       setInterval(() => {
         if(this.wating.cont.getValue() === 0){
           this.triggerSnapshot()}
@@ -61,8 +59,7 @@ export class CameraComponent implements OnInit {
     this.errors.push(error);
   }
   public handleImage(webcamImage: WebcamImage): void {
-  
-    this.ImgService.webImg = webcamImage.imageAsDataUrl;
+    this.helper.webImg = webcamImage.imageAsDataUrl;
     this.PicWasTaken.emit(true)
   }
   public cameraWasSwitched(deviceId: string): void {

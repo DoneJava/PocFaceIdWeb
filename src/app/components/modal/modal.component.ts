@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { ImgService } from 'src/app/services/img.service';
-
+import { HelperService } from 'src/app/services/Helper.service';
 
 @Component({
   selector: 'app-modal',
@@ -16,12 +15,12 @@ export class ModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,
-    public imgWeb: ImgService
+    public helper: HelperService
   ) {}
 
   close():void {
     this.dialogRef.close();
-    this.imgWeb.webImg = null
+    this.helper.webImg = null
   }
 
   saveAndClose(): void {
@@ -35,7 +34,7 @@ export class ModalComponent {
 
   attPicWasTaken(event: boolean){
       this.isHidden = true
-      this.img = this.imgWeb.webImg
+      this.img = this.helper.webImg
   }
 
 }

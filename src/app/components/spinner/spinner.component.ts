@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class SpinnerComponent implements OnInit {
 
   @Input() bg: boolean = false
+  @Input() diameter: number = 100
 
   constructor() { }
 

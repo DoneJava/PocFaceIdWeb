@@ -1,7 +1,7 @@
 <div style="text-align: center">
   <div>
 
-    <div style="position: relative;">
+    <div style="position: relative; margin-bottom: -1.2%;">
       <webcam 
         [height]="this.Measusres.height" 
         [width]="this.Measusres.width"
@@ -19,7 +19,6 @@
     </div>
 
     <p *ngIf="isActivated" style="font-weight: 500;">Centralize seu rosto no local indicado acima.</p>
-    <br />
     <div class="btns" *ngIf="isActivated">
       <button type="button" (click)="triggerSnapshot()" title="Take Picture" class="btn btn-primary" id="TirarFoto">
         Tirar foto

@@ -1,13 +1,12 @@
-import { FormControl, Validators } from '@angular/forms';
-import { ImgService } from './../../services/img.service';
+import { Validators } from '@angular/forms';
 import { Component, Output, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
-import { TakePhotoService } from 'src/app/services/take-photo.service';
 import { HttpService } from 'src/app/services/http.service';
-import { IsloadingService } from 'src/app/services/isloading.service';
+import { HelperService } from 'src/app/services/Helper.service';
+
 
 @Component({
   selector: 'app-register',
@@ -16,6 +15,7 @@ import { IsloadingService } from 'src/app/services/isloading.service';
 })
 export class RegisterComponent implements OnInit {
 
+  //Output para informar ao formulário quais campos gerar.
   @Output() formFields: any = {
     inputs: [
       { show: 'Nome', name: 'name', type: 'text', class: 'name' },
@@ -33,16 +33,16 @@ export class RegisterComponent implements OnInit {
 
 
   constructor(
-    private ImgService: ImgService,
     private _snackBar: MatSnackBar,
     private http: HttpService,
     private router: Router,
     public dialog: MatDialog,
-    private takingShoot: TakePhotoService,
-    public Loading: IsloadingService
+    public helper: HelperService
   ) { }
+
   ngOnInit(): void {
-    this.takingShoot.loopShoot = false
+    //Informa ao componente camera que ele não precisa iniciar loop de fotos
+    this.helper.loopShoot = false
   }
 
   CpfValidator(control: any):  boolean | null {
@@ -80,14 +80,15 @@ export class RegisterComponent implements OnInit {
     return true;
   }
 
-
+  //Verifica se há alguma foto
   returnImg(): boolean {
-    if (this.ImgService.webImg)
+    if (this.helper.webImg)
       return true
     else
       return false
   }
 
+  //Recebe formulário do app-formulário e envia para api
   listenerForm(event: any) {
     if (!this.CpfValidator(event)) {
       this._snackBar.open('CPF inválido.', 'X', {
@@ -96,7 +97,7 @@ export class RegisterComponent implements OnInit {
         verticalPosition: 'top'
       })
     }
-    else if (!this.ImgService.webImg) {
+    else if (!this.helper.webImg) {
       this._snackBar.open('A foto é obrigatória.', 'X', {
         duration: 3000,
         horizontalPosition: 'right',
@@ -104,11 +105,11 @@ export class RegisterComponent implements OnInit {
       })
     }
     else if (event.valid) {
-      this.Loading.isLoading.next(true)
-      event.value.img = this.ImgService.webImg
+      this.helper.isLoading.next(true)
+      event.value.img = this.helper.webImg
 
       this.http.putUser(event.value).subscribe((data) => {
-        this.Loading.isLoading.next(false)
+        this.helper.isLoading.next(false)
         this._snackBar.open('Registro feito com sucesso!', 'X', {
           duration: 3000,
           horizontalPosition: 'right',
@@ -116,7 +117,7 @@ export class RegisterComponent implements OnInit {
         });
         this.router.navigate(['']);
       }, (error) => {
-        this.Loading.isLoading.next(false)
+        this.helper.isLoading.next(false)
         this._snackBar.open('Erro ao efetuar registro.', 'X', {
           duration: 3000,
           horizontalPosition: 'right',

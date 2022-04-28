@@ -17,6 +17,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { WebcamModule } from 'ngx-webcam';
 import { InterceptorModule } from './interceptors/interceptor.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +30,11 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { ValidadorComponent } from './views/validador/validador.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { CompareComponent } from './views/compare/compare.component';
+import { MenuComponent } from './views/menu/menu.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { FilesComponent } from './components/files/files.component';
+
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -39,7 +47,11 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     ModalComponent,
     ValidadorComponent,
     FormComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    CompareComponent,
+    MenuComponent,
+    ToolbarComponent,
+    FilesComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +73,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     MatGridListModule,
     HttpClientModule,
     MatProgressSpinnerModule,
-    InterceptorModule
+    InterceptorModule,
+    MatToolbarModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

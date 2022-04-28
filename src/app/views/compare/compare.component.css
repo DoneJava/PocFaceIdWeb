@@ -1,0 +1,19 @@
+.fullPage {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10%;
+    background: linear-gradient(to right, skyblue, dodgerblue);
+}
+
+.container {
+    padding: 40px 50px;
+    border: solid 1px rgb(211, 210, 210);
+    height: 800px;
+    width: 1300px;
+    background-color: white;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}

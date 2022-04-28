@@ -1,3 +1,7 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
 .fullPage {
   height: 100vh;
   display: flex;
@@ -19,10 +23,7 @@
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-}
-
-#imgBD {
-  max-width: 400px;
+  height: 370px;
 }
 
 .classBlue {
@@ -40,4 +41,27 @@
 .classGreen {
   font-family: 'Roboto', sans-serif;
   color: rgb(43, 231, 37);
+}
+.classBorderBlue {
+  border: solid 3px rgb(37, 115, 231);
+}
+.classBorderRed {
+  border: solid 3px rgb(231, 37, 37);
+}
+.classBorderYellow {
+  border: solid 3px rgb(231, 212, 37);
+}
+.classBorderGreen {
+  border: solid 3px rgb(43, 231, 37);
+}
+
+#validacao {
+  height: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#imgBD {
+  max-width: 400px;
 }

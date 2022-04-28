@@ -1,47 +1,60 @@
+<mat-toolbar style="position: absolute; background-color: rgba(0, 0, 0, 0); margin-bottom: 1px solid">
+  <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button> -->
+  <button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+  </mat-menu>
+  <span>Face ID</span>
+  <span class="example-spacer"></span>
+  <button mat-button (click)="exit()">
+    Sair
+  </button>
+</mat-toolbar>
 <div class="fullPage">
   <div class="container">
-    <mat-grid-list cols="2" rowHeight="5:3">
-      <mat-grid-tile>
-        <div *ngIf="imgBD != ''; else errorDB" style="display: flex; flex-direction: column; align-items: center;">
-          <img id="imgBD" src="{{ imgBD }}" alt="" />
-          <h1 style="margin-top: 10%;">Imagem do BD</h1>
+    <div class="containerimg">
+      <div *ngIf="imgBD != ''; else errorDB" style="display: flex; flex-direction: column; align-items: center;">
+        <img id="imgBD" src="{{ imgBD }}" alt="" />
+        <br />
+        <h1>Imagem de referência</h1>
+      </div>
+      <ng-template #errorDB>
+        <div *ngIf="!timeIsOver; else brokedBD">
+          <app-spinner></app-spinner>
+          <h1>Imagem de referência</h1>
         </div>
-        <ng-template #errorDB>
-          <div *ngIf="!timeIsOver; else brokedBD">
-            <app-spinner></app-spinner>
-            <h1>Imagem do BD</h1>
+        <ng-template #brokedBD>
+          <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;">
+            <img style="max-width: 50px; margin-bottom: 5%;" src="../../../assets/img/x.png" alt="" srcset="">
+            <h1>Sem comunicação com a API!</h1>
           </div>
-          <ng-template #brokedBD>
-            <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;">
-              <img style="max-width: 50px; margin-bottom: 5%;" src="../../../assets/img/x.png" alt="" srcset="">
-              <h1>Sem comunicação com a API!</h1>
-            </div>
-          </ng-template>
         </ng-template>
-      </mat-grid-tile>
-      <mat-grid-tile >
-        <div style="display: flex; flex-direction: column; align-items: center;">
+      </ng-template>
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div id="camera" style="padding-bottom: -15px;">
           <app-camera [Measusres]="Measures" [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
-          <h1>Web Cam</h1>
         </div>
-      </mat-grid-tile>
-      <mat-grid-tile colspan="2">
-        <div  id="validacao">
-          <div *ngIf="validation != ''; else error">
-            <div >
-              <h1>{{validation}}</h1>
-            </div>
+      </div>
+    </div>
+    <div id="validacao">
+      <div *ngIf="validation != ''; else error">
+        <div>
+          <h1>{{validation}}</h1>
+          <div>
+            <app-spinner [diameter]="25"></app-spinner>
           </div>
-          <ng-template #error>
-            <div *ngIf="!timeIsOver; else broked">
-              <app-spinner></app-spinner>
-            </div>
-            <ng-template #broked>
-              <h1>Sem comunicação com a API!</h1>
-            </ng-template>
-          </ng-template>
         </div>
-      </mat-grid-tile>
-    </mat-grid-list>
+      </div>
+      <ng-template #error>
+        <div *ngIf="!timeIsOver; else broked">
+          <app-spinner></app-spinner>
+        </div>
+        <ng-template #broked>
+          <h1>Sem comunicação com a API!</h1>
+        </ng-template>
+      </ng-template>
+    </div>
   </div>
 </div>
