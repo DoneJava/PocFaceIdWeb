@@ -1,1 +1,10 @@
-<input type="file" mat-flat-input color="primary" (change)="onFileSelected($event)">
+<div *ngIf="this.helper.myimage else btn">
+    <img [src]="this.helper.myimage | async" width="500px" alt="" />
+    <br>
+</div>
+<ng-template #btn>
+    <mat-form-field>
+        <ngx-mat-file-input placeholder="Selecine uma imagem..." (change)="onChange($event)"></ngx-mat-file-input>
+        <mat-icon matSuffix>folder</mat-icon>
+    </mat-form-field>   
+</ng-template>

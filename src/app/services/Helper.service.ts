@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +21,8 @@ export class HelperService {
 
   //habilita/desabilita o loop de fotos
   public loopShoot: boolean = false
+
+  //
+  myimage: Observable<any> | undefined;
 
 }

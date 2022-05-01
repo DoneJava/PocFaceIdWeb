@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Component, EventEmitter, Output, OnInit} from '@angular/core';
+import { observable, Observable, Subscriber } from 'rxjs';
+import { HelperService } from 'src/app/services/Helper.service';
 
 @Component({
   selector: 'app-files',
@@ -8,20 +9,37 @@ import { Observable, ReplaySubject } from 'rxjs';
 })
 export class FilesComponent implements OnInit {
 
-  constructor() { }
+  @Output() imgBase64 = new EventEmitter
+
+  constructor(public helper: HelperService) { }
 
   ngOnInit(): void {
   }
 
-  selectedFile: any = null
-  base64Output : string = ''
+  onChange(event: Event) {
+    const target= event.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
+    this.convertToBase64(file);
+  }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-        console.log(reader.result);
+  convertToBase64(file: File): void {
+    this.helper.myimage = new Observable((subscriber: Subscriber<any>) => {
+      this.readFile(file, subscriber);
+    });
+  }
+
+  readFile(file: File, subscriber: Subscriber<any>) {
+    const filereader = new FileReader();
+    filereader.readAsDataURL(file);
+
+    filereader.onload = () => {
+      subscriber.next(filereader.result);
+      subscriber.complete();
+      this.imgBase64.emit(filereader.result)
+    };
+    filereader.onerror = (error) => {
+      subscriber.error(error);
+      subscriber.complete();
     };
   }
 }

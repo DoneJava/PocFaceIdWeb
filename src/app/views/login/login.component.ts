@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
         });
         localStorage.setItem('token', 'true')
         this.helper.isLoading.next(false)
-        this.router.navigate(['autenticar']);
+        this.router.navigate(['menu']);
 
       }, (error) => {
         this.helper.isLoading.next(false)
