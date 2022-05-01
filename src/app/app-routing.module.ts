@@ -13,9 +13,9 @@ import { CompareComponent } from './views/compare/compare.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
-  { path: 'autenticar', component: ValidadorComponent, /* canActivate: [AuthGuard] */ },
-  { path: 'menu', component: MenuComponent, /* canActivate: [AuthGuard] */},
-  { path: 'compare', component: CompareComponent, /* canActivate: [AuthGuard] */},
+  { path: 'autenticar', component: ValidadorComponent, canActivate: [AuthGuard] },
+  { path: 'menu', component: MenuComponent, canActivate: [AuthGuard]},
+  { path: 'compare', component: CompareComponent, canActivate: [AuthGuard]},
   { path: '', component: LoginComponent, pathMatch: 'full' }
 ];
 

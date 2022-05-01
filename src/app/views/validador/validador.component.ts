@@ -50,6 +50,10 @@ export class ValidadorComponent implements OnInit {
     })
   }
 
+  onBack(): void {
+    this.router.navigate(["/menu"])
+  }
+
   //Muda a cor da letra e câmera de acordo com a resposta da API
   changeColor(error: boolean, data: any): void {
     let font = document.getElementById('validacao') as HTMLDivElement

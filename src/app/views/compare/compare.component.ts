@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/Helper.service';
 import { HttpService } from 'src/app/services/http.service';
@@ -12,7 +13,8 @@ export class CompareComponent implements OnInit {
 
   constructor(
     public helper: HelperService,
-    private http: HttpService
+    private http: HttpService,
+    private route: Router
     ) { }
 
   imgBD: any
@@ -32,6 +34,10 @@ export class CompareComponent implements OnInit {
 
   onClick() {
     this.helper.myimage = undefined
+  }
+
+  onBack(): void {
+    this.route.navigate(["/menu"])
   }
 
   onImgBase64(event: any): void {

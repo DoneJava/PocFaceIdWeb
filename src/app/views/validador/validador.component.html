@@ -1,17 +1,4 @@
-<mat-toolbar style="position: absolute; background-color: rgba(0, 0, 0, 0); margin-bottom: 1px solid">
-  <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button> -->
-  <button mat-button [matMenuTriggerFor]="menu"><mat-icon>menu</mat-icon></button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>Item 1</button>
-  </mat-menu>
-  <span>Face ID</span>
-  <span class="example-spacer"></span>
-  <button mat-button (click)="exit()">
-    Sair
-  </button>
-</mat-toolbar>
+<app-toolbar></app-toolbar>
 <div class="fullPage">
   <div class="container">
     <div class="containerimg">
@@ -55,6 +42,9 @@
           <h1>Sem comunicação com a API!</h1>
         </ng-template>
       </ng-template>
+    </div>
+    <div>
+      <button mat-stroked-button (click)="onBack()">Voltar</button>
     </div>
   </div>
 </div>
