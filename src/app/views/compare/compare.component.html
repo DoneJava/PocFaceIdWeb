@@ -15,7 +15,7 @@
                 </div>
             </ng-template>
             <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-                <app-files (imgBase64)="onImgBase64($event)" ></app-files>
+                <app-files (imgBase64)="onImgBase64($event)"></app-files>
                 <br />
                 <div *ngIf="this.helper.myimage">
                     <h1>Imagem importada</h1>
@@ -23,10 +23,16 @@
             </div>
         </div>
         <div>
-            <div *ngIf="this.helper.myimage" style=" display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                <Label style="font-family: 'Roboto', sans-serif;">{{res}}</Label>
+            <div *ngIf="res; else loading"
+                style=" display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                    <Label>{{res}}</Label>
                 <button mat-stroked-button (click)="onClick()">Tentar novamente</button>
             </div>
+            <ng-template #loading>
+                <div *ngIf="this.helper.myimage">
+                    <app-spinner [diameter]="25"></app-spinner>
+                </div>
+            </ng-template>
         </div>
         <div>
             <button mat-stroked-button (click)="onBack()">Voltar</button>

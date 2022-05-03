@@ -48,6 +48,25 @@ export class CompareComponent implements OnInit {
     this.http.postValidar(this.data).subscribe((data) => {
       this.res = data.mensagemResposta
       
+      switch(data.statusMensagem){
+        case 1:
+          this.res = "Nenhum rosto detectado."
+          break;
+        
+        case 2:
+          this.res = "Mais de um rosto na foto, por favor, insira imagens somente com um rosto..."
+          break;
+
+        case 3:
+          this.res = `${data.mensagemResposta} | accuracy: ${data.confidence}`
+          break;
+
+        case 4:
+          this.res = `${data.mensagemResposta} | accuracy: ${data.confidence}`
+          break;
+      }
+
+
     }, (error) => {
       this.timeIsOver = true
       console.log(error)
