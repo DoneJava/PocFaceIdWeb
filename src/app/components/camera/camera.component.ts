@@ -22,7 +22,7 @@ export class CameraComponent implements OnInit {
 
   @Input() isActivated: boolean = true
   @Input() Measusres: any = {}
-
+  public cont = 1
   public showWebcam = true;
   public allowCameraSwitch = false;
   public multipleWebcamsAvailable = false;
@@ -44,8 +44,15 @@ export class CameraComponent implements OnInit {
     if (this.helper.loopShoot){
       setInterval(() => {
         if(this.wating.cont.getValue() === 0){
-          this.triggerSnapshot()}
-      }, 5000);
+          if(this.cont == 1){
+            this.triggerSnapshot()
+            this.helper.semafaro.next(1)
+            this.triggerSnapshot()
+            this.helper.semafaro.next(0)
+          }
+          this.cont++
+        }
+      }, 1000);
     }
   }
 
@@ -59,8 +66,13 @@ export class CameraComponent implements OnInit {
     this.errors.push(error);
   }
   public handleImage(webcamImage: WebcamImage): void {
-    this.helper.webImg = webcamImage.imageAsDataUrl;
-    this.PicWasTaken.emit(true)
+    if(this.helper.semafaro.getValue() == 0){
+      this.helper.webImg = webcamImage.imageAsDataUrl;
+    }
+    else{
+      this.helper.webImgAux = webcamImage.imageAsDataUrl;
+      this.PicWasTaken.emit(true)
+    }
   }
   public cameraWasSwitched(deviceId: string): void {
     this.deviceId = deviceId;

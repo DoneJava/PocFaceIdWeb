@@ -45,6 +45,7 @@ export class CompareComponent implements OnInit {
     this.data.password = this.helper.senha
     this.data.img = event
     console.log(this.data)
+    
     this.http.postValidar(this.data).subscribe((data) => {
       this.res = data.mensagemResposta
       

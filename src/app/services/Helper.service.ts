@@ -9,8 +9,11 @@ export class HelperService {
 
   constructor() { }
   
-  //User
+  //Foto tirada
   public webImg: any;
+  public webImgAux: any;
+
+  //User
   public cpf: any;
   public senha: any;
   public nome: any;
@@ -18,6 +21,9 @@ export class HelperService {
   
   //habilita/desabilita o loading
   public isLoading = new BehaviorSubject<Boolean>(false)
+  
+  //ordena para qual parametro a foto deve ser enviada
+  public semafaro = new BehaviorSubject<Number>(0)
 
   //habilita/desabilita o loop de fotos
   public loopShoot: boolean = false

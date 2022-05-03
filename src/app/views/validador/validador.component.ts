@@ -39,6 +39,9 @@ export class ValidadorComponent implements OnInit {
     this.data.img = this.helper.webImg;
     this.data.cpf = this.helper.cpf
     this.data.password = this.helper.senha
+    this.data.img2 = this.helper.webImgAux
+
+    console.log(this.data)
 
     this.http.postValidar(this.data).subscribe((data) => {
       this.validation = data.mensagemResposta
