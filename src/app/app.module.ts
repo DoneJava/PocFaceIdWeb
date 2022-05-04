@@ -34,6 +34,7 @@ import { LoginComponent } from './views/login/login.component';
 import { MenuComponent } from './views/menu/menu.component';
 import { RegisterComponent } from './views/register/register.component';
 import { ValidadorComponent } from './views/validador/validador.component';
+import { MenuValidationComponent } from './views/menu-validation/menu-validation.component';
 
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
@@ -51,7 +52,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     CompareComponent,
     MenuComponent,
     ToolbarComponent,
-    FilesComponent
+    FilesComponent,
+    MenuValidationComponent
   ],
   imports: [
     BrowserModule,

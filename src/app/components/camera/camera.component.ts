@@ -57,6 +57,7 @@ export class CameraComponent implements OnInit {
   }
 
   public triggerSnapshot(): void {
+    console.log(1)
     this.trigger.next();
   }
   public toggleWebcam(): void {
@@ -66,11 +67,15 @@ export class CameraComponent implements OnInit {
     this.errors.push(error);
   }
   public handleImage(webcamImage: WebcamImage): void {
+    console.log('entri')
     if(this.helper.semafaro.getValue() == 0){
       this.helper.webImg = webcamImage.imageAsDataUrl;
     }
     else{
       this.helper.webImgAux = webcamImage.imageAsDataUrl;
+      this.PicWasTaken.emit(true)
+    }
+    if(this.isActivated){
       this.PicWasTaken.emit(true)
     }
   }

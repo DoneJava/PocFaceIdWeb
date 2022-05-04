@@ -54,7 +54,7 @@ export class ValidadorComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigate(["/menu"])
+    this.router.navigate(["/menu/autenticar"])
   }
 
   //Muda a cor da letra e câmera de acordo com a resposta da API

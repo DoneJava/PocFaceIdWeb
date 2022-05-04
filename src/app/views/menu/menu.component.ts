@@ -17,7 +17,7 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/compare'])
   }
   toWebCam(): void {
-    this.router.navigate(['/autenticar'])
+    this.router.navigate(['/menu/autenticar'])
   }
 
 }
