@@ -15,7 +15,7 @@ export class CameraComponent implements OnInit {
   constructor(
     private helper: HelperService,
     private wating: Interceptor
-    ) {
+  ) {
 
   }
   @Output() PicWasTaken = new EventEmitter();
@@ -33,22 +33,31 @@ export class CameraComponent implements OnInit {
   private nextWebcam: Subject<boolean | string> = new Subject<
     boolean | string
   >();
-  public ngOnInit(): void {
+
+  ngOnInit(): void {
     WebcamUtil.getAvailableVideoInputs().then(
       (mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       }
-      
+
     );
-    
-    if (this.helper.loopShoot){
+    setInterval(() => {
+      this.takeInLoop()
+    }, 1000)
+
+  }
+
+  takeInLoop() {
+    if (this.helper.loopShoot) {
       setInterval(() => {
-        if(this.wating.cont.getValue() === 0){
-          if(this.cont == 1){
+        if (this.wating.cont.getValue() === 0) {
+          if (this.cont == 1) {
             this.triggerSnapshot()
             this.helper.semafaro.next(1)
-            this.triggerSnapshot()
-            this.helper.semafaro.next(0)
+            setInterval(() => {
+              this.triggerSnapshot()
+              this.helper.semafaro.next(0)
+            }, 1000)
           }
           this.cont++
         }
@@ -57,7 +66,6 @@ export class CameraComponent implements OnInit {
   }
 
   public triggerSnapshot(): void {
-    console.log(1)
     this.trigger.next();
   }
   public toggleWebcam(): void {
@@ -67,18 +75,14 @@ export class CameraComponent implements OnInit {
     this.errors.push(error);
   }
   public handleImage(webcamImage: WebcamImage): void {
-    console.log('entri')
-    if(this.helper.semafaro.getValue() == 0){
+    if (this.helper.semafaro.getValue() == 0) {
       this.helper.webImg = webcamImage.imageAsDataUrl;
-      console.log(this.helper.webImg)
     }
-    else{
+    else {
       this.helper.webImgAux = webcamImage.imageAsDataUrl;
       this.PicWasTaken.emit(true)
     }
-    if(this.isActivated){
-      this.PicWasTaken.emit(true)
-    }
+
   }
   public cameraWasSwitched(deviceId: string): void {
     this.deviceId = deviceId;

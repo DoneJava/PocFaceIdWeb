@@ -116,6 +116,7 @@ export class RegisterComponent implements OnInit {
           verticalPosition: 'top'
         });
         this.router.navigate(['']);
+        this.helper.webImg = ''
       }, (error) => {
         this.helper.isLoading.next(false)
         this._snackBar.open('Erro ao efetuar registro.', 'X', {
