@@ -41,6 +41,7 @@ export class CameraComponent implements OnInit {
       }
 
     );
+<<<<<<< HEAD
     setInterval(() => {
       this.takeInLoop()
     }, 1000)
@@ -49,6 +50,10 @@ export class CameraComponent implements OnInit {
 
   takeInLoop() {
     if (this.helper.loopShoot) {
+=======
+
+    if (this.helper.loopShoot){
+>>>>>>> 28e908347c96a7dc70d04b2fa26f1d515352e967
       setInterval(() => {
         if (this.wating.cont.getValue() === 0) {
           if (this.cont == 1) {
