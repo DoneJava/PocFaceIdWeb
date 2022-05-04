@@ -34,7 +34,6 @@ export class ValidadorAtivoComponent implements OnInit {
       this.imgBD = localStorage.getItem('foto')
 
     this.validation = this.helper.message
-
   }
 
   data: User = {};
@@ -52,6 +51,7 @@ export class ValidadorAtivoComponent implements OnInit {
 
       this.http.postVivacidade(this.vivacidade).subscribe((data) => {
         this.passValidar = true
+        this.validation = ''
       }, (error) => {
         console.log(error)
       })
