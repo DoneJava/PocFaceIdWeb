@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input,  AfterViewInit } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Interceptor } from 'src/app/interceptors/interceptor.service';
@@ -10,7 +10,7 @@ import { HelperService } from 'src/app/services/Helper.service';
   styleUrls: ['./camera.component.css'],
 })
 
-export class CameraComponent implements OnInit {
+export class CameraComponent implements OnInit, AfterViewInit {
 
   constructor(
     private helper: HelperService,
@@ -41,19 +41,18 @@ export class CameraComponent implements OnInit {
       }
 
     );
-<<<<<<< HEAD
+
+
+  }
+
+  ngAfterViewInit(): void {
     setInterval(() => {
       this.takeInLoop()
-    }, 1000)
-
+    }, 2000)
   }
 
   takeInLoop() {
     if (this.helper.loopShoot) {
-=======
-
-    if (this.helper.loopShoot){
->>>>>>> 28e908347c96a7dc70d04b2fa26f1d515352e967
       setInterval(() => {
         if (this.wating.cont.getValue() === 0) {
           if (this.cont == 1) {
@@ -62,7 +61,7 @@ export class CameraComponent implements OnInit {
             setInterval(() => {
               this.triggerSnapshot()
               this.helper.semafaro.next(0)
-            }, 1000)
+            }, 300)
           }
           this.cont++
         }
