@@ -40,7 +40,6 @@ export class LoginComponent implements OnInit {
 
   //Recebe formulário e envia para API
   listenerForm(event: any) {
-    console.log(this.helper.webImg)
     this.helper.cpf = event.value.cpf;
     this.helper.senha = event.value.password
 

@@ -40,17 +40,9 @@
         </div>
       </div>
       <ng-template #error>
-        <div *ngIf="this.helper.message[0]; else loading">
-          <h1>{{this.helper.message[0]}}</h1>
+        <div *ngIf="!timeIsOver;">
+          <app-spinner></app-spinner>
         </div>
-        <ng-template #loading>
-          <div *ngIf="!timeIsOver; else broked">
-            <app-spinner></app-spinner>
-          </div>
-          <ng-template #broked>
-            <h1>Sem comunicação com a API!</h1>
-          </ng-template>
-        </ng-template>
       </ng-template>
     </div>
     <div>

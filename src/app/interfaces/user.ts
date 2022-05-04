@@ -5,3 +5,8 @@ export interface User {
   img?: string;
   numberReq?: number;
 }
+
+export interface Vivacidade {
+  img?:string;
+  validador?: number;
+}

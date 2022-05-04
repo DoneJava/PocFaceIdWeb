@@ -1,8 +1,6 @@
-import { CameraComponent } from './../../components/camera/camera.component';
-import { Subject } from 'rxjs';
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/interfaces/user';
+import { User, Vivacidade } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/Helper.service';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -21,7 +19,7 @@ export class ValidadorAtivoComponent implements OnInit {
   ) { }
 
   Measures: any = { height: 400, width: 400 }
-  validation: any = ''
+  validation: any
   timeIsOver: boolean = false
   imgBD: any
   passValidar: boolean = false
@@ -39,17 +37,19 @@ export class ValidadorAtivoComponent implements OnInit {
   }
 
   data: User = {};
+  vivacidade: Vivacidade = {}
+
 
 
   //Recebe o formulário e envia para a API
   emiter(): void {
-    this.data.img = this.helper.webImg;
-    this.data.cpf = this.helper.cpf
-    this.data.password = this.helper.senha
-    this.data.numberReq = this.helper.random
 
     if (!this.passValidar) {
-      this.http.postVivacidade(this.data).subscribe((data) => {
+      this.vivacidade.img = this.helper.webImg
+      this.vivacidade.validador = this.helper.random
+
+
+      this.http.postVivacidade(this.vivacidade).subscribe((data) => {
         this.passValidar = true
         this.validation = ''
       }, (error) => {
@@ -57,6 +57,10 @@ export class ValidadorAtivoComponent implements OnInit {
       })
     }
     else {
+      this.data.img = this.helper.webImg;
+      this.data.cpf = this.helper.cpf
+      this.data.password = this.helper.senha
+
       this.http.postValidar(this.data).subscribe((data) => {
         this.validation = data.mensagemResposta
         this.changeColor(false, data)
