@@ -70,6 +70,7 @@ export class CameraComponent implements OnInit {
     console.log('entri')
     if(this.helper.semafaro.getValue() == 0){
       this.helper.webImg = webcamImage.imageAsDataUrl;
+      console.log(this.helper.webImg)
     }
     else{
       this.helper.webImgAux = webcamImage.imageAsDataUrl;
