@@ -1,3 +1,5 @@
+import { HelperService } from 'src/app/services/Helper.service';
+import { HttpService } from 'src/app/services/http.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -8,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private http: HttpService, private helper: HelperService) { }
 
   ngOnInit(): void {
   }
@@ -17,7 +19,18 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['/compare'])
   }
   toWebCam(): void {
-    this.router.navigate(['/menu/autenticar'])
+
+    this.http.getRandom().subscribe((data) => {
+      this.helper.message = data.mensagemResposta
+      this.helper.random = data.numero
+      console.log(this.helper.message)
+      console.log(this.helper.random)
+    },
+     (error) => {
+       console.log(error)
+     })
+
+    this.router.navigate(['autenticar/ativo'])
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit, OnChanges } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Interceptor } from 'src/app/interceptors/interceptor.service';
@@ -10,7 +10,7 @@ import { HelperService } from 'src/app/services/Helper.service';
   styleUrls: ['./camera.component.css'],
 })
 
-export class CameraComponent implements OnInit {
+export class CameraComponent implements OnInit, AfterViewInit {
 
   constructor(
     private helper: HelperService,
@@ -22,6 +22,9 @@ export class CameraComponent implements OnInit {
 
   @Input() isActivated: boolean = true
   @Input() Measusres: any = {}
+  @Input() event: any;
+  @Input() proofActivate: boolean = false
+
   public cont = 1
   public showWebcam = true;
   public allowCameraSwitch = false;
@@ -41,34 +44,22 @@ export class CameraComponent implements OnInit {
       }
 
     );
-<<<<<<< HEAD
-    setInterval(() => {
-      this.takeInLoop()
-    }, 1000)
 
+  }
+  ngAfterViewInit(): void {
+    this.takeInLoop()
   }
 
   takeInLoop() {
     if (this.helper.loopShoot) {
-=======
-
-    if (this.helper.loopShoot){
->>>>>>> 28e908347c96a7dc70d04b2fa26f1d515352e967
       setInterval(() => {
         if (this.wating.cont.getValue() === 0) {
-          if (this.cont == 1) {
-            this.triggerSnapshot()
-            this.helper.semafaro.next(1)
-            setInterval(() => {
-              this.triggerSnapshot()
-              this.helper.semafaro.next(0)
-            }, 1000)
-          }
-          this.cont++
+          this.triggerSnapshot()
         }
-      }, 1000);
+      }, 2000);
     }
   }
+
 
   public triggerSnapshot(): void {
     this.trigger.next();
@@ -80,14 +71,8 @@ export class CameraComponent implements OnInit {
     this.errors.push(error);
   }
   public handleImage(webcamImage: WebcamImage): void {
-    if (this.helper.semafaro.getValue() == 0) {
-      this.helper.webImg = webcamImage.imageAsDataUrl;
-    }
-    else {
-      this.helper.webImgAux = webcamImage.imageAsDataUrl;
-      this.PicWasTaken.emit(true)
-    }
-
+    this.helper.webImg = webcamImage.imageAsDataUrl;
+    this.PicWasTaken.emit(true)
   }
   public cameraWasSwitched(deviceId: string): void {
     this.deviceId = deviceId;
