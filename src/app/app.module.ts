@@ -35,6 +35,7 @@ import { MenuComponent } from './views/menu/menu.component';
 import { RegisterComponent } from './views/register/register.component';
 import { ValidadorComponent } from './views/validador/validador.component';
 import { MenuValidationComponent } from './views/menu-validation/menu-validation.component';
+import { ValidadorAtivoComponent } from './views/validador-ativo/validador-ativo.component';
 
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
@@ -53,7 +54,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     MenuComponent,
     ToolbarComponent,
     FilesComponent,
-    MenuValidationComponent
+    MenuValidationComponent,
+    ValidadorAtivoComponent
   ],
   imports: [
     BrowserModule,

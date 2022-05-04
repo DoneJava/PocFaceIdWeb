@@ -1,0 +1,67 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .fullPage {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10%;
+    background: linear-gradient(to right, skyblue, dodgerblue);
+  }
+  
+  .container {
+    padding: 40px 50px;
+    border: solid 1px rgb(211, 210, 210);
+    height: 800px;
+    width: 1300px;
+    background-color: white;
+  }
+  
+  .containerimg {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    height: 370px;
+  }
+  
+  .classBlue {
+    font-family: 'Roboto', sans-serif;
+    color: rgb(37, 115, 231);
+  }
+  .classRed {
+    font-family: 'Roboto', sans-serif;
+    color: rgb(231, 37, 37);
+  }
+  .classYellow {
+    font-family: 'Roboto', sans-serif;
+    color: rgb(231, 212, 37);
+  }
+  .classGreen {
+    font-family: 'Roboto', sans-serif;
+    color: rgb(43, 231, 37);
+  }
+  .classBorderBlue {
+    border: solid 3px rgb(37, 115, 231);
+  }
+  .classBorderRed {
+    border: solid 3px rgb(231, 37, 37);
+  }
+  .classBorderYellow {
+    border: solid 3px rgb(231, 212, 37);
+  }
+  .classBorderGreen {
+    border: solid 3px rgb(43, 231, 37);
+  }
+  
+  #validacao {
+    height: 45%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #imgBD {
+    max-width: 400px;
+  }

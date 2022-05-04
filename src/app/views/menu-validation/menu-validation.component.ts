@@ -14,10 +14,14 @@ export class MenuValidationComponent implements OnInit {
   }
 
   toWebCamAt(): void {
-    this.router.navigate(['/autenticar'])
+    this.router.navigate(['/autenticar/ativo'])
   }
   toWebCamPac(): void {
     this.router.navigate(['/autenticar'])
+  }
+
+  onBack(): void {
+    this.router.navigate(['/menu'])
   }
 
 
