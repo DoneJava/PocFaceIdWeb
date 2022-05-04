@@ -23,14 +23,13 @@ export class MenuComponent implements OnInit {
     this.http.getRandom().subscribe((data) => {
       this.helper.message = data.mensagemResposta
       this.helper.random = data.numero
-      console.log(this.helper.message)
-      console.log(this.helper.random)
+      this.router.navigate(['autenticar/ativo'])
     },
      (error) => {
        console.log(error)
      })
 
-    this.router.navigate(['autenticar/ativo'])
+    
   }
 
 }

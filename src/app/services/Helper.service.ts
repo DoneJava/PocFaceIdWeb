@@ -20,6 +20,9 @@ export class HelperService {
   //Comando para tirar foto
   public shoot = new BehaviorSubject<boolean>(false)
 
+  //Valida Loading
+  public isDisable = new BehaviorSubject<Boolean>(false)
+
   //User
   public cpf: any;
   public senha: any;
