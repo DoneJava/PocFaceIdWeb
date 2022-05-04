@@ -38,9 +38,9 @@ export class CameraComponent implements OnInit {
       (mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       }
-      
+
     );
-    
+
     if (this.helper.loopShoot){
       setInterval(() => {
         if(this.wating.cont.getValue() === 0){
