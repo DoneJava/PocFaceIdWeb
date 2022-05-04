@@ -3,7 +3,7 @@
       <mat-form-field appearance="legacy" class='input'>
          <mat-label>{{input.show}}</mat-label>
          <input matInput formControlName={{input.name}} type={{input.type}} mask={{input.mask}} autocomplete="off">
-         <mat-error *ngIf="formulario.invalid">Campo obrigatório</mat-error>
+         <mat-error *ngIf="formulario.invalid">Campo inválido</mat-error>
       </mat-form-field>
    </div>
    <div>

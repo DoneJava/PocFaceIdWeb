@@ -24,13 +24,12 @@ export class RegisterComponent implements OnInit {
       { show: 'Confirmação de senha', name: 'passwordConfimation', type: 'password', class: 'passwordConfimation' },
     ],
     formGroup: {
-      name: [null, Validators.required],
+      name: [null, [Validators.required, Validators.pattern('^[a-zA-Z\\u00C0-\\u017F´]+\\s+[a-zA-Z\\u00C0-\\u017F´]{0,}$')]],
       cpf: [null, Validators.required],
       password: [null, Validators.required],
       passwordConfimation: [null, Validators.required]
     }
   }
-
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -80,6 +79,7 @@ export class RegisterComponent implements OnInit {
     return true;
   }
 
+
   //Verifica se há alguma foto
   returnImg(): boolean {
     if (this.helper.webImg)
@@ -90,41 +90,43 @@ export class RegisterComponent implements OnInit {
 
   //Recebe formulário do app-formulário e envia para api
   listenerForm(event: any) {
-    if (!this.CpfValidator(event)) {
-      this._snackBar.open('CPF inválido.', 'X', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      })
-    }
-    else if (!this.helper.webImg) {
-      this._snackBar.open('A foto é obrigatória.', 'X', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      })
-    }
-    else if (event.valid) {
-      this.helper.isLoading.next(true)
-      event.value.img = this.helper.webImg
-
-      this.http.putUser(event.value).subscribe((data) => {
-        this.helper.isLoading.next(false)
-        this._snackBar.open('Registro feito com sucesso!', 'X', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        });
-        this.router.navigate(['']);
-        this.helper.webImg = ''
-      }, (error) => {
-        this.helper.isLoading.next(false)
-        this._snackBar.open('Erro ao efetuar registro.', 'X', {
+    if(event.valid){
+      if (!this.CpfValidator(event)) {
+        this._snackBar.open('CPF inválido.', 'X', {
           duration: 3000,
           horizontalPosition: 'right',
           verticalPosition: 'top'
         })
-      })
+      }
+      else if (!this.helper.webImg) {
+        this._snackBar.open('A foto é obrigatória.', 'X', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        })
+      }
+      else if (event.valid) {
+        this.helper.isLoading.next(true)
+        event.value.img = this.helper.webImg
+  
+        this.http.putUser(event.value).subscribe((data) => {
+          this.helper.isLoading.next(false)
+          this._snackBar.open('Registro feito com sucesso!', 'X', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          });
+          this.router.navigate(['']);
+          this.helper.webImg = ''
+        }, (error) => {
+          this.helper.isLoading.next(false)
+          this._snackBar.open('Erro ao efetuar registro.', 'X', {
+            duration: 3000,
+            horizontalPosition: 'right',
+            verticalPosition: 'top'
+          })
+        })
+      }
     }
   }
 
