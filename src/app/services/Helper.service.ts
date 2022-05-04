@@ -13,6 +13,13 @@ export class HelperService {
   public webImg: any;
   public webImgAux: any;
 
+  //Mensagem APi
+  public message: string = ''
+  public random: number = 3
+
+  //Comando para tirar foto
+  public shoot = new BehaviorSubject<boolean>(false)
+
   //User
   public cpf: any;
   public senha: any;
@@ -28,7 +35,7 @@ export class HelperService {
   //habilita/desabilita o loop de fotos
   public loopShoot: boolean = false
 
-  //
+  //Imagem como observable
   myimage: Observable<any> | undefined;
 
 }

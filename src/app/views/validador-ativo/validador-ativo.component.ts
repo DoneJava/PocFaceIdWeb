@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { CameraComponent } from './../../components/camera/camera.component';
+import { Subject } from 'rxjs';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/Helper.service';
@@ -13,7 +15,7 @@ import { HttpService } from 'src/app/services/http.service';
 export class ValidadorAtivoComponent implements OnInit {
 
   constructor(
-    private helper: HelperService,
+    public helper: HelperService,
     private http: HttpService,
     private router: Router
   ) { }
@@ -22,6 +24,9 @@ export class ValidadorAtivoComponent implements OnInit {
   validation: any = ''
   timeIsOver: boolean = false
   imgBD: any
+  passValidar: boolean = false
+
+
 
   ngOnInit(): void {
     this.helper.loopShoot = true
@@ -29,6 +34,8 @@ export class ValidadorAtivoComponent implements OnInit {
       this.imgBD = this.helper.imgBD
     else
       this.imgBD = localStorage.getItem('foto')
+
+    this.validation = this.helper.message
   }
 
   data: User = {};
@@ -39,22 +46,30 @@ export class ValidadorAtivoComponent implements OnInit {
     this.data.img = this.helper.webImg;
     this.data.cpf = this.helper.cpf
     this.data.password = this.helper.senha
-    this.data.img2 = this.helper.webImgAux
+    this.data.numberReq = this.helper.random
 
-    console.log(this.data)
-
-    this.http.postValidar(this.data).subscribe((data) => {
-      this.validation = data.mensagemResposta
-      this.changeColor(false, data)
-    }, (error) => {
-      this.timeIsOver = true
-      console.log(error)
-      this.changeColor(true, error)
-    })
+    if (!this.passValidar) {
+      this.http.postVivacidade(this.data).subscribe((data) => {
+        this.passValidar = true
+        this.validation = ''
+      }, (error) => {
+        console.log(error)
+      })
+    }
+    else {
+      this.http.postValidar(this.data).subscribe((data) => {
+        this.validation = data.mensagemResposta
+        this.changeColor(false, data)
+      }, (error) => {
+        this.timeIsOver = true
+        console.log(error)
+        this.changeColor(true, error)
+      })
+    }
   }
 
   onBack(): void {
-    this.router.navigate(["/menu/autenticar"])
+    this.router.navigate(['/menu'])
   }
 
   //Muda a cor da letra e câmera de acordo com a resposta da API

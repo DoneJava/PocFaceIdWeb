@@ -10,6 +10,8 @@ export class HttpService {
   urlApiLogin = 'https://localhost:44388/api/Face/Login';
   urlApiValidar = 'https://localhost:44388/api/Face/Validar';
   urlApiVerificarImg = 'https://localhost:44388/api/Face/VerificarImg';
+  urlApiVerificarVivacidade = 'https://localhost:44388/api/Face/VerificarVivacidade'
+  urlRandomNumber = 'https://localhost:44388/api/Face/Random'
 
  
 
@@ -29,5 +31,11 @@ export class HttpService {
   }
   postValidar(data: any): Observable<any> {
     return this.http.post(this.urlApiValidar, JSON.stringify(data), this.httpHeader)
+  }
+  postVivacidade(data: any): Observable<any> {
+    return this.http.post(this.urlApiVerificarVivacidade, JSON.stringify(data), this.httpHeader)
+  }
+  getRandom(): Observable<any> {
+    return this.http.get(this.urlRandomNumber)
   }
 }
