@@ -18,7 +18,7 @@ export class RegisterComponent implements OnInit {
   //Output para informar ao formulário quais campos gerar.
   @Output() formFields: any = {
     inputs: [
-      { show: 'Nome', name: 'name', type: 'text', class: 'name' },
+      { show: 'Nome e Sobrenome', name: 'name', type: 'text', class: 'name' },
       { show: 'CPF', name: 'cpf', type: 'text', class: 'cpf', mask: '000.000.000-99' },
       { show: 'Senha', name: 'password', type: 'password', class: 'password' },
       { show: 'Confirmação de senha', name: 'passwordConfimation', type: 'password', class: 'passwordConfimation' },

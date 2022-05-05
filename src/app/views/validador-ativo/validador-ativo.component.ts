@@ -44,19 +44,18 @@ export class ValidadorAtivoComponent implements OnInit {
   //Recebe o formulário e envia para a API
   emiter(): void {
 
-    if (!this.passValidar) {
-      this.vivacidade.img = this.helper.webImg
-      this.vivacidade.validador = this.helper.random
+    this.vivacidade.img = this.helper.webImg
+    this.vivacidade.validador = this.helper.random
+    
+    this.http.postVivacidade(this.vivacidade).subscribe((data) => {
+      this.passValidar = true
+      this.validation = "Usuário autenticado com sucesso!"
+    }, (error) => {
+    })
 
-
-      this.http.postVivacidade(this.vivacidade).subscribe((data) => {
-        this.passValidar = true
-        this.validation = ''
-      }, (error) => {
-        console.log(error)
-      })
+    /*if (!this.passValidar) {
     }
-    else {
+     else {
       this.data.img = this.helper.webImg;
       this.data.cpf = this.helper.cpf
       this.data.password = this.helper.senha
@@ -66,10 +65,9 @@ export class ValidadorAtivoComponent implements OnInit {
         this.changeColor(false, data)
       }, (error) => {
         this.timeIsOver = true
-        console.log(error)
         this.changeColor(true, error)
       })
-    }
+    } */
   }
 
   onBack(): void {

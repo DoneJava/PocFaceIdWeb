@@ -3,6 +3,7 @@
 
     <div style="position: relative; margin-bottom: -1.2%;">
       <webcam 
+        [hidden]="isHidden"
         [height]="this.Measusres.height" 
         [width]="this.Measusres.width"
         [trigger]="triggerObservable" 

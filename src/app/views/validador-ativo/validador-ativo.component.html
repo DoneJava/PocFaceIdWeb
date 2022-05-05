@@ -2,10 +2,13 @@
 <div class="fullPage">
   <div class="container">
     <div class="containerimg">
-      <div *ngIf="!this.passValidar; else validar">
+      <div *ngIf="!this.passValidar; else check">
         <app-camera [Measusres]="Measures" [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
       </div>
-      <ng-template #validar>
+      <ng-template #check>
+        <img src="../../../assets/img/check.png" style="width: 30%; height: 40%;" alt="" srcset="">
+      </ng-template>
+      <!-- <ng-template #validar>
         <div *ngIf="imgBD != ''; else errorDB" style="display: flex; flex-direction: column; align-items: center;">
           <img id="imgBD" src="{{ imgBD }}" alt="" />
           <br />
@@ -28,15 +31,15 @@
             <app-camera [Measusres]="Measures" [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
           </div>
         </div>
-      </ng-template>
+      </ng-template> -->
     </div>
     <div id="validacao">
       <div *ngIf="validation != ''; else error">
         <div>
           <h1>{{validation}}</h1>
-          <div>
+          <!-- <div>
             <app-spinner [diameter]="25"></app-spinner>
-          </div>
+          </div> -->
         </div>
       </div>
       <ng-template #error>
@@ -44,9 +47,6 @@
           <app-spinner></app-spinner>
         </div>
       </ng-template>
-    </div>
-    <div>
-      <button mat-stroked-button (click)="onBack()">Voltar</button>
     </div>
   </div>
 </div>

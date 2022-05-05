@@ -8,15 +8,16 @@
     justify-content: center;
     align-items: center;
     padding: 10%;
-    background: linear-gradient( to right,rgb(68, 68, 70),rgb(3, 0, 19));
+    background: #166E84;
   }
   
   .container {
     padding: 40px 50px;
     border: solid 1px rgb(211, 210, 210);
-    height: 800px;
-    width: 1300px;
+    height: 550px;
+    width: 500px;
     background-color: white;
+    border-radius: 5px;
   }
   
   .containerimg {
@@ -24,6 +25,7 @@
     display: flex;
     justify-content: space-evenly;
     height: 370px;
+    align-items: center;
   }
   
   .classBlue {
@@ -59,7 +61,7 @@
     height: 45%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
   }
   
   #imgBD {

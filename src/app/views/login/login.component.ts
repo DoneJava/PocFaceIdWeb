@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
 import { HelperService } from 'src/app/services/Helper.service';
+import { User } from 'src/app/interfaces/user';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +27,8 @@ export class LoginComponent implements OnInit {
     ]
   }
 
+  user: User = {}
+
   constructor(
     private _snackBar: MatSnackBar,
     private http: HttpService,
@@ -35,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     //Informa ao componente camera que ele não precisa iniciar loop de fotos
-    this.helper.loopShoot = false
+    this.helper.loopShoot = true
   }
 
   //Recebe formulário e envia para API
@@ -43,22 +46,34 @@ export class LoginComponent implements OnInit {
     this.helper.cpf = event.value.cpf;
     this.helper.senha = event.value.password
 
+    this.user.cpf = this.helper.cpf;
+    this.user.img = this.helper.webImg;
+    this.user.password = this.helper.senha;
 
     this.helper.isLoading.next(true)
     if (event.valid) {
       this.http.putLogin(event.value).subscribe((data) => {
         let foto = "data:image/jpeg;base64," + data.mensagemResposta
         this.helper.imgBD = foto
-        localStorage.setItem('foto', foto)
-
-        this._snackBar.open('Login feito com sucesso!', 'Close', {
-          duration: 2000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right',
-        });
-        localStorage.setItem('token', 'true')
-        this.helper.isLoading.next(false)
-        this.router.navigate(['menu']);
+        localStorage.setItem('foto', foto) 
+        this.http.postValidar(this.user).subscribe((data) => {
+          this.http.getRandom().subscribe((data) => {
+            this.helper.message = data.mensagemResposta
+            this.helper.random = data.numero
+            this.router.navigate(['autenticar/ativo'])
+            this._snackBar.open('Login feito com sucesso!', 'Close', {
+              duration: 2000,
+              verticalPosition: 'top',
+              horizontalPosition: 'right',
+            });
+            localStorage.setItem('token', 'true')
+            this.helper.isLoading.next(false)
+          },
+           (error) => {
+             console.log(error)
+           })
+        }, (error) => {
+        })        
 
       }, (error) => {
         this.helper.isLoading.next(false)
@@ -86,5 +101,8 @@ export class LoginComponent implements OnInit {
         horizontalPosition: 'right'
       })
     }
+  }
+
+  emiter():void {
   }
 }
