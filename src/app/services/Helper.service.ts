@@ -8,13 +8,14 @@ export class HelperService {
 
 
   constructor() { }
-  
+
   //Foto tirada
   public webImg: any;
   public webImgAux: any;
 
   //istrue
   public ifTrue: any
+  public ifImg: any
 
   //Mensagem APi
   public message: string = ''
@@ -31,10 +32,10 @@ export class HelperService {
   public senha: any;
   public nome: any;
   public imgBD: any
-  
+
   //habilita/desabilita o loading
   public isLoading = new BehaviorSubject<Boolean>(false)
-  
+
   //ordena para qual parametro a foto deve ser enviada
   public semafaro = new BehaviorSubject<Number>(0)
 

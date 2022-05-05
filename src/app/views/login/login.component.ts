@@ -56,10 +56,10 @@ export class LoginComponent implements OnInit {
       this.http.putLogin(event.value).subscribe((data) => {
         let foto = "data:image/jpeg;base64," + data.mensagemResposta
         this.helper.imgBD = foto
-        localStorage.setItem('foto', foto) 
-        
-        while(!this.validaReq){
+        localStorage.setItem('foto', foto)
+
           this.http.postValidar(this.user).subscribe((data) => {
+            this.helper.ifImg = data.img
             this.helper.ifTrue = data.mensagemResposta
             this.http.getRandom().subscribe((data) => {
               this.helper.message = data.mensagemResposta
@@ -77,11 +77,7 @@ export class LoginComponent implements OnInit {
                console.log(error)
              })
           }, (error) => {
-            setTimeout(() => {
-              console.log('aguardando rosto')
-            }, 1000);
-          })        
-        }
+          })
 
       }, (error) => {
         this.helper.isLoading.next(false)
@@ -92,7 +88,7 @@ export class LoginComponent implements OnInit {
             verticalPosition: 'top',
             horizontalPosition: 'right',
           })
-          
+
         } else {
           this._snackBar.open('Erro ao tentar conexão com o servidor', 'Close', {
             duration: 2000,
