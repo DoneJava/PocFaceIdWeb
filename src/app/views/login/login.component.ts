@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   user: User = {}
+  validaReq: boolean = false
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -56,24 +57,31 @@ export class LoginComponent implements OnInit {
         let foto = "data:image/jpeg;base64," + data.mensagemResposta
         this.helper.imgBD = foto
         localStorage.setItem('foto', foto) 
-        this.http.postValidar(this.user).subscribe((data) => {
-          this.http.getRandom().subscribe((data) => {
-            this.helper.message = data.mensagemResposta
-            this.helper.random = data.numero
-            this.router.navigate(['autenticar/ativo'])
-            this._snackBar.open('Login feito com sucesso!', 'Close', {
-              duration: 2000,
-              verticalPosition: 'top',
-              horizontalPosition: 'right',
-            });
-            localStorage.setItem('token', 'true')
-            this.helper.isLoading.next(false)
-          },
-           (error) => {
-             console.log(error)
-           })
-        }, (error) => {
-        })        
+        
+        while(!this.validaReq){
+          this.http.postValidar(this.user).subscribe((data) => {
+            this.helper.ifTrue = data.mensagemResposta
+            this.http.getRandom().subscribe((data) => {
+              this.helper.message = data.mensagemResposta
+              this.helper.random = data.numero
+              this.router.navigate(['autenticar/ativo'])
+              this._snackBar.open('Login feito com sucesso!', 'Close', {
+                duration: 2000,
+                verticalPosition: 'top',
+                horizontalPosition: 'right',
+              });
+              localStorage.setItem('token', 'true')
+              this.helper.isLoading.next(false)
+            },
+             (error) => {
+               console.log(error)
+             })
+          }, (error) => {
+            setTimeout(() => {
+              console.log('aguardando rosto')
+            }, 1000);
+          })        
+        }
 
       }, (error) => {
         this.helper.isLoading.next(false)

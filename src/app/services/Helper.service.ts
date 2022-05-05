@@ -13,6 +13,9 @@ export class HelperService {
   public webImg: any;
   public webImgAux: any;
 
+  //istrue
+  public ifTrue: any
+
   //Mensagem APi
   public message: string = ''
   public random: number = 3

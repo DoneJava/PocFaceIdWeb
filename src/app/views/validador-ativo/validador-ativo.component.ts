@@ -49,7 +49,7 @@ export class ValidadorAtivoComponent implements OnInit {
     
     this.http.postVivacidade(this.vivacidade).subscribe((data) => {
       this.passValidar = true
-      this.validation = "Usuário autenticado com sucesso!"
+      this.validation = this.helper.ifTrue
     }, (error) => {
     })
 
