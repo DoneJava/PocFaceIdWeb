@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@
 import { Subject, Observable } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 import { Interceptor } from 'src/app/interceptors/interceptor.service';
-import { HelperService } from 'src/app/services/Helper.service';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-camera',
@@ -57,7 +57,7 @@ export class CameraComponent implements OnInit, AfterViewInit {
         if (this.wating.cont.getValue() === 0) {
           this.triggerSnapshot()
         }
-      }, 300);
+      }, 2000);
     }
   }
 

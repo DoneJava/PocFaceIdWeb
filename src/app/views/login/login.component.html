@@ -6,7 +6,6 @@
     <div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" *ngIf="this.helper.isLoading.getValue()">
       <app-spinner [bg]="true"></app-spinner>
     </div>
-    <app-camera [isHidden]="true" [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
     <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>
     <div class="register">
       <a href="register">Efetuar Cadastro</a>

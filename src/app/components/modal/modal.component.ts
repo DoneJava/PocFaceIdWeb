@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { HelperService } from 'src/app/services/Helper.service';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-modal',
@@ -10,7 +10,7 @@ import { HelperService } from 'src/app/services/Helper.service';
 export class ModalComponent {
 
   isHidden: boolean = false;
-  Measures: any = {height: 500, width: 500}
+  Measures: any = {height: 500, width: 490}
   img: any = ''
 
   constructor(

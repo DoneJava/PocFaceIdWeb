@@ -1,10 +1,12 @@
 import { HttpService } from '../../services/http.service';
-import { Component, Output, OnInit } from '@angular/core';
+import { Component, Output, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Validators } from '@angular/forms';
-import { HelperService } from 'src/app/services/Helper.service';
+import { HelperService } from 'src/app/services/helper.service';
 import { User } from 'src/app/interfaces/user';
+import { CameraComponent } from 'src/app/components/camera/camera.component';
+import { delay, retry } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +14,8 @@ import { User } from 'src/app/interfaces/user';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  @ViewChild(CameraComponent) child: CameraComponent | undefined
+
   //Output para informar ao formulário quais campos gerar.
   @Output() formFields: any = {
     inputs: [
@@ -38,12 +42,12 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    //Informa ao componente camera que ele não precisa iniciar loop de fotos
-    this.helper.loopShoot = true
+    this.helper.loopShoot = false
   }
 
   //Recebe formulário e envia para API
   listenerForm(event: any) {
+    this.child?.triggerSnapshot()
     this.helper.cpf = event.value.cpf;
     this.helper.senha = event.value.password
 
@@ -52,61 +56,47 @@ export class LoginComponent implements OnInit {
     this.user.password = this.helper.senha;
 
     this.helper.isLoading.next(true)
-    if (event.valid) {
-      this.http.putLogin(event.value).subscribe((data) => {
-        let foto = "data:image/jpeg;base64," + data.mensagemResposta
-        this.helper.imgBD = foto
-        localStorage.setItem('foto', foto)
 
-          this.http.postValidar(this.user).subscribe((data) => {
-            this.helper.ifImg = data.img
-            this.helper.ifTrue = data.mensagemResposta
-            this.http.getRandom().subscribe((data) => {
-              this.helper.message = data.mensagemResposta
-              this.helper.random = data.numero
-              this.router.navigate(['autenticar/ativo'])
-              this._snackBar.open('Login feito com sucesso!', 'Close', {
-                duration: 2000,
-                verticalPosition: 'top',
-                horizontalPosition: 'right',
-              });
-              localStorage.setItem('token', 'true')
-              this.helper.isLoading.next(false)
-            },
-             (error) => {
-               console.log(error)
-             })
-          }, (error) => {
-          })
+    this.http.putLogin(event.value).subscribe((data) => {
+      let foto = "data:image/jpeg;base64," + data.mensagemResposta
+      this.helper.imgBD = foto
 
-      }, (error) => {
-        this.helper.isLoading.next(false)
-        console.log(error)
-        if (error.status == 401 ) {
-          this._snackBar.open('Usuário ou senha inválido!', 'Close', {
+        this.http.getRandom().subscribe((data) => {
+          this.helper.message = data.mensagemResposta
+          this.helper.random = data.numero
+          this._snackBar.open('Login feito com sucesso!', 'Close', {
             duration: 2000,
             verticalPosition: 'top',
             horizontalPosition: 'right',
+          });
+          localStorage.setItem('token', 'true')
+          this.helper.isLoading.next(false)
+          this.router.navigate(['autenticar/ativo'])
+        },
+          (error) => {
+            console.log(error)
           })
+    }, (error) => {
+      this.helper.isLoading.next(false)
+      console.log(error)
+      if (error.status == 401) {
+        this._snackBar.open('Usuário ou senha inválido!', 'Close', {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        })
 
-        } else {
-          this._snackBar.open('Erro ao tentar conexão com o servidor', 'Close', {
-            duration: 2000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          })
-        }
-      })
-    }
-    else {
-      this._snackBar.open('Formulário inválido', 'X', {
-        duration: 2000,
-        verticalPosition: 'top',
-        horizontalPosition: 'right'
-      })
-    }
+      } else {
+        this._snackBar.open('Erro ao tentar conexão com o servidor', 'Close', {
+          duration: 2000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        })
+      }
+    })
+
   }
 
-  emiter():void {
+  emiter(): void {
   }
 }

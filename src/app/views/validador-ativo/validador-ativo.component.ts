@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, Vivacidade } from 'src/app/interfaces/user';
-import { HelperService } from 'src/app/services/Helper.service';
+import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
 
 
@@ -22,7 +22,7 @@ export class ValidadorAtivoComponent implements OnInit {
   validation: any
   timeIsOver: boolean = false
   imgBD: any
-  passValidar: boolean = false
+  passValidar: number = 0
 
 
 
@@ -39,71 +39,29 @@ export class ValidadorAtivoComponent implements OnInit {
   data: User = {};
   vivacidade: Vivacidade = {}
 
-
-
   //Recebe o formulário e envia para a API
   emiter(): void {
 
-    this.vivacidade.img = this.helper.webImg
-    this.vivacidade.validador = this.helper.random
-    
-    this.http.postVivacidade(this.vivacidade).subscribe((data) => {
-      this.passValidar = true
-      this.validation = this.helper.ifTrue
-    }, (error) => {
-    })
-
-    /*if (!this.passValidar) {
+    if(this.passValidar == 0){
+      this.vivacidade.img = this.helper.webImg
+      this.vivacidade.validador = this.helper.random
+      this.http.postVivacidade(this.vivacidade).subscribe((data) => {
+        this.passValidar = 1
+        this.validation = data.mensagemResposta
+      }, (error) => {
+      })
     }
-     else {
-      this.data.img = this.helper.webImg;
+    else if(this.passValidar == 1){
       this.data.cpf = this.helper.cpf
+      this.data.img = this.helper.webImg
       this.data.password = this.helper.senha
 
       this.http.postValidar(this.data).subscribe((data) => {
+        this.passValidar = 2
         this.validation = data.mensagemResposta
-        this.changeColor(false, data)
       }, (error) => {
-        this.timeIsOver = true
-        this.changeColor(true, error)
+
       })
-    } */
-  }
-
-  onBack(): void {
-    this.router.navigate(['/menu'])
-  }
-
-  //Muda a cor da letra e câmera de acordo com a resposta da API
-  changeColor(error: boolean, data: any): void {
-    let font = document.getElementById('validacao') as HTMLDivElement
-    let camera = document.getElementById('camera') as HTMLDivElement
-
-    if (error) {
-      font.className = 'classRed'
-    }
-    else {
-      switch (data.statusMensagem) {
-        case 1:
-          font.className = 'classBlue'
-          camera.className = 'classBorderBlue'
-          break;
-        case 2:
-          font.className = 'classYellow'
-          camera.className = 'classBorderYellow'
-          break;
-        case 3:
-          font.className = 'classGreen'
-          camera.className = 'classBorderGreen'
-          break;
-        case 4:
-          font.className = 'classRed'
-          camera.className = 'classBorderRed'
-          break;
-        default:
-          font.className = ''
-          break;
-      }
     }
   }
 

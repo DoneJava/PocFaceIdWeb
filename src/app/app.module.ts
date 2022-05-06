@@ -23,18 +23,13 @@ import { WebcamModule } from 'ngx-webcam';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CameraComponent } from './components/camera/camera.component';
-import { FilesComponent } from './components/files/files.component';
 import { FormComponent } from './components/form/form.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { InterceptorModule } from './interceptors/interceptor.module';
-import { CompareComponent } from './views/compare/compare.component';
 import { LoginComponent } from './views/login/login.component';
-import { MenuComponent } from './views/menu/menu.component';
 import { RegisterComponent } from './views/register/register.component';
-import { ValidadorComponent } from './views/validador/validador.component';
-import { MenuValidationComponent } from './views/menu-validation/menu-validation.component';
 import { ValidadorAtivoComponent } from './views/validador-ativo/validador-ativo.component';
 
 
@@ -47,14 +42,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     RegisterComponent,
     CameraComponent,
     ModalComponent,
-    ValidadorComponent,
     FormComponent,
     SpinnerComponent,
-    CompareComponent,
-    MenuComponent,
     ToolbarComponent,
-    FilesComponent,
-    MenuValidationComponent,
     ValidadorAtivoComponent
   ],
   imports: [

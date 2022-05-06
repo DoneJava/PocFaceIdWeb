@@ -13,38 +13,11 @@
           <img src="../../../assets/img/x.png" style="width: 30%; height: 40%;" alt="" srcset="">
         </ng-template>
       </ng-template>
-      <!-- <ng-template #validar>
-        <div *ngIf="imgBD != ''; else errorDB" style="display: flex; flex-direction: column; align-items: center;">
-          <img id="imgBD" src="{{ imgBD }}" alt="" />
-          <br />
-          <h1>Imagem de referência</h1>
-        </div>
-        <ng-template #errorDB>
-          <div *ngIf="!timeIsOver; else brokedBD">
-            <app-spinner></app-spinner>
-            <h1>Imagem de referência</h1>
-          </div>
-          <ng-template #brokedBD>
-            <div style="display: flex;flex-direction: column; justify-content: center; align-items: center;">
-              <img style="max-width: 50px; margin-bottom: 5%;" src="../../../assets/img/x.png" alt="" srcset="">
-              <h1>Sem comunicação com a API!</h1>
-            </div>
-          </ng-template>
-        </ng-template>
-        <div style="display: flex; flex-direction: column; align-items: center;">
-          <div id="camera" style="padding-bottom: -15px;">
-            <app-camera [Measusres]="Measures" [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
-          </div>
-        </div>
-      </ng-template> -->
     </div>
     <div id="validacao">
       <div *ngIf="validation != ''; else error">
         <div style="text-align: center;">
           <h1>{{validation}}</h1>
-          <!-- <div>
-            <app-spinner [diameter]="25"></app-spinner>
-          </div> -->
         </div>
       </div>
       <ng-template #error>

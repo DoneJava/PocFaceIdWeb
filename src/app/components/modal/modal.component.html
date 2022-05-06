@@ -9,7 +9,7 @@
 <mat-divider style="padding: 2%;"></mat-divider>
 <div mat-dialog-content id="main">
   <div *ngIf="img; else camera">
-    <img style="width: 500px;" src={{this.img}}>
+    <img style="width: 500px" src={{this.img}}>
   </div>
   <ng-template #camera>
     <app-camera [Measusres]="this.Measures" *ngIf="!isHidden" (PicWasTaken)="attPicWasTaken($event)"></app-camera>
