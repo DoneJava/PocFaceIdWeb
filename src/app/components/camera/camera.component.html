@@ -1,21 +1,19 @@
 <div style="text-align: center">
-  <div>
-
-    <div style="position: relative; margin-bottom: -1.2%;">
+  <div >
+    <div style="position: relative; ">
       <webcam 
-        [hidden]="isHidden"
         [height]="this.Measusres.height" 
         [width]="this.Measusres.width"
         [trigger]="triggerObservable" 
-        (imageCapture)="handleImage($event)"
-        *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" 
-        [switchCamera]="nextWebcamObservable"
-        [videoOptions]="videoOptions" 
-        (cameraSwitched)="cameraWasSwitched($event)"
-        (initError)="handleInitError($event)">
-    </webcam>
-      <div style="position: absolute; top: 50%; left: 50%;transform: translate(-50%, -50%);">
-        <img *ngIf="isActivated" src="../../../assets/img/layer.png">
+        (imageCapture)="handleImage($event)" 
+        *ngIf="showWebcam"
+        [allowCameraSwitch]="allowCameraSwitch" 
+        [switchCamera]="nextWebcamObservable" 
+        [videoOptions]="videoOptions"
+        (cameraSwitched)="cameraWasSwitched($event)" (initError)="handleInitError($event)">
+      </webcam>
+      <div style="position: absolute; top: 50%; left: 50%;transform: translate(-50%, -50%); ">
+        <img *ngIf="isActivated" style="max-width: 550px; max-height: 550px;" src="../../../assets/img/layer.png">
       </div>
     </div>
 

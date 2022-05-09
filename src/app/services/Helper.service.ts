@@ -11,7 +11,6 @@ export class HelperService {
 
   //Foto tirada
   public webImg: any;
-  public webImgAux: any;
 
   //istrue
   public ifTrue: any

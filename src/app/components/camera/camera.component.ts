@@ -24,7 +24,6 @@ export class CameraComponent implements OnInit, AfterViewInit {
   @Input() Measusres: any = {}
   @Input() event: any;
   @Input() proofActivate: boolean = false
-  @Input() isHidden: boolean = false
 
   public cont = 1
   public showWebcam = true;

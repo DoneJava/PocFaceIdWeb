@@ -8,11 +8,22 @@
 </div>
 <mat-divider style="padding: 2%;"></mat-divider>
 <div mat-dialog-content id="main">
-  <div *ngIf="img; else camera">
-    <img style="width: 500px" src={{this.img}}>
+  <div *ngIf="this.helper.loopShoot; else authOk">
+    <app-camera [Measusres]="Measures" [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
+    <div *ngIf="res; else wait" style="text-align: center;">
+      <h1 style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">{{res}}</h1>
+    </div>
+    <ng-template #wait>
+      <app-spinner [diameter]="25"></app-spinner>
+    </ng-template>
   </div>
-  <ng-template #camera>
-    <app-camera [Measusres]="this.Measures" *ngIf="!isHidden" (PicWasTaken)="attPicWasTaken($event)"></app-camera>
+  <ng-template #authOk>
+    <div *ngIf="img; else camera">
+      <img style="width: 500px" src={{this.img}}>
+    </div>
+    <ng-template #camera>
+      <app-camera [Measusres]="this.Measures" *ngIf="!isHidden" (PicWasTaken)="attPicWasTaken($event)"></app-camera>
+    </ng-template>
   </ng-template>
 </div>
 <div *ngIf="isHidden" id="liked">
