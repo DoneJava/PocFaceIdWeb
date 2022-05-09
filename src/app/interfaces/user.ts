@@ -3,10 +3,4 @@ export interface User {
   cpf?: string;
   password?: string;
   img?: string;
-  numberReq?: number;
-}
-
-export interface Vivacidade {
-  img?:string;
-  validador?: number;
 }

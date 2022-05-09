@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Vivacidade } from 'src/app/interfaces/user';
+import { User } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -16,7 +16,7 @@ export class ModalComponent implements OnInit {
   img: any = ''
   res: string = ''
 
-  vivacidade: Vivacidade = {}
+  user: User = {}
 
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,
@@ -28,7 +28,7 @@ export class ModalComponent implements OnInit {
 
     this.http.getRandom().subscribe((data) => {
       this.res = data.mensagemResposta
-      this.helper.random = data.numero
+      
     }, (error) => {
 
     })
@@ -54,13 +54,18 @@ export class ModalComponent implements OnInit {
   }
 
   emiter(): void{
-      this.vivacidade.img = this.helper.webImg
-      this.vivacidade.validador = this.helper.random
-      this.http.postVivacidade(this.vivacidade).subscribe((data) => {
+      this.user.img = this.helper.webImg
+      this.http.postVivacidade(this.user).subscribe((data) => {
         this.helper.loopShoot = false
         this.helper.webImg = ''
       }, (error) => {
         this.helper.webImg = ''
+        if (error.statusText == 'Unknown Error') {
+          this.res = 'Sem conexão com a API.'
+          setInterval(()=>{
+            localStorage.clear()
+          })
+        }
       })
   }
 

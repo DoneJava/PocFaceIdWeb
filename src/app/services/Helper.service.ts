@@ -18,7 +18,6 @@ export class HelperService {
 
   //Mensagem APi
   public message: string = ''
-  public random: number = 3
 
   //Comando para tirar foto
   public shoot = new BehaviorSubject<boolean>(false)

@@ -1,12 +1,11 @@
-import { HttpService } from '../../services/http.service';
-import { Component, Output, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Validators } from '@angular/forms';
-import { HelperService } from 'src/app/services/helper.service';
-import { User } from 'src/app/interfaces/user';
 import { CameraComponent } from 'src/app/components/camera/camera.component';
-import { delay, retry } from 'rxjs';
+import { User } from 'src/app/interfaces/user';
+import { HelperService } from 'src/app/services/helper.service';
+import { HttpService } from '../../services/http.service';
 
 @Component({
   selector: 'app-login',
@@ -48,34 +47,24 @@ export class LoginComponent implements OnInit {
   //Recebe formulário e envia para API
   listenerForm(event: any) {
     this.child?.triggerSnapshot()
-    this.helper.cpf = event.value.cpf;
-    this.helper.senha = event.value.password
 
-    this.user.cpf = this.helper.cpf;
+    this.helper.cpf = this.user.cpf = event.value.cpf;
+    this.helper.senha = this.user.cpf = event.value.password
+
     this.user.img = this.helper.webImg;
-    this.user.password = this.helper.senha;
 
     this.helper.isLoading.next(true)
-
     this.http.putLogin(event.value).subscribe((data) => {
-      let foto = "data:image/jpeg;base64," + data.mensagemResposta
-      this.helper.imgBD = foto
-
-        this.http.getRandom().subscribe((data) => {
-          this.helper.message = data.mensagemResposta
-          this.helper.random = data.numero
-          this._snackBar.open('Login feito com sucesso!', 'Close', {
-            duration: 2000,
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          });
-          localStorage.setItem('token', 'true')
-          this.helper.isLoading.next(false)
-          this.router.navigate(['autenticar/ativo'])
-        },
-          (error) => {
-            console.log(error)
-          })
+      console.log(data)
+      this.http.getRandom().subscribe((data) => {
+        this.helper.message = data.mensagemResposta
+        localStorage.setItem('token', 'true')
+        this.helper.isLoading.next(false)
+        this.router.navigate(['autenticar'])
+      },
+        (error) => {
+          console.log(error)
+        })
     }, (error) => {
       this.helper.isLoading.next(false)
       console.log(error)
@@ -95,8 +84,5 @@ export class LoginComponent implements OnInit {
       }
     })
 
-  }
-
-  emiter(): void {
   }
 }
