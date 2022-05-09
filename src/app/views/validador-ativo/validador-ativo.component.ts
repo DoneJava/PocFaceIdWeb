@@ -48,6 +48,7 @@ export class ValidadorAtivoComponent implements OnInit {
       this.http.postVivacidade(this.vivacidade).subscribe((data) => {
         this.passValidar = 1
         this.validation = data.mensagemResposta
+        console.log(data)
       }, (error) => {
       })
     }
@@ -59,6 +60,7 @@ export class ValidadorAtivoComponent implements OnInit {
       this.http.postValidar(this.data).subscribe((data) => {
         this.passValidar = 2
         this.validation = data.mensagemResposta
+        console.log(data)
       }, (error) => {
 
       })

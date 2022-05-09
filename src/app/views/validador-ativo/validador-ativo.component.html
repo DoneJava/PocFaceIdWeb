@@ -6,11 +6,11 @@
         <app-camera [Measusres]="Measures" [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
       </div>
       <ng-template #check>
-        <div *ngIf="this.helper.ifImg; else imgFalse" style="text-align: center;">
+        <div *ngIf="!this.helper.ifImg; else imgFalse" style="text-align: center;">
           <img src="../../../assets/img/check.png" style="width: 30%; height: 40%;" alt="" srcset="">
         </div>
         <ng-template #imgFalse>
-          <img src="../../../assets/img/x.png" style="width: 30%; height: 40%;" alt="" srcset="">
+          <img src="../../../assets/img/x.jpg" style="width: 30%; height: 40%;" alt="" srcset="">
         </ng-template>
       </ng-template>
     </div>

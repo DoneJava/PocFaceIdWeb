@@ -12,7 +12,7 @@ import { HttpService } from 'src/app/services/http.service';
 export class ModalComponent implements OnInit {
 
   isHidden: boolean = false;
-  Measures: any = {height: 500, width: 500}
+  Measures: any = {height: 500, width: 490}
   img: any = ''
   res: string = ''
 

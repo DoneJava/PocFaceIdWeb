@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { WebcamImage, WebcamInitError, WebcamMirrorProperties, WebcamUtil } from 'ngx-webcam';
 import { Interceptor } from 'src/app/interceptors/interceptor.service';
 import { HelperService } from 'src/app/services/helper.service';
 
@@ -33,9 +33,8 @@ export class CameraComponent implements OnInit, AfterViewInit {
   public videoOptions: MediaTrackConstraints = {};
   public errors: WebcamInitError[] = [];
   private trigger: Subject<void> = new Subject<void>();
-  private nextWebcam: Subject<boolean | string> = new Subject<
-    boolean | string
-  >();
+  private nextWebcam: Subject<boolean | string> = new Subject<boolean | string>();
+  public mirrorImage: string | WebcamMirrorProperties = 'always'
 
   ngOnInit(): void {
     WebcamUtil.getAvailableVideoInputs().then(
