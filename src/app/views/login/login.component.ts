@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
     this.helper.isLoading.next(true)
     this.http.putLogin(this.user).subscribe((data) => {
       this.http.getRandom().subscribe((data) => {
-        this.helper.message = data.mensagemResposta
+        this.helper.messageToValidar = data.mensagemResposta
         localStorage.setItem('token', 'true')
         this.helper.isLoading.next(false)
         this.router.navigate(['autenticar'])

@@ -2,11 +2,11 @@
 <div class="fullPage">
   <div class="container">
     <div class="containerimg">
-      <div *ngIf="this.passValidar != 2; else check">
+      <div *ngIf="this.passValidar == 'naoPassou'; else check">
         <app-camera [Measusres]="Measures" [isActivated]="false" (PicWasTaken)="emiter()"></app-camera>
       </div>
       <ng-template #check>
-        <div *ngIf="this.helper.ifImg; else imgFalse" style="text-align: center;">
+        <div *ngIf="this.passValidar == 'passou'; else imgFalse" style="text-align: center;">
           <img src="../../../assets/img/check.png" style="width: 30%; height: 40%;" alt="" srcset="">
         </div>
         <ng-template #imgFalse>
@@ -21,9 +21,7 @@
         </div>
       </div>
       <ng-template #error>
-        <div *ngIf="!timeIsOver;">
-          <app-spinner></app-spinner>
-        </div>
+        <app-spinner [diameter]="25"></app-spinner>
       </ng-template>
     </div>
   </div>

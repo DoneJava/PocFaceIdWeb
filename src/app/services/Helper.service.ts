@@ -12,12 +12,8 @@ export class HelperService {
   //Foto tirada
   public webImg: any;
 
-  //istrue
-  public ifTrue: any
-  public ifImg: any
-
   //Mensagem APi
-  public message: string = ''
+  public messageToValidar: string = ''
 
   //Comando para tirar foto
   public shoot = new BehaviorSubject<boolean>(false)

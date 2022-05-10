@@ -19,16 +19,16 @@ export class ValidadorAtivoComponent implements OnInit {
   ) { }
 
   Measures: any = { height: 400, width: 400 }
-  messageToUser: any
-  timeIsOver: boolean = false
-  imgBD: any
-  passValidar: number = 0
+  messageToUser: any = ''
+  passValidar: string = 'naoPassou'
 
 
-
-  ngOnInit(): void {
+  ngOnInit(): void { 
     this.helper.loopShoot = true
-    this.messageToUser = this.helper.message
+
+    setTimeout(()=> {
+      this.messageToUser = this.helper.messageToValidar
+    }, 2000)
   }
 
   data: vivacidade = {};
@@ -36,19 +36,45 @@ export class ValidadorAtivoComponent implements OnInit {
   //Recebe o formulário e envia para a API
   emiter(): void {
     this.data.img = this.helper.webImg
-    
-    this.http.postVivacidade(this.data).subscribe((data) => {
-      this.passValidar = 1
-    }, (error) => {
-      this.timeIsOver = true
-      if (error.statusText == 'Unknown Error') {
-        this.messageToUser = 'Sem conexão com a API.'
-        setInterval(() => (
-          this.router.navigate(['/']),
-          localStorage.clear()
-          ), 5000)
-      }
-    })
+
+    if (this.helper.messageToValidar) {
+      this.http.postVivacidade(this.data).subscribe((data) => {
+        this.passValidar = 'passou'
+        this.helper.loopShoot = false
+        this.messageToUser = data.mensagemResposta
+        console.log(data)
+      }, (error) => {
+
+        if (error.status == 401) {
+          this.passValidar = 'reprovou'
+          this.helper.loopShoot = false
+          this.messageToUser = error.error.mensagemResposta
+        }
+
+        if (error.statusText == 'Unknown Error') {
+          this.messageToUser = 'Sem conexão com a API.'
+          setInterval(() => (
+            this.router.navigate(['/']),
+            localStorage.clear()
+            ), 5000)
+        }
+      })
+    }
+    else {
+      this.http.getRandom().subscribe((data) => {
+        this.helper.messageToValidar = data.mensagemResposta
+        setTimeout(() => {
+          this.messageToUser = data.mensagemResposta
+        }, 2000);
+      },
+        (error) => {
+          this.messageToUser = 'Sem conexão com a API.'
+          setInterval(() => (
+            this.router.navigate(['/']),
+            localStorage.clear()
+            ), 5000)
+        })
+    }
   }
 
   //Retira toke e foto do storage e desloga o usuário
