@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/interfaces/user';
+import { User, vivacidade } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -31,12 +31,12 @@ export class ValidadorAtivoComponent implements OnInit {
     this.messageToUser = this.helper.message
   }
 
-  data: User = {};
+  data: vivacidade = {};
 
   //Recebe o formulário e envia para a API
   emiter(): void {
-
     this.data.img = this.helper.webImg
+    
     this.http.postVivacidade(this.data).subscribe((data) => {
       this.passValidar = 1
     }, (error) => {

@@ -3,7 +3,7 @@ import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CameraComponent } from 'src/app/components/camera/camera.component';
-import { User } from 'src/app/interfaces/user';
+import { login, User } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from '../../services/http.service';
 
@@ -13,7 +13,6 @@ import { HttpService } from '../../services/http.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  @ViewChild(CameraComponent) child: CameraComponent | undefined
 
   //Output para informar ao formulário quais campos gerar.
   @Output() formFields: any = {
@@ -30,8 +29,7 @@ export class LoginComponent implements OnInit {
     ]
   }
 
-  user: User = {}
-  validaReq: boolean = false
+  user: login = {}
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -46,16 +44,11 @@ export class LoginComponent implements OnInit {
 
   //Recebe formulário e envia para API
   listenerForm(event: any) {
-    this.child?.triggerSnapshot()
-
-    this.helper.cpf = this.user.cpf = event.value.cpf;
-    this.helper.senha = this.user.cpf = event.value.password
-
-    this.user.img = this.helper.webImg;
+    this.helper.cpf = this.user.CPF = event.value.cpf;
+    this.helper.senha = this.user.Senha = event.value.password
 
     this.helper.isLoading.next(true)
-    this.http.putLogin(event.value).subscribe((data) => {
-      console.log(data)
+    this.http.putLogin(this.user).subscribe((data) => {
       this.http.getRandom().subscribe((data) => {
         this.helper.message = data.mensagemResposta
         localStorage.setItem('token', 'true')
