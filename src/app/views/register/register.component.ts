@@ -19,15 +19,15 @@ export class RegisterComponent implements OnInit {
   //Output para informar ao formulário quais campos gerar.
   @Output() formFields: any = {
     inputs: [
-      { show: 'Nome e Sobrenome', name: 'name', type: 'text', class: 'name' },
+      { show: 'Nome e Sobrenome', name: 'Nome', type: 'text', class: 'name' },
       { show: 'CPF', name: 'cpf', type: 'text', class: 'cpf', mask: '000.000.000-99' },
-      { show: 'Senha', name: 'password', type: 'password', class: 'password' },
+      { show: 'Senha', name: 'Senha', type: 'password', class: 'password' },
       { show: 'Confirmação de senha', name: 'passwordConfimation', type: 'password', class: 'passwordConfimation' },
     ],
     formGroup: {
-      name: [null, [Validators.required, Validators.pattern('^[a-zA-Z\\u00C0-\\u017F´]+\\s+[a-zA-Z\\u00C0-\\u017F´]{0,}$')]],
+      Nome: [null, [Validators.required, Validators.pattern('^[a-zA-Z\\u00C0-\\u017F´]+\\s+[a-zA-Z\\u00C0-\\u017F´]{0,}$')]],
       cpf: [null, Validators.required],
-      password: [null, Validators.required],
+      Senha: [null, Validators.required],
       passwordConfimation: [null, Validators.required]
     }
   }
@@ -74,7 +74,6 @@ export class RegisterComponent implements OnInit {
       else if (event.valid) {
         this.helper.isLoading.next(true)
         event.value.img = this.helper.webImg
-  
         this.http.putUser(event.value).subscribe((data) => {
           this.helper.isLoading.next(false)
           this._snackBar.open('Registro feito com sucesso!', 'X', {

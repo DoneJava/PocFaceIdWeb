@@ -4,12 +4,12 @@ export interface login {
 }
 
 export interface vivacidade {
-  img?: string;
+  Img?: string;
 }
 
 export interface User {
-  name?: string;
-  cpf?: string;
-  password?: string;
-  img?: string;
+  Nome?: string;
+  Cpf?: string;
+  Senha?: string;
+  Img?: string;
 }

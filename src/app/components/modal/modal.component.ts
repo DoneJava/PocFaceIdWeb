@@ -13,9 +13,10 @@ import { HttpService } from 'src/app/services/http.service';
 export class ModalComponent implements OnInit {
 
   isHidden: boolean = false;
-  Measures: any = {height: 500, width: 490}
+  Measures: any = { height: 500, width: 490 }
   img: any = ''
   res: string = ''
+  contador: number = 0;
 
   user: vivacidade = {}
 
@@ -24,67 +25,73 @@ export class ModalComponent implements OnInit {
     public helper: HelperService,
     private http: HttpService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.helper.loopShoot = true
 
     this.http.getRandom().subscribe((data) => {
       this.res = data.mensagemResposta
-      
+
     }, (error) => {
 
     })
   }
 
-  close():void {
+  close(): void {
     this.dialogRef.close();
+    this.helper.loopShoot = false
     this.helper.webImg = null
   }
 
   saveAndClose(): void {
-    this.http.postVericarCadastro(this.helper.webImg).subscribe((data) => {
+    this.user.Img = this.helper.webImg;
+    this.http.postVericarCadastro(this.user).subscribe((data) => {
       this.dialogRef.close();
-    } , (error) => {
+    }, (error) => {
       this._snackBar.open('É necessário que a pessoa do cadastro e prova de vida sejam as mesmas', 'Close', {
         duration: 6000,
         verticalPosition: 'top',
         horizontalPosition: 'right',
       })
-      this.refuse
+
     })
-  }
+  }                     
 
   refuse(): void {
     this.isHidden = false
     this.img = null
   }
 
-  attPicWasTaken(event: boolean){
-      this.isHidden = true
-      this.img = this.helper.webImg
+  attPicWasTaken(event: boolean) {
+    this.isHidden = true
+    this.img = this.helper.webImg
   }
 
-  emiter(): void{
-      
-    this.user.img = this.helper.webImg
+  emiter(): void {
+    if (this.contador <= 5) {
+      this.contador++
+      this.user.Img = this.helper.webImg
       this.http.postVivacidadeCadastro(this.user).subscribe((data) => {
         this.helper.loopShoot = false
         this.helper.webImg = ''
       }, (error) => {
-        this.helper.webImg = ''
+        this.helper.webImg = ''                     
         if (error.statusText == 'Unknown Error') {
           this.res = 'Sem conexão com a API.'
-          setInterval(()=>{
+          setInterval(() => {                                                                                         
             localStorage.clear()
-          })
-        }else{
-          this.close
-          this._snackBar.open('É necessário que a pessoa do cadastro e prova de vida sejam as mesmas', 'Close', {
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
           })
         }
       })
+    }
+    else{
+      this._snackBar.open('Não possível validar a vivacidade, tente novamente.', 'Close', {
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      })
+      this.helper.webImg = null
+      this.dialogRef.close();
+    }
   }
 
 }

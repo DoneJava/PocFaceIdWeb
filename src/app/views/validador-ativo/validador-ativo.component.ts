@@ -36,7 +36,7 @@ export class ValidadorAtivoComponent implements OnInit {
 
   //Recebe o formulário e envia para a API
   emiter(): void {
-    this.data.img = this.helper.webImg
+    this.data.Img = this.helper.webImg
 
     if (this.helper.messageToValidar && this.contaReq <= 30) {
       this.contaReq++

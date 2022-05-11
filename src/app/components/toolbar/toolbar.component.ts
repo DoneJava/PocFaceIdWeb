@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private helper: HelperService) { }
 
   ngOnInit(): void {
   }
@@ -16,7 +17,9 @@ export class ToolbarComponent implements OnInit {
   exit(): void {
     localStorage.removeItem('token')
     localStorage.removeItem('foto')
-
+    this.helper.webImg = '';
+    this.helper.cpf = null;
+    this.helper.senha = null;
     this.router.navigate(['/'])
   }
 
