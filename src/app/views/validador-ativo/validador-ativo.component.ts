@@ -21,12 +21,13 @@ export class ValidadorAtivoComponent implements OnInit {
   Measures: any = { height: 400, width: 400 }
   messageToUser: any = ''
   passValidar: string = 'naoPassou'
+  contaReq: number = 0
 
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.helper.loopShoot = true
 
-    setTimeout(()=> {
+    setTimeout(() => {
       this.messageToUser = this.helper.messageToValidar
     }, 2000)
   }
@@ -37,7 +38,8 @@ export class ValidadorAtivoComponent implements OnInit {
   emiter(): void {
     this.data.img = this.helper.webImg
 
-    if (this.helper.messageToValidar) {
+    if (this.helper.messageToValidar && this.contaReq <= 30) {
+      this.contaReq++
       this.http.postVivacidade(this.data).subscribe((data) => {
         this.passValidar = 'passou'
         this.helper.loopShoot = false
@@ -56,24 +58,18 @@ export class ValidadorAtivoComponent implements OnInit {
           setInterval(() => (
             this.router.navigate(['/']),
             localStorage.clear()
-            ), 5000)
+          ), 5000)
         }
       })
     }
     else {
-      this.http.getRandom().subscribe((data) => {
-        this.helper.messageToValidar = data.mensagemResposta
-        setTimeout(() => {
-          this.messageToUser = data.mensagemResposta
-        }, 2000);
-      },
-        (error) => {
-          this.messageToUser = 'Sem conexão com a API.'
-          setInterval(() => (
-            this.router.navigate(['/']),
-            localStorage.clear()
-            ), 5000)
-        })
+      this.passValidar = 'reprovou'
+      this.messageToUser = 'É necessário efetuar o login novamente...'
+      setInterval(() => (
+        this.router.navigate(['/']),
+        localStorage.clear()
+      ), 4000)
+      this.helper.loopShoot = false
     }
   }
 

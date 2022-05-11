@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { User } from 'src/app/interfaces/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { vivacidade } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -16,12 +17,13 @@ export class ModalComponent implements OnInit {
   img: any = ''
   res: string = ''
 
-  user: User = {}
+  user: vivacidade = {}
 
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,
     public helper: HelperService,
-    private http: HttpService
+    private http: HttpService,
+    private _snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
     this.helper.loopShoot = true
@@ -40,7 +42,16 @@ export class ModalComponent implements OnInit {
   }
 
   saveAndClose(): void {
-    this.dialogRef.close();
+    this.http.postVericarCadastro(this.helper.webImg).subscribe((data) => {
+      this.dialogRef.close();
+    } , (error) => {
+      this._snackBar.open('É necessário que a pessoa do cadastro e prova de vida sejam as mesmas', 'Close', {
+        duration: 6000,
+        verticalPosition: 'top',
+        horizontalPosition: 'right',
+      })
+      this.refuse
+    })
   }
 
   refuse(): void {
@@ -54,8 +65,9 @@ export class ModalComponent implements OnInit {
   }
 
   emiter(): void{
-      this.user.img = this.helper.webImg
-      this.http.postVivacidade(this.user).subscribe((data) => {
+      
+    this.user.img = this.helper.webImg
+      this.http.postVivacidadeCadastro(this.user).subscribe((data) => {
         this.helper.loopShoot = false
         this.helper.webImg = ''
       }, (error) => {
@@ -64,6 +76,12 @@ export class ModalComponent implements OnInit {
           this.res = 'Sem conexão com a API.'
           setInterval(()=>{
             localStorage.clear()
+          })
+        }else{
+          this.close
+          this._snackBar.open('É necessário que a pessoa do cadastro e prova de vida sejam as mesmas', 'Close', {
+            verticalPosition: 'top',
+            horizontalPosition: 'right',
           })
         }
       })

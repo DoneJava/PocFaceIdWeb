@@ -7,9 +7,10 @@ import { Observable } from 'rxjs';
 })
 export class HttpService {
   urlApiCadastrar = 'https://localhost:44388/api/Face/Cadastrar';
+  urlApiVivacidadeCad = 'https://localhost:44388/api/Face/VerificarVivacidadeCadastro'
+  urlApiVerificarId = 'https://localhost:44388/api/Face/ConfirmarCadastro'
   urlApiLogin = 'https://localhost:44388/api/Face/Login';
   urlApiValidar = 'https://localhost:44388/api/Face/Validar';
-  urlApiVerificarImg = 'https://localhost:44388/api/Face/VerificarImg';
   urlApiVerificarVivacidade = 'https://localhost:44388/api/Face/VerificarVivacidade'
   urlRandomNumber = 'https://localhost:44388/api/Face/Random'
 
@@ -23,9 +24,6 @@ export class HttpService {
     }),
   };
 
-  putUser(data: any): Observable<any> {
-    return this.http.put(this.urlApiCadastrar, data)
-  }
   putLogin(data: any): Observable<any> {
     return this.http.put(this.urlApiLogin, data)
   }
@@ -34,6 +32,15 @@ export class HttpService {
   }
   postVivacidade(data: any): Observable<any> {
     return this.http.post(this.urlApiVerificarVivacidade, JSON.stringify(data), this.httpHeader)
+  }
+  putUser(data: any): Observable<any> {
+    return this.http.put(this.urlApiCadastrar, data)
+  }
+  postVivacidadeCadastro(data: any): Observable<any> {
+    return this.http.post(this.urlApiVivacidadeCad, JSON.stringify(data), this.httpHeader)
+  }
+  postVericarCadastro(data: any): Observable<any> {
+    return this.http.post(this.urlApiVerificarId, JSON.stringify(data), this.httpHeader)
   }
   getRandom(): Observable<any> {
     return this.http.get(this.urlRandomNumber)

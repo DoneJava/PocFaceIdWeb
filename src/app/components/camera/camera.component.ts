@@ -53,11 +53,14 @@ export class CameraComponent implements OnInit, AfterViewInit {
     /* setTimeout(() => {this.triggerSnapshot()}, 5000)  */
     
     if (this.helper.loopShoot) {
-      setInterval(() => {
-        if (this.wating.cont.getValue() === 0) {
-          this.triggerSnapshot()
-        }
-      }, 300);
+      setTimeout(() => {
+        setInterval(() => {
+          if (this.wating.cont.getValue() === 0) {
+            this.triggerSnapshot()
+          }
+        }, 300);
+      }, 2000)
+      
     }
   }
 
