@@ -58,7 +58,7 @@ export class CameraComponent implements OnInit, AfterViewInit {
           if (this.wating.cont.getValue() === 0) {
             this.triggerSnapshot()
           }
-        }, 300);
+        }, 200);
       }, 2000)
       
     }

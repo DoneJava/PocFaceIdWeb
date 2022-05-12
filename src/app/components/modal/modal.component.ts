@@ -28,10 +28,11 @@ export class ModalComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.helper.loopShoot = true
-
+    this.res = ''
     this.http.getRandom().subscribe((data) => {
-      this.res = data.mensagemResposta
-
+      setTimeout(() => {
+        this.res = data.mensagemResposta
+      }, 2000);
     }, (error) => {
 
     })
@@ -55,7 +56,7 @@ export class ModalComponent implements OnInit {
       })
 
     })
-  }                     
+  }
 
   refuse(): void {
     this.isHidden = false
@@ -68,30 +69,33 @@ export class ModalComponent implements OnInit {
   }
 
   emiter(): void {
-    if (this.contador <= 5) {
-      this.contador++
-      this.user.Img = this.helper.webImg
-      this.http.postVivacidadeCadastro(this.user).subscribe((data) => {
+
+    this.user.Img = this.helper.webImg
+    this.http.postVivacidadeCadastro(this.user).subscribe((data) => {
+      this.helper.loopShoot = false
+      this.helper.webImg = ''
+    }, (error) => {
+      this.helper.webImg = ''
+      if (error.status == 401) {
         this.helper.loopShoot = false
-        this.helper.webImg = ''
-      }, (error) => {
-        this.helper.webImg = ''                     
-        if (error.statusText == 'Unknown Error') {
-          this.res = 'Sem conexão com a API.'
-          setInterval(() => {                                                                                         
-            localStorage.clear()
-          })
-        }
-      })
-    }
-    else{
-      this._snackBar.open('Não possível validar a vivacidade, tente novamente.', 'Close', {
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-      })
-      this.helper.webImg = null
-      this.dialogRef.close();
-    }
+        this._snackBar.open('Não possível validar a vivacidade, tente novamente.', 'Close', {
+          verticalPosition: 'top',
+          horizontalPosition: 'right',
+        })
+        this.helper.webImg = null
+        this.dialogRef.close();
+      }
+      if (error.statusText == 'Unknown Error') {
+        this.res = 'Sem conexão com a API.'
+        setTimeout(() => {
+          localStorage.clear()
+          this.helper.webImg = '';
+          this.helper.cpf = null;
+          this.helper.senha = null;
+          this.dialogRef.close();
+        }, 5000);
+      }
+    })
   }
 
 }

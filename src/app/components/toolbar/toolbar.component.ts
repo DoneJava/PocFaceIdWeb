@@ -15,8 +15,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   exit(): void {
-    localStorage.removeItem('token')
-    localStorage.removeItem('foto')
+    localStorage.clear()
     this.helper.webImg = '';
     this.helper.cpf = null;
     this.helper.senha = null;

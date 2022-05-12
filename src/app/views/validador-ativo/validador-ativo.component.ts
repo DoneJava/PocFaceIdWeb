@@ -21,7 +21,6 @@ export class ValidadorAtivoComponent implements OnInit {
   Measures: any = { height: 400, width: 400 }
   messageToUser: any = ''
   passValidar: string = 'naoPassou'
-  contaReq: number = 0
 
 
   ngOnInit(): void {
@@ -38,8 +37,7 @@ export class ValidadorAtivoComponent implements OnInit {
   emiter(): void {
     this.data.Img = this.helper.webImg
 
-    if (this.helper.messageToValidar && this.contaReq <= 30) {
-      this.contaReq++
+    if (this.helper.messageToValidar) {
       this.http.postVivacidade(this.data).subscribe((data) => {
         this.passValidar = 'passou'
         this.helper.loopShoot = false
@@ -51,6 +49,17 @@ export class ValidadorAtivoComponent implements OnInit {
           this.passValidar = 'reprovou'
           this.helper.loopShoot = false
           this.messageToUser = error.error.mensagemResposta
+
+          setTimeout(() => {
+            setTimeout(() => {
+              this.messageToUser = 'Redirecionando para o login...'
+              localStorage.clear()
+              this.helper.webImg = '';
+              this.helper.cpf = null;
+              this.helper.senha = null;
+              this.router.navigate(['/'])
+            }, 2000);
+          }, 4000);
         }
 
         if (error.statusText == 'Unknown Error') {
@@ -64,12 +73,15 @@ export class ValidadorAtivoComponent implements OnInit {
     }
     else {
       this.passValidar = 'reprovou'
-      this.messageToUser = 'É necessário efetuar o login novamente...'
-      setInterval(() => (
-        this.router.navigate(['/']),
-        localStorage.clear()
-      ), 4000)
       this.helper.loopShoot = false
+      this.messageToUser = "É necessário realizar o login novamente..."
+      setTimeout(() => {
+        localStorage.clear()
+        this.helper.webImg = '';
+        this.helper.cpf = null;
+        this.helper.senha = null;
+        this.router.navigate(['/'])
+      }, 3000);
     }
   }
 
