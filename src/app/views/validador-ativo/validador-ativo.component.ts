@@ -31,7 +31,7 @@ export class ValidadorAtivoComponent implements OnInit {
     }, 2000)
   }
 
-  data: vivacidade = {};
+  data: vivacidade = { };
 
   //Recebe o formulário e envia para a API
   emiter(): void {
