@@ -1,28 +1,117 @@
-<div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" *ngIf="this.helper.isLoading.getValue(); else isntLoading">
+<div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" *ngIf="this.helper.isLoading.getValue()">
   <app-spinner [bg]="true"></app-spinner>
 </div>
-<ng-template #isntLoading>
-</ng-template>
+<div class="backColor" id="colorbg">
+  <div id="color75"></div>
+  <div id="color25"></div>
+</div>
 <div class="fullPage">
   <div class="container">
-    <h1 style="font-weight: 500;">Cadastro</h1>
-    <div style="margin-top: 10%;">
-      <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>      
-    </div>
-    <div class="webCam">
-      <button mat-stroked-button color="primary" (click)="openDialog()">
-        <div style="display: flex; justify-content: center; align-items: center;">
-          <div>Tirar foto*</div>
-          <div *ngIf="returnImg()" style="display: flex; justify-content: center; align-items: center; margin-left: 5px;">
-            <mat-icon style="color: #47c047;">check_circle_outline</mat-icon>
+    <div id="divForm">
+      <!-- FORMULARIO -->
+      <div *ngIf="this.onSubmit; else submited">
+        <h1 style="font-weight: 500;">Cadastro</h1>
+        <div style="margin-top: 10%;">
+          <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>
+        </div>
+        <div style="text-align: center; margin-top: 2%; height: 9%;">
+          <button form="form" mat-raised-button type="submit"
+            style="border-radius: 25px; width: 55%; height: 100%; background-color: rgb(102, 176, 242); color: white;">
+            Próximo
+          </button>
+        </div>
+        <mat-divider style="margin: 20px 0 0 0;"></mat-divider>
+        <div class="register">
+          <h4 style="margin-right: 5px;">Já tem uma conta?</h4>
+          <a href="/" style="color: rgb(86, 148, 202);">
+            <h4>Logar</h4>
+          </a>
+        </div>
+      </div>
+      <ng-template #submited>
+        <!-- INSTRUCOES -->
+        <div *ngIf="this.cameraOff; else cameraOn">
+          <h1
+            style="text-align: center; font-size: x-large; font-weight: 550; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
+            Para obtermos uma melhor leitura, siga as instruções abaixo:
+          </h1>
+          <ul style="text-align: justify;">
+            <li>
+              <h3
+                style="font-weight: 500; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
+                Será exigido uma movimentação do seu rosto, faça os movimentos calmamente.
+              </h3>
+            </li>
+            <li>
+              <h3
+                style="font-weight: 500; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
+                Em seguida, será necessário centralizar seu rosto no local indicado na tela
+                e aguardar a contagem
+                regressiva para a foto ser tirada. Caso não goste da foto, clicar em "não" e será feito uma nova
+                tentativa.</h3>
+            </li>
+          </ul>
+          <div style="text-align: center; height: 14%; margin: 8% 0 0 0;">
+            <button mat-raised-button
+              style="border-radius: 25px; width: 35%; height: 100%; background-color: rgb(102, 176, 242); color: white;"
+              (click)="this.cameraOff = false;">OK!</button>
           </div>
         </div>
-      </button>
+        <ng-template #cameraOn>
+          <!-- CAMERA -->
+          <div *ngIf="this.VivacidadeNaoValidada; else VivacidadeValidada">
+            <app-camera [Measusres]="Measures" [isActivated]="false" [needTitle]="true"
+              (PicWasTaken)="this.ValidaVivacidade()"></app-camera>
+            <div *ngIf="this.messageToUser != ''; else stillLoading" style="text-align: center">
+              <div class="icons" style="margin-top: 5%;">
+                <div *ngIf="this.messageToUser == 'Vire o rosto para cima.'">
+                  <mat-icon svgIcon="arrow" id="icon" style="transform: rotate(45deg)" class="classDashToTop">
+                  </mat-icon>
+                </div>
+                <div *ngIf="this.messageToUser == 'Vire o rosto para baixo.'">
+                  <mat-icon svgIcon="arrow" id="icon" style="transform: rotate(225deg)" class="classDashToBottom">
+                  </mat-icon>
+                </div>
+                <div *ngIf="this.messageToUser == 'Vire o rosto para esquerda.'">
+                  <mat-icon svgIcon="arrow" id="icon" style="transform: rotate(-45deg)" class="classDashToLeft">
+                  </mat-icon>
+                </div>
+                <div *ngIf="this.messageToUser == 'Vire o rosto para direta.'">
+                  <mat-icon svgIcon="arrow" id="icon" style="transform: rotate(135deg)" class="classDashToRight">
+                  </mat-icon>
+                </div>
+              </div>
+              <h1
+                style="font-weight: 700; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; margin-top: 5%;">
+                {{this.messageToUser}}</h1>
+            </div>
+          </div>
+          <ng-template #VivacidadeValidada>
+            <div *ngIf="this.helper.webImg; else camera">
+              <img style="width: 500px" src={{this.helper.webImg}}>
+              <div style="text-align: center; margin-top: 5%;">
+                <h1 style="font-weight: 700; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">Gostou da foto?</h1>
+              </div>
+              <mat-divider></mat-divider>
+              <div style="display: flex; justify-content: space-evenly; margin-top: 3%;">
+                <button mat-stroked-button (click)="this.takeAgain()">Não</button>
+                <button mat-stroked-button style="background-color: rgb(102, 176, 242); color: white;" (click)="SendForm()">Sim</button>
+              </div>
+            </div>
+            <ng-template #camera>
+              <app-camera [Measusres]="this.Measures" [isActivated]="true"></app-camera>
+              <h1 style="margin: 3% auto;">{{this.contador}}</h1>
+            </ng-template>
+          </ng-template>
+
+          <ng-template #stillLoading>
+            <app-spinner style="margin-top: 5%;" [diameter]="25"></app-spinner>
+          </ng-template>
+        </ng-template>
+      </ng-template>
     </div>
-    <mat-divider style="margin: 20px 0;"></mat-divider>
-    <div class="buttons">
-      <a mat-stroked-button href = '/' type="button" style="text-decoration: none;">Voltar</a>
-      <button form="form" mat-raised-button color="primary" type="submit">Enviar</button>
+    <div id="divInfo">
+      <img style="max-width: 400px;" src="../../../assets/img/logo.png">
     </div>
   </div>
 </div>

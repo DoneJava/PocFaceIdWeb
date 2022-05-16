@@ -31,6 +31,7 @@ import { InterceptorModule } from './interceptors/interceptor.module';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { ValidadorAtivoComponent } from './views/validador-ativo/validador-ativo.component';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
@@ -70,7 +71,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     InterceptorModule,
     MatToolbarModule,
     MatMenuModule,
-    MaterialFileInputModule
+    MaterialFileInputModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,15 +1,17 @@
 <form id="form" [formGroup]="formulario" (ngSubmit)="onSubmit()">
    <div *ngFor="let input of formFields.inputs" class={{input.class}}>
-      <mat-form-field appearance="legacy" class='input'>
+      <mat-form-field appearance="outline" class='input'>
          <mat-label>{{input.show}}</mat-label>
          <input matInput formControlName={{input.name}} type={{input.type}} mask={{input.mask}} autocomplete="off">
          <mat-error *ngIf="formulario.invalid">Campo inválido</mat-error>
       </mat-form-field>
    </div>
+   <div style="margin-top: -3%;" *ngFor="let link of formFields.link">
+      <a href={{link.href}}>{{link.show}}</a>
+   </div>
    <div>
       <div *ngFor="let btn of formFields.buttons" class={{btn.class}}>
-         <button mat-raised-button color="primary" type={{btn.type}} id={{btn.name}}
-            [disabled]="!formulario.valid">{{btn.show}}</button>
+         <button mat-raised-button color="primary" type={{btn.type}} id={{btn.name}}>{{btn.show}}</button>
       </div>
    </div>
 </form>

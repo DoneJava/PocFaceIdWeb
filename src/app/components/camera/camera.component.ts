@@ -19,11 +19,11 @@ export class CameraComponent implements OnInit, AfterViewInit {
 
   }
   @Output() PicWasTaken = new EventEmitter();
-
+  
+  @Input() needTitle: boolean = false
   @Input() isActivated: boolean = true
   @Input() Measusres: any = {}
-  @Input() event: any;
-  @Input() proofActivate: boolean = false
+  
 
   public cont = 1
   public showWebcam = true;
@@ -41,8 +41,9 @@ export class CameraComponent implements OnInit, AfterViewInit {
       (mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       }
-
     );
+      
+
 
   }
   ngAfterViewInit(): void {
@@ -54,13 +55,15 @@ export class CameraComponent implements OnInit, AfterViewInit {
     
     if (this.helper.loopShoot) {
       setTimeout(() => {
-        setInterval(() => {
-          if (this.wating.cont.getValue() === 0) {
+        var shoot = setInterval(() => {
+          if (this.wating.cont.getValue() === 0 && this.helper.loopShoot) {
             this.triggerSnapshot()
           }
-        }, 200);
+          else{
+            clearInterval(shoot)
+          }
+        }, 1000);
       }, 2000)
-      
     }
   }
 

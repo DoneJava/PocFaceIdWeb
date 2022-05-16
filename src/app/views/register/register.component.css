@@ -1,19 +1,32 @@
-.fullPage {
-  height: 100vh;
+.backColor{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10%;
-  background: #166E84;
+  height: 100vh;
+  width: 100vw;
+  z-index: -100;
+  position: absolute;
+}
+
+
+.fullPage {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  z-index: 100;
 }
 
 .container {
-  border: solid 1px rgb(211, 210, 210);
-  padding: 5%;
+  box-shadow: 0 0 3em rgb(126, 126, 126);
+  border: 1px rgb(126, 126, 126);
   border-radius: 5px;
-  height: 580px;
-  width: 500px;
-  background-color: white;
+  height: 75%;
+  width: 80%;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
 }
 
 .webCam {
@@ -44,4 +57,79 @@
 
 .end > a {
   width: 90px;
+}
+
+.register {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+  margin-bottom: -10%;
+}
+
+.register > a {
+  text-decoration: none;
+  color: black;
+}
+
+.register > a:hover {
+  color: rgb(63,81,181);
+}
+
+#color25 {
+  background-color: rgb(102, 176, 242);
+  width: 40%;
+  height: 100%;
+  position: relative;
+}
+#color75 {
+  background-color: rgb(255, 255, 255);
+  width: 60%;
+  height: 100%;
+}
+
+#divForm{
+  width: 70%;
+  padding: 1% 12%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#divInfo{
+  width: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.classDashToRight {
+  animation: dashToRigin 1s infinite;
+}
+
+@keyframes dashToRight {
+  to {transform: translateX(15px), rotate(135deg);}
+}
+
+.classDashToLeft {
+  animation: dashToLeft 1s infinite;
+}
+
+@keyframes dashToLeft {
+  to {transform: translateX(-15px), rotate(-45deg);}
+}
+
+.classDashToTop {
+  animation: dashToTop 1s infinite;
+}
+
+@keyframes dashToTop {
+  to {transform: translateY(15px),rotate(45deg);}
+}
+
+.classDashToBottom {
+  animation: dashToBottom 2s infinite;
+}
+
+@keyframes dashToBottom {
+  to {transform: translateY(-15px), rotate(225deg);}
 }

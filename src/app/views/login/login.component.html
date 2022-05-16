@@ -1,14 +1,26 @@
+<div class="backColor" id="colorbg">
+  <div id="color25"></div>
+  <div id="color75"></div>
+</div>
 <div class="fullPage">
   <div class="container">
-    <div class="img">
-      <img id="img" src="../../../assets/img/logo.png">
+    <div id="divImg">
+      <div class="img">
+        <img id="img" src="../../../assets/img/logo.png">
+      </div>
     </div>
-    <div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" *ngIf="this.helper.isLoading.getValue()">
-      <app-spinner [bg]="true"></app-spinner>
-    </div>
-    <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>
-    <div class="register">
-      <a href="register">Efetuar Cadastro</a>
+    <div id="divForm">
+      <div style="width: 55%">
+        <div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" *ngIf="this.helper.isLoading.getValue()">
+          <app-spinner [bg]="true"></app-spinner>
+        </div>
+        <h1 style="font-family: 'Roboto', sans-serif;">Login</h1>
+        <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>
+        <div class="register">
+          <h4 style="margin-right: 5px;">Ainda não tem uma conta?</h4>
+          <a href="register" style="color: rgb(86, 148, 202);"><h4>Cadastrar-se</h4></a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
