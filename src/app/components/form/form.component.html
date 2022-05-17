@@ -6,8 +6,8 @@
          <mat-error *ngIf="formulario.invalid">Campo inválido</mat-error>
       </mat-form-field>
    </div>
-   <div style="margin-top: -3%;" *ngFor="let link of formFields.link">
-      <a href={{link.href}}>{{link.show}}</a>
+   <div (click)="this.emitClick()" style="margin-top: -3%;" *ngFor="let link of formFields.link">
+      <h4 style="color: rgb(102, 176, 242); cursor: pointer;">{{link.show}}</h4>
    </div>
    <div>
       <div *ngFor="let btn of formFields.buttons" class={{btn.class}}>

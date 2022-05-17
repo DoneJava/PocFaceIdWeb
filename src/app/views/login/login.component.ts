@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -32,7 +32,10 @@ export class LoginComponent implements OnInit {
     ]
   }
 
+
+
   user: login = {}
+  lostPassword: boolean = false
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -83,6 +86,13 @@ export class LoginComponent implements OnInit {
         }
       })
     }
+  }
 
+  toForgot(): void {
+    this.lostPassword = true
+  }
+
+  toLogin(): void {
+    this.lostPassword = false
   }
 }

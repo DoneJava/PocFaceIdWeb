@@ -1,0 +1,33 @@
+<div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" *ngIf="this.helper.isLoading.getValue()">
+    <app-spinner [bg]="true"></app-spinner>
+</div>
+<div class="backColor" id="colorbg">
+    <div id="color25"></div>
+    <div id="color75"></div>
+</div>
+<div class="fullPage">
+    <div class="container">
+        <div *ngFor="let questao of prova">
+            <div style="display: flex;">
+                <div class="numero" style="margin-right: 3%; font-size: 1.8em;">
+                    {{questao.numero}}
+                </div>
+                <div class="questao" style="font-size: 1.3em; text-align: justify;">
+                    {{questao.titulo}}
+                </div>
+            </div>
+            <div *ngFor="let resposta of questao.respostas"
+                style="background-color: #eaeaea; border-radius: 6px; margin: 2% auto; width: 95%;">
+                <div style="display: flex; width: 100%;">
+                    <div
+                        style="width: 8%; padding: 2%; background-color: #eaeaea; text-align: center;border-radius: 6px;">
+                        {{resposta[0]}}
+                    </div>
+                    <div style="padding: 2%; margin: 3px;background-color: #cccccc; width: 100%; border-radius: 6px;">
+                        {{resposta[1]}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

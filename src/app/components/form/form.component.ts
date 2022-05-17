@@ -11,6 +11,7 @@ export class FormComponent implements OnInit {
   @Input() formFields: any = {};
 
   @Output() FormEmiter = new EventEmitter();
+  @Output() linkClick = new EventEmitter();
 
   constructor(private builder: FormBuilder) { }
 
@@ -30,5 +31,9 @@ export class FormComponent implements OnInit {
 
   onSubmit() {
     this.FormEmiter.emit(this.formulario)
+  }
+
+  emitClick(): void {
+    this.linkClick.emit(true)
   }
 }

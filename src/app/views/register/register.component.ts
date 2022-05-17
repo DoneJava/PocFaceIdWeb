@@ -48,11 +48,12 @@ export class RegisterComponent implements OnInit {
   user: vivacidade = {}
   VivacidadeNaoValidada: boolean = true
   contador: number = 10
+  getError: boolean = false
 
   constructor(
     private _snackBar: MatSnackBar,
     private http: HttpService,
-    private router: Router,
+    public router: Router,
     public dialog: MatDialog,
     public helper: HelperService,
     private cpf: CpfValidatorService,
@@ -80,6 +81,7 @@ export class RegisterComponent implements OnInit {
         this.messageToUser = data.mensagemResposta
       }, 3000);
     }, (error) => {
+      this.getError = true
       if(error.status == 0){
         this._snackBar.open("Talvez você esteja sem internet.", "Close", {
           duration: 3000,

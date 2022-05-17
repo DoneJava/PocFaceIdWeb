@@ -13,10 +13,10 @@
       </div>
     </div>
     <div id="divForm">
-      <div style="width: 55%">
-        <div *ngIf="true; else lostPassword">
+      <div id ='changeWidth' style="width: 55%">
+        <div *ngIf="!this.lostPassword; else lostPasswordLink">
           <h1 style="font-family: 'Roboto', sans-serif;">Login</h1>
-          <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>
+          <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)" (linkClick)="this.toForgot()"></app-form>
           <div class="register">
             <h4 style="margin-right: 5px;">Ainda não tem uma conta?</h4>
             <a href="register" style="color: rgb(86, 148, 202);">
@@ -24,8 +24,8 @@
             </a>
           </div>
         </div>
-        <ng-template #lostPassword>
-          
+        <ng-template #lostPasswordLink>
+          <app-forgot-password (back)="this.toLogin()"></app-forgot-password>
         </ng-template>
       </div>
     </div>

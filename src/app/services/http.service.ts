@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
+  urlResetSenha = 'https://localhost:44388/api/Face/ResetarSenha'
+  urlEsqueciSenha = 'https://localhost:44388/api/Face/EsqueciSenha';
   urlApiCadastrar = 'https://localhost:44388/api/Face/Cadastrar';
   urlApiVivacidadeCad = 'https://localhost:44388/api/Face/VerificarVivacidadeCadastro'
   urlApiVerificarId = 'https://localhost:44388/api/Face/ConfirmarCadastro'
@@ -26,6 +28,12 @@ export class HttpService {
 
   putLogin(data: any): Observable<any> {
     return this.http.put(this.urlApiLogin, data)
+  }
+  putEsqueciSenha(data: any): Observable<any> {
+    return this.http.put(this.urlEsqueciSenha, data)
+  }
+  putResetarSenha(data: any): Observable<any> {
+    return this.http.put(this.urlResetSenha, data)
   }
   postValidar(data: any): Observable<any> {
     return this.http.post(this.urlApiValidar, JSON.stringify(data), this.httpHeader)

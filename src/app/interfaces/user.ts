@@ -9,7 +9,7 @@ export interface vivacidade {
 
 export interface User {
   Nome?: string;
-  Cpf?: string;
+  CPF?: string;
   Senha?: string;
   Img?: string;
 }

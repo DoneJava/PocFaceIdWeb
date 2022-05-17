@@ -32,6 +32,8 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { ValidadorAtivoComponent } from './views/validador-ativo/validador-ativo.component';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { TestComponent } from './views/test/test.component';
 
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
@@ -46,7 +48,9 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     FormComponent,
     SpinnerComponent,
     ToolbarComponent,
-    ValidadorAtivoComponent
+    ValidadorAtivoComponent,
+    ForgotPasswordComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

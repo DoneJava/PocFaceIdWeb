@@ -67,7 +67,7 @@
           <div *ngIf="this.VivacidadeNaoValidada; else VivacidadeValidada" style="max-height: 400px;">
             <div style="max-height: 500px;">
               <app-camera [Measusres]="Measures" [isActivated]="false" [needTitle]="true"
-                (PicWasTaken)="this.ValidaVivacidade()"></app-camera>  
+                (PicWasTaken)="this.ValidaVivacidade()"></app-camera>
             </div>
             <div *ngIf="this.messageToUser != ''; else stillLoading" style="text-align: center;">
               <div class="icons" style="margin-top: 5%;">
@@ -97,12 +97,15 @@
             <div *ngIf="this.helper.webImg; else camera">
               <img style="width: 500px" src={{this.helper.webImg}}>
               <div style="text-align: center; margin-top: 5%;">
-                <h1 style="font-weight: 700; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">Gostou da foto?</h1>
+                <h1
+                  style="font-weight: 700; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">
+                  Gostou da foto?</h1>
               </div>
               <mat-divider></mat-divider>
               <div style="display: flex; justify-content: space-evenly; margin-top: 3%;">
                 <button mat-stroked-button (click)="this.takeAgain()">Não</button>
-                <button mat-stroked-button style="background-color: rgb(102, 176, 242); color: white;" (click)="SendForm()">Sim</button>
+                <button mat-stroked-button style="background-color: rgb(102, 176, 242); color: white;"
+                  (click)="SendForm()">Sim</button>
               </div>
             </div>
             <ng-template #camera>
@@ -112,8 +115,18 @@
           </ng-template>
 
           <ng-template #stillLoading>
-            <div style="margin-top: 4%;">
-              <app-spinner style="margin-top: 5%;" [diameter]="25"></app-spinner>
+            <div style="margin-top: 4%; text-align: center;">
+              <div *ngIf="this.getError; else toError">
+                <h4
+                  style="font-weight: 700; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">
+                  Sem comunicação com a API
+                </h4>
+                <mat-divider></mat-divider>
+                <button style="margin: 3% auto; " mat-stroked-button (click)="this.router.navigate(['/'])">Home</button>
+              </div>
+              <ng-template #toError>
+                <app-spinner [diameter]="25"></app-spinner>
+              </ng-template>
             </div>
           </ng-template>
         </ng-template>

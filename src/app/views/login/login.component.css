@@ -72,16 +72,17 @@
 }
 
 #divImg{
-  width: 35%;
+  width: 33%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 #divForm{
-  width: 70%;
+  width: 67%;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: nowrap;
 }
 
 
