@@ -50,19 +50,26 @@
                 regressiva para a foto ser tirada. Caso não goste da foto, clicar em "não" e será feito uma nova
                 tentativa.</h3>
             </li>
+            <li>
+              <h3
+                style="font-weight: 500; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif">
+                Click em "OK!" para começar.</h3>
+            </li>
           </ul>
           <div style="text-align: center; height: 14%; margin: 8% 0 0 0;">
             <button mat-raised-button
               style="border-radius: 25px; width: 35%; height: 100%; background-color: rgb(102, 176, 242); color: white;"
-              (click)="this.cameraOff = false;">OK!</button>
+              (click)="this.turnOffAndCallRandom();">OK!</button>
           </div>
         </div>
         <ng-template #cameraOn>
           <!-- CAMERA -->
-          <div *ngIf="this.VivacidadeNaoValidada; else VivacidadeValidada">
-            <app-camera [Measusres]="Measures" [isActivated]="false" [needTitle]="true"
-              (PicWasTaken)="this.ValidaVivacidade()"></app-camera>
-            <div *ngIf="this.messageToUser != ''; else stillLoading" style="text-align: center">
+          <div *ngIf="this.VivacidadeNaoValidada; else VivacidadeValidada" style="max-height: 400px;">
+            <div style="max-height: 500px;">
+              <app-camera [Measusres]="Measures" [isActivated]="false" [needTitle]="true"
+                (PicWasTaken)="this.ValidaVivacidade()"></app-camera>  
+            </div>
+            <div *ngIf="this.messageToUser != ''; else stillLoading" style="text-align: center;">
               <div class="icons" style="margin-top: 5%;">
                 <div *ngIf="this.messageToUser == 'Vire o rosto para cima.'">
                   <mat-icon svgIcon="arrow" id="icon" style="transform: rotate(45deg)" class="classDashToTop">
@@ -105,7 +112,9 @@
           </ng-template>
 
           <ng-template #stillLoading>
-            <app-spinner style="margin-top: 5%;" [diameter]="25"></app-spinner>
+            <div style="margin-top: 4%;">
+              <app-spinner style="margin-top: 5%;" [diameter]="25"></app-spinner>
+            </div>
           </ng-template>
         </ng-template>
       </ng-template>

@@ -11,6 +11,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { vivacidade } from 'src/app/interfaces/user';
 import { CameraComponent } from 'src/app/components/camera/camera.component';
+import { retry } from 'rxjs';
 
 
 @Component({
@@ -65,17 +66,27 @@ export class RegisterComponent implements OnInit {
     //Informa ao componente camera que ele não precisa iniciar loop de fotos
     this.helper.loopShoot = true
 
+    
+  }
+
+  turnOffAndCallRandom(): void {
+    this.cameraOff = false
     this.getRandom()
   }
 
   getRandom(): void {
-    this.http.getRandom().subscribe((data) => {
-      
+    this.http.getRandom().pipe(retry(5)).subscribe((data) => {
       setTimeout(() => {
         this.messageToUser = data.mensagemResposta
-      }, 2000);
+      }, 3000);
     }, (error) => {
-
+      if(error.status == 0){
+        this._snackBar.open("Talvez você esteja sem internet.", "Close", {
+          duration: 3000,
+          verticalPosition: 'top',
+          horizontalPosition: 'right'
+        })
+      }
     })
   }
 
@@ -112,7 +123,6 @@ export class RegisterComponent implements OnInit {
         this.helper.webImg = ''
         this.takePhoto()
       }, (error) => {
-        console.log(this.helper.loopShoot)
         this.helper.webImg = ''
         if (error.status == 401) {
           this.helper.loopShoot = false
@@ -157,11 +167,24 @@ export class RegisterComponent implements OnInit {
       this.helper.webImg = ''
     }, (error) => {
       this.helper.isLoading.next(false)
-      this._snackBar.open('Erro ao efetuar registro.', 'X', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      })
+      console.log(error.status)
+      if(error.status == 409){
+        this.onSubmit = true
+        this._snackBar.open('Usuário já cadastrado na base.', 'Close', {
+          duration: 7000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        })
+        this.helper.webImg = ''
+        this.router.navigate(['/'])
+      }
+      else{
+        this._snackBar.open('Erro ao efetuar registro.', 'X', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        })
+      }
     })
   }
  
