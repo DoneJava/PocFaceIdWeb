@@ -43,3 +43,7 @@
     width: 69%;
     height: 100%;
   }
+
+  .mark {
+    border: 2px solid green;
+  }

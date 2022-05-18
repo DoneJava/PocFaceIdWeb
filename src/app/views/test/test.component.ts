@@ -1,5 +1,8 @@
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { HelperService } from './../../services/helper.service';
 import { Component, OnInit } from '@angular/core';
+import { ModalComponent } from 'src/app/components/modal/modal.component';
 
 @Component({
   selector: 'app-test',
@@ -33,17 +36,35 @@ export class TestComponent implements OnInit {
 
   numQuest: number = 0
   isDisabled: boolean = false
+  arrQuestion: any[] = []
+  pushed: boolean = false
 
   constructor(
-    public helper: HelperService
+    public helper: HelperService,
+    private _snackBar: MatSnackBar,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
     this.changeButton('back', true)
   }
 
-  putQuestion(): void {
+  onClick(mark: string, question: number): void {
+    this.arrQuestion.forEach(element => {
+      if (element[0] == question && element[1] != mark) {
+        let div = document.getElementById(element[1]) as HTMLDivElement
+        div.classList.remove("mark")
+        element[1] = mark
+        this.pushed = true
+      }
+    });
+    if (this.pushed == false) {
+      this.arrQuestion.push([question, mark])
+    }
+    this.pushed = false
 
+    let div = document.getElementById(mark) as HTMLDivElement
+    div.classList.add("mark")
   }
 
   nextQuestion(): void {
@@ -55,21 +76,29 @@ export class TestComponent implements OnInit {
     }
     if (this.numQuest == this.prova.length - 1) {
       this.changeButton('next', true)
+    } else {
+      
     }
+
+    /* let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
+    div.style.border = '2px solid green' */
   }
 
   backQuestion(): void {
     if (this.numQuest == this.prova.length - 1) {
-      console.log('1')
       this.changeButton('next', false)
     }
-    if (this.numQuest -1 == 0) {
+    if (this.numQuest - 1 == 0) {
       this.numQuest--
       this.changeButton('back', true)
-    }else{
+    } else {
       this.numQuest--
     }
+
+    let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
+    div.classList.add("mark")
   }
+
 
   changeButton(button: string, color: boolean): void {
     switch (button) {
