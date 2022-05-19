@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { WebcamModule } from 'ngx-webcam';
@@ -23,16 +24,15 @@ import { WebcamModule } from 'ngx-webcam';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CameraComponent } from './components/camera/camera.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { FormComponent } from './components/form/form.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { ValidadorHiddenComponent } from './components/validador-hidden/validador-hidden.component';
 import { InterceptorModule } from './interceptors/interceptor.module';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
-import { ValidadorAtivoComponent } from './views/validador-ativo/validador-ativo.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { TestComponent } from './views/test/test.component';
 
 
@@ -44,13 +44,13 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     LoginComponent,
     RegisterComponent,
     CameraComponent,
-    ModalComponent,
     FormComponent,
     SpinnerComponent,
     ToolbarComponent,
-    ValidadorAtivoComponent,
     ForgotPasswordComponent,
-    TestComponent
+    TestComponent,
+    ModalComponent,
+    ValidadorHiddenComponent
   ],
   imports: [
     BrowserModule,

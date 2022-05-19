@@ -16,14 +16,14 @@
         </div>
         <div style="text-align: center; margin-top: 2%; height: 9%;">
           <button form="form" mat-raised-button type="submit"
-            style="border-radius: 25px; width: 55%; height: 100%; background-color: rgb(102, 176, 242); color: white;">
+            style="border-radius: 25px; width: 55%; height: 100%; background-color: #00569f; color: white;">
             Próximo
           </button>
         </div>
         <mat-divider style="margin: 20px 0 0 0;"></mat-divider>
         <div class="register">
           <h4 style="margin-right: 5px;">Já tem uma conta?</h4>
-          <a href="/" style="color: rgb(86, 148, 202);">
+          <a href="/" style="color: #00569f;">
             <h4>Logar</h4>
           </a>
         </div>
@@ -58,13 +58,13 @@
           </ul>
           <div style="text-align: center; height: 14%; margin: 8% 0 0 0;">
             <button mat-raised-button
-              style="border-radius: 25px; width: 35%; height: 100%; background-color: rgb(102, 176, 242); color: white;"
+              style="border-radius: 25px; width: 35%; height: 100%; background-color: #00569f; color: white;"
               (click)="this.turnOffAndCallRandom();">OK!</button>
           </div>
         </div>
         <ng-template #cameraOn>
           <!-- CAMERA -->
-          <div *ngIf="!this.VivacidadeNaoValidada; else VivacidadeValidada" style="max-height: 400px;">
+          <div *ngIf="this.VivacidadeNaoValidada; else VivacidadeValidada" style="max-height: 400px;">
             <div style="max-height: 500px;">
               <app-camera [Measusres]="Measures" [isActivated]="false" [needTitle]="true"
                 (PicWasTaken)="this.ValidaVivacidade()"></app-camera>
@@ -104,7 +104,7 @@
               <mat-divider></mat-divider>
               <div style="display: flex; justify-content: space-evenly; margin-top: 3%;">
                 <button mat-stroked-button (click)="this.takeAgain()">Não</button>
-                <button mat-stroked-button style="background-color: rgb(102, 176, 242); color: white;"
+                <button mat-stroked-button style="background-color: #00569f; color: white;"
                   (click)="SendForm()">Sim</button>
               </div>
             </div>

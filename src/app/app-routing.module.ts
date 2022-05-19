@@ -1,4 +1,3 @@
-import { ValidadorAtivoComponent } from './views/validador-ativo/validador-ativo.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { NgModule } from '@angular/core';

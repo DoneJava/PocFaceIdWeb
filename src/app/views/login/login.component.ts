@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { ModalComponent } from 'src/app/components/modal/modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { CameraComponent } from 'src/app/components/camera/camera.component';
-import { login, User } from 'src/app/interfaces/user';
+import { login } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/helper.service';
 import { HttpService } from '../../services/http.service';
 
@@ -36,12 +36,13 @@ export class LoginComponent implements OnInit {
 
   user: login = {}
   lostPassword: boolean = false
+  authFace: boolean = false
 
   constructor(
     private _snackBar: MatSnackBar,
     private http: HttpService,
-    private router: Router,
     public helper: HelperService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -49,27 +50,32 @@ export class LoginComponent implements OnInit {
 
   }
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ModalComponent, {
+      width: '550px',
+    });
+
+    dialogRef.componentInstance.FieldsDialog = {
+      title: 'Autenticação Facial.',
+      type: 'cam',
+      login: true
+    }
+  }
+
   //Recebe formulário e envia para API
   listenerForm(event: any) {
     if (event.valid) {
-
       this.helper.cpf = this.user.CPF = event.value.cpf;
       this.helper.senha = this.user.Senha = event.value.password
+      
+      localStorage.setItem(btoa('CPF'), btoa(this.helper.cpf))
+      localStorage.setItem(btoa('Senha'), btoa(this.helper.senha))
 
       this.helper.isLoading.next(true)
       this.http.putLogin(this.user).subscribe((data) => {
-        this.http.getRandom().subscribe((data) => {
-          this.helper.messageToValidar = data.mensagemResposta
-          localStorage.setItem('token', 'true')
-          this.helper.isLoading.next(false)
-          this.router.navigate(['autenticar'])
-        },
-          (error) => {
-            console.log(error)
-          })
+        this.openDialog()
       }, (error) => {
         this.helper.isLoading.next(false)
-        console.log(error)
         if (error.status == 401) {
           this._snackBar.open('Usuário ou senha inválido!', 'Close', {
             duration: 2000,
@@ -85,6 +91,8 @@ export class LoginComponent implements OnInit {
           })
         }
       })
+
+
     }
   }
 
@@ -95,4 +103,5 @@ export class LoginComponent implements OnInit {
   toLogin(): void {
     this.lostPassword = false
   }
+
 }

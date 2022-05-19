@@ -1,8 +1,6 @@
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog} from '@angular/material/dialog';
 import { HelperService } from './../../services/helper.service';
 import { Component, OnInit } from '@angular/core';
-import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { Router } from '@angular/router';
 
 @Component({

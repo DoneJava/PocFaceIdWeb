@@ -15,9 +15,6 @@ export class HelperService {
   //Mensagem APi
   public messageToValidar: string = ''
 
-  //Comando para tirar foto
-  public shoot = new BehaviorSubject<boolean>(false)
-
   //Valida Loading
   public isDisable = new BehaviorSubject<Boolean>(false)
 
@@ -36,7 +33,7 @@ export class HelperService {
   //habilita/desabilita o loop de fotos
   public loopShoot: boolean = false
 
-  //Imagem como observable
-  myimage: Observable<any> | undefined;
+  //authLogin
+  public authLogin: boolean = false
 
 }

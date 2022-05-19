@@ -3,7 +3,6 @@ import { Component, Output, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { HttpService } from 'src/app/services/http.service';
 import { HelperService } from 'src/app/services/helper.service';
 import { CpfValidatorService } from 'src/app/services/cpf-validator.service';
@@ -122,6 +121,7 @@ export class RegisterComponent implements OnInit {
       this.http.postVivacidadeCadastro(this.user).subscribe((data) => {
         this.VivacidadeNaoValidada = false
         this.helper.loopShoot = false
+        console.log('off')
         this.helper.webImg = ''
         this.takePhoto()
       }, (error) => {
@@ -191,28 +191,3 @@ export class RegisterComponent implements OnInit {
   }
  
 }
-
- /* openDialog(): void {
-    const dialogRef = this.dialog.open(ModalComponent, {
-      width: '900px'
-    });
-  } */
-
-/* event.value.img = this.helper.webImg
-        this.http.putUser(event.value).subscribe((data) => {
-          this.helper.isLoading.next(false)
-          this._snackBar.open('Registro feito com sucesso!', 'X', {
-            duration: 3000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          });
-          this.router.navigate(['']);
-          this.helper.webImg = ''
-        }, (error) => {
-          this.helper.isLoading.next(false)
-          this._snackBar.open('Erro ao efetuar registro.', 'X', {
-            duration: 3000,
-            horizontalPosition: 'right',
-            verticalPosition: 'top'
-          })
-        }) */

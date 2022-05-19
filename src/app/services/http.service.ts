@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
-  urlResetSenha = 'https://localhost:44388/api/Face/ResetarSenha'
-  urlEsqueciSenha = 'https://localhost:44388/api/Face/EsqueciSenha';
-  urlApiCadastrar = 'https://localhost:44388/api/Face/Cadastrar';
-  urlApiVivacidadeCad = 'https://localhost:44388/api/Face/VerificarVivacidadeCadastro'
-  urlApiVerificarId = 'https://localhost:44388/api/Face/ConfirmarCadastro'
-  urlApiLogin = 'https://localhost:44388/api/Face/Login';
+  urlResetSenha = 'https://localhost:44388/api/Face/ResetarSenha'//
+  urlEsqueciSenha = 'https://localhost:44388/api/Face/EsqueciSenha';//
+  urlApiCadastrar = 'https://localhost:44388/api/Face/Cadastrar';//
+  urlApiVivacidadeCad = 'https://localhost:44388/api/Face/VerificarVivacidadeCadastro'//
+  urlApiVerificarId = 'https://localhost:44388/api/Face/ConfirmarCadastro'//
+  urlApiLogin = 'https://localhost:44388/api/Face/Login';//
   urlApiValidar = 'https://localhost:44388/api/Face/Validar';
-  urlApiVerificarVivacidade = 'https://localhost:44388/api/Face/VerificarVivacidade'
-  urlRandomNumber = 'https://localhost:44388/api/Face/Random'
+  urlApiVerificarVivacidade = 'https://localhost:44388/api/Face/VerificarVivacidade'//
+  urlRandomNumber = 'https://localhost:44388/api/Face/Random'//
 
  
 

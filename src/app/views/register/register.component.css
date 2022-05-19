@@ -20,7 +20,7 @@
 }
 
 .container {
-  box-shadow: 0 0 3em rgb(126, 126, 126);
+  box-shadow: 0 0 0.5em rgb(126, 126, 126);
   border: 1px rgb(126, 126, 126);
   border-radius: 5px;
   height: 75%;
@@ -76,7 +76,7 @@
 }
 
 #color25 {
-  background-color: rgb(102, 176, 242);
+  background-color: #00569f;
   width: 40%;
   height: 100%;
   position: relative;

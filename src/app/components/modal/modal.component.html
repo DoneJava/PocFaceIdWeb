@@ -1,8 +1,33 @@
-<div>
-  Deseja finalizar a prova?
+<div class="title">
+    <h1 st>{{FieldsDialog.title}}</h1>
 </div>
-<mat-divider *ngIf="isHidden"></mat-divider>
-<div mat-dialog-actions *ngIf="isHidden" class="buttons">
-    <button mat-raised-button (click)="refuse()">Não</button>
-    <button mat-raised-button color="primary" (click)="saveAndClose()">Sim</button>
+<div mat-dialog-content>
+    <div *ngIf="FieldsDialog.type == 'cam'; else text">
+        <div class="camera">
+            <app-camera  [Measusres]="Measures" [isActivated]="false" [needTitle]="false" ></app-camera>
+        </div>
+        <div class="message">
+            <h2>{{FieldsDialog.randomMessage}}</h2>
+        </div>
+    </div>
+    <ng-template #text>
+        <div *ngIf="FieldsDialog.type == 'one'; else two">
+            <div class="img">
+                <img  src="../../../assets/img/x.jpg" alt="">
+            </div>
+            <div class="message">
+                <h2>{{FieldsDialog.one}}</h2>
+            </div>
+        </div>
+        <ng-template #two>
+            <div class="img">
+                <img src="../../../assets/img/x.jpg" alt="">
+            </div>
+            <div class="message">
+                <h2>{{FieldsDialog.two}}</h2>
+            </div>
+        </ng-template>
+    </ng-template>
+</div>
+<div mat-dialog-actions>
 </div>
