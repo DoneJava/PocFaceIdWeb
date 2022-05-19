@@ -64,7 +64,7 @@
         </div>
         <ng-template #cameraOn>
           <!-- CAMERA -->
-          <div *ngIf="this.VivacidadeNaoValidada; else VivacidadeValidada" style="max-height: 400px;">
+          <div *ngIf="!this.VivacidadeNaoValidada; else VivacidadeValidada" style="max-height: 400px;">
             <div style="max-height: 500px;">
               <app-camera [Measusres]="Measures" [isActivated]="false" [needTitle]="true"
                 (PicWasTaken)="this.ValidaVivacidade()"></app-camera>

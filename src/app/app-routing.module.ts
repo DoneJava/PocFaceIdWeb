@@ -5,12 +5,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guard/auth.guard';
 import { NotFoundComponent } from './views/not-found/not-found.component';
+import { TestComponent } from './views/test/test.component';
 
 
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
-  { path: 'autenticar', component: ValidadorAtivoComponent, canActivate: [AuthGuard] },
+  { path: 'autenticar', component: TestComponent, canActivate: [AuthGuard] },
   { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: '**', pathMatch: 'full', component: NotFoundComponent}
 ];

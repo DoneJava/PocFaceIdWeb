@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HelperService } from './../../services/helper.service';
 import { Component, OnInit } from '@angular/core';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-test',
@@ -25,7 +26,7 @@ export class TestComponent implements OnInit {
     {
       numero: '03',
       titulo: 'Em 2007 foi lançado no Brasil o PAC Programa de Aceleração do Crescimento. A execução desse programa tem uma abrangência:',
-      respostas: [["A", 'distrital'], ["B", 'municipal'], ["C", 'estadual'], ["B", 'nacional']]
+      respostas: [["A", 'distrital'], ["B", 'municipal'], ["C", 'estadual'], ["D", 'nacional']]
     },
     {
       numero: '04',
@@ -38,11 +39,14 @@ export class TestComponent implements OnInit {
   isDisabled: boolean = false
   arrQuestion: any[] = []
   pushed: boolean = false
+  isFinished: boolean = false
+  nextEnd:boolean = false
+  semAgradecimentos: boolean = true
 
   constructor(
     public helper: HelperService,
-    private _snackBar: MatSnackBar,
     public dialog: MatDialog,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -51,20 +55,40 @@ export class TestComponent implements OnInit {
 
   onClick(mark: string, question: number): void {
     this.arrQuestion.forEach(element => {
-      if (element[0] == question && element[1] != mark) {
-        let div = document.getElementById(element[1]) as HTMLDivElement
-        div.classList.remove("mark")
+      if(element[1] == '' && element[0] == question){
         element[1] = mark
         this.pushed = true
       }
+      else if (element[0] == question && element[1] != mark) {
+        let div = document.getElementById(element[1]) as HTMLDivElement
+        div.style.border = 'none'
+        element[1] = mark
+        this.pushed = true
+      }
+      else if(element[0] == question && element[1] == mark){
+        this.pushed = true
+      }
     });
+    
     if (this.pushed == false) {
       this.arrQuestion.push([question, mark])
     }
     this.pushed = false
 
     let div = document.getElementById(mark) as HTMLDivElement
-    div.classList.add("mark")
+    div.style.border = '2px solid black'
+  }
+
+  onUnMark(question: number): void {
+    for(let i = 0; i < this.arrQuestion.length; i++){
+      if(this.arrQuestion[i][0] == question){
+        let div = document.getElementById(this.arrQuestion[i][1]) as HTMLDivElement
+        div.style.border = 'none'
+        this.arrQuestion.splice(i,i)
+      }
+    }
+
+    console.log(this.arrQuestion)
   }
 
   nextQuestion(): void {
@@ -74,19 +98,24 @@ export class TestComponent implements OnInit {
     if (this.numQuest < this.prova.length - 1) {
       this.numQuest++
     }
+    if(this.nextEnd) {
+      this.isFinished = true
+    }
     if (this.numQuest == this.prova.length - 1) {
       this.changeButton('next', true)
-    } else {
-      
+      this.nextEnd = true
     }
 
-    /* let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-    div.style.border = '2px solid green' */
+
+    let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
+    div ? console.log('ok') : console.log(this.arrQuestion, this.numQuest)
+    div.style.border = '2px solid green'
   }
 
   backQuestion(): void {
     if (this.numQuest == this.prova.length - 1) {
       this.changeButton('next', false)
+      this.nextEnd = false
     }
     if (this.numQuest - 1 == 0) {
       this.numQuest--
@@ -96,7 +125,8 @@ export class TestComponent implements OnInit {
     }
 
     let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-    div.classList.add("mark")
+    div ? console.log(div) : console.log(this.arrQuestion, this.numQuest)
+    div.style.border = '2px solid green'
   }
 
 
@@ -129,6 +159,11 @@ export class TestComponent implements OnInit {
         }
         break;
     }
+  }
+
+  endTest():void {
+    this.router.navigate(['/'])
+    localStorage.clear()
   }
 
 }

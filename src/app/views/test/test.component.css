@@ -32,6 +32,27 @@
     background-color: rgb(255, 255, 255);
   }
 
+  .grid-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #cccccc;
+    height: 50%;
+  }
+
+  .grid-item{
+    color: white;
+    background-color: rgb(121, 183, 238);
+    border: 2px solid rgb(221, 221, 221);
+    padding: 20px;
+    font-size: 20px;
+    margin: 0 15px 0 15px;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
 
   #color25 {
     background-color: rgb(102, 176, 242);

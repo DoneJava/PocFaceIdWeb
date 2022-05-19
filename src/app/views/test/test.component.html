@@ -21,41 +21,83 @@
                 font-size: 1.1rem;">
             Prova de conhecimentos gerais
         </div>
-        <div>
-            <div style="display: flex; height: 25%; box-sizing: border-box;">
-                <div class="numero" style="margin-right: 3%; font-size: 1.8em;">
-                    {{this.prova[numQuest].numero}}
+        <div *ngIf="!isFinished; else finish">
+            <div>
+                <div style="display: flex; height: 25%; box-sizing: border-box;">
+                    <div class="numero" style="margin-right: 3%; font-size: 1.8em;">
+                        {{this.prova[numQuest].numero}}
+                    </div>
+                    <div class="questao" style="font-size: 1.3em; text-align: justify;">
+                        {{this.prova[numQuest].titulo}}
+                    </div>
                 </div>
-                <div class="questao" style="font-size: 1.3em; text-align: justify;">
-                    {{this.prova[numQuest].titulo}}
-                </div>
-            </div>
-            <div style="position: absolute; bottom: 250px; left: 8%; width: 85%; " >
-                <div *ngFor="let resposta of this.prova[numQuest].respostas"
-                    style="background-color: #eaeaea; border-radius: 6px; margin: 3% auto; width: 95%;cursor: pointer;"
-                    (click)="this.onClick(resposta[0], numQuest)"
-                    id={{resposta[0]}}>
-                    <div style="display: flex; width: 100%;">
-                        <div
-                            style="width: 8%; padding: 2%; background-color: #eaeaea; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
-                            <strong>{{resposta[0]}}</strong>
-                        </div>
-                        <div
-                            style="padding: 2%; margin: 3px;background-color: #cccccc; width: 100%; border-radius: 6px;">
-                            {{resposta[1]}}
+                <div style="position: absolute; bottom: 250px; left: 8%; width: 85%; ">
+                    <div *ngFor="let resposta of this.prova[numQuest].respostas"
+                        style="background-color: #eaeaea; border-radius: 6px; margin: 3% auto; width: 95%;cursor: pointer;"
+                        (click)="this.onClick(resposta[0], numQuest)" class="resp" id={{resposta[0]}}>
+                        <div style="display: flex; width: 100%;">
+                            <div
+                                style="width: 8%; padding: 2%; background-color: #eaeaea; border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                                <strong>{{resposta[0]}}</strong>
+                            </div>
+                            <div
+                                style="padding: 2%; margin: 3px;background-color: #cccccc; width: 100%; border-radius: 6px;">
+                                {{resposta[1]}}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div
-                style="position: absolute; bottom: 50px; left: 8%; width: 85%; display: flex; justify-content: space-between;">
-                <div style="width: 25%;"><button mat-stroked-button style="width: 100%;" (click)="this.backQuestion()"
-                        [disabled]="this.isDisabled" id="back">Voltar</button></div>
-                <div style="width: 25%;"><button mat-stroked-button style="width: 100%;" id="unmark">Desmarcar</button>
+                <div
+                    style="position: absolute; bottom: 50px; left: 8%; width: 85%; display: flex; justify-content: space-between;">
+                    <div style="width: 25%;"><button mat-stroked-button style="width: 100%;"
+                            (click)="this.backQuestion()" [disabled]="this.isDisabled" id="back">Voltar</button></div>
+                    <div style="width: 25%;"><button mat-stroked-button style="width: 100%;" id="unmark"
+                            (click)="this.onUnMark(numQuest)">Desmarcar</button>
+                    </div>
+                    <div style="width: 25%;"><button mat-stroked-button style="width: 100%;"
+                            (click)="this.nextQuestion()" id="next">Avançar</button></div>
                 </div>
-                <div style="width: 25%;"><button mat-stroked-button style="width: 100%;" (click)="this.nextQuestion()"
-                        id="next">Avançar</button></div>
             </div>
         </div>
+        <ng-template #finish>
+            <div *ngIf="semAgradecimentos; else agradecimentos">
+                <div style="display: flex; justify-content: space-between; flex-direction: column; height: 95%;">
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="display: flex; flex-direction: column">
+                            <div>
+                                Participante: Matheus Cardoso
+                            </div>
+                            <div>
+                                {{this.helper.cpf}}
+                            </div>
+                        </div>
+                        <div>
+                            <img style="width: 50px;" src="../../../assets/img/anonimo.png" alt="">
+                        </div>
+                    </div>
+                    <div class="grid-container">
+                        <div class="grid-item" style="border-radius: 5px;" *ngFor="let i of this.arrQuestion"><div></div>{{i[0]+1}}) {{i[1]}}</div>
+                    </div>
+                </div>
+                <div class="buttons" style="display: flex; justify-content: space-between; margin: 40% auto 0 auto; width: 85%;">
+                    <button mat-stroked-button style="width: 100px" (click)="this.isFinished = false;">Não</button>
+                    <button (click)="this.semAgradecimentos = false" mat-stroked-button style="background-color: rgb(102, 176, 242); color: white; width: 100px;">Sim</button>
+                </div>
+            </div>
+            <ng-template #agradecimentos>
+                <div style="height: 50%; text-align: center; display: flex; justify-content: space-around; flex-direction: column; border: 1px solid #cccccc; border-radius: 5px;">
+                    <div >
+                        <img style="width: 100px;" src="../../../assets/img/check.png" alt="">
+                    </div>
+                    <div>
+                        <h1>Prova Concluida com sucesso!</h1>
+                        <h3>Ao Clicar no botão abaixo, você será redirecionado para a tela de login.</h3>
+                    </div>
+                </div>
+                <div class="buttons" style="display: flex; justify-content: center; margin: 30% auto 0 auto; width: 85%;">
+                    <button mat-stroked-button style="background-color: rgb(102, 176, 242); color: white; width: 100px;" (click)="this.endTest()">Home</button>
+                </div>
+            </ng-template>
+        </ng-template>
     </div>
 </div>
