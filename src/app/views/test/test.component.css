@@ -16,7 +16,7 @@
     width: 100vw;
     background: transparent;
     z-index: 100;
-    background-color: rgb(102, 176, 242);
+    background-color: #00569f;
   }
   
   .container {
@@ -55,7 +55,7 @@
 
 
   #color25 {
-    background-color: rgb(102, 176, 242);
+    background-color: #00569f;
     width: 40%;
     height: 100%;
   }

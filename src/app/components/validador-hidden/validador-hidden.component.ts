@@ -1,11 +1,12 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ModalComponent } from 'src/app/components/modal/modal.component';
-import { MatDialog } from '@angular/material/dialog';
-import { HttpService } from './../../services/http.service';
-import { User } from './../../interfaces/user';
-import { CameraComponent } from './../camera/camera.component';
 import { HelperService } from 'src/app/services/helper.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+
+import { User } from './../../interfaces/user';
+import { HttpService } from './../../services/http.service';
+import { CameraComponent } from './../camera/camera.component';
 
 @Component({
   selector: 'app-validador-hidden',
@@ -37,21 +38,20 @@ export class ValidadorHiddenComponent implements OnInit {
       if (this.greenLight) {
         this.camera.triggerSnapshot()
         this.user.Img = this.helper.webImg
-        if(this.helper.cpf && this.helper.senha){
+        if (this.helper.cpf && this.helper.senha) {
           this.user.CPF = this.helper.cpf
           this.user.Senha = this.helper.senha
         }
-        else{
+        else {
           this.user.CPF = atob(String(localStorage.getItem(btoa('CPF'))))
           this.user.Senha = atob(String(localStorage.getItem(btoa('Senha'))))
         }
 
         this.http.postValidar(this.user).subscribe((data) => { }, (error) => {
-          console.log(error)
           if (error.status == 401) {
             if (error.error.code == 1)
               this.badWayOne(error.error.mensagemResposta)
-            else if(error.error.code == 2)
+            else if (error.error.code == 2)
               this.badWayTwo(error.error.mensagemResposta)
           }
         })
@@ -63,7 +63,7 @@ export class ValidadorHiddenComponent implements OnInit {
     const dialogRef = this.dialog.open(ModalComponent, {
       width: '550px',
     });
-    
+
     dialogRef.componentInstance.FieldsDialog = ref
 
     dialogRef.disableClose = true

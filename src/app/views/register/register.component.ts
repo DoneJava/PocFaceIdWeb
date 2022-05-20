@@ -1,3 +1,4 @@
+import { FacesComponent } from './../../components/faces/faces.component';
 import { Validators } from '@angular/forms';
 import { Component, Output, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -38,6 +39,9 @@ export class RegisterComponent implements OnInit {
 
   @ViewChild(CameraComponent, { static: false })
   camera!: CameraComponent;
+
+  @ViewChild(FacesComponent, { static: false })
+  face!: FacesComponent;
 
   cadastro: any = ''
   onSubmit: boolean = true
@@ -126,6 +130,7 @@ export class RegisterComponent implements OnInit {
         this.takePhoto()
       }, (error) => {
         this.helper.webImg = ''
+        console.log(error)
         if (error.status == 401) {
           this.helper.loopShoot = false
           this._snackBar.open('Não possível validar a vivacidade, tente novamente.', 'Close', {
@@ -133,6 +138,15 @@ export class RegisterComponent implements OnInit {
             horizontalPosition: 'right',
           })
           this.helper.webImg = null
+        }
+        else if(error.status == 400){
+          console.log(error.error)
+          if(error.error.etapa1 == true)
+            this.face.id1.style.fill = '#38FF1E'
+          if(error.error.etapa2 == true)
+            this.face.id2.style.fill = '#38FF1E'
+          if(error.error.etapa3 == true)
+            this.face.id3.style.fill = '#38FF1E'
         }
       })
   }

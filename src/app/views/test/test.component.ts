@@ -1,6 +1,6 @@
 import { MatDialog} from '@angular/material/dialog';
 import { HelperService } from './../../services/helper.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -44,7 +44,8 @@ export class TestComponent implements OnInit {
   constructor(
     public helper: HelperService,
     public dialog: MatDialog,
-    public router: Router
+    public router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -73,15 +74,13 @@ export class TestComponent implements OnInit {
     }
     this.pushed = false
 
-    let div = document.getElementById(mark) as HTMLDivElement
-    div.style.border = '2px solid black'
+    document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
   }
 
   onUnMark(question: number): void {
     for(let i = 0; i < this.arrQuestion.length; i++){
       if(this.arrQuestion[i][0] == question){
-        let div = document.getElementById(this.arrQuestion[i][1]) as HTMLDivElement
-        div.style.border = 'none'
+        document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = 'none'
         this.arrQuestion.splice(i,i)
       }
     }
@@ -104,10 +103,8 @@ export class TestComponent implements OnInit {
       this.nextEnd = true
     }
 
-
-    let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-    div ? console.log('ok') : console.log(this.arrQuestion, this.numQuest)
-    div.style.border = '2px solid green'
+    this.cdr.detectChanges()
+    document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
   }
 
   backQuestion(): void {
@@ -121,10 +118,16 @@ export class TestComponent implements OnInit {
     } else {
       this.numQuest--
     }
+    this.cdr.detectChanges()
+    document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
+  }
 
-    let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-    div ? console.log(div) : console.log(this.arrQuestion, this.numQuest)
-    div.style.border = '2px solid green'
+  backFromEnd(): void {
+    this.isFinished = false
+    this.nextEnd = true    
+    this.cdr.detectChanges()
+    this.changeButton('next', true)
+    document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
   }
 
 

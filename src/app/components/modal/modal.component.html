@@ -7,7 +7,23 @@
             <app-camera  [Measusres]="Measures" [isActivated]="false" [needTitle]="false" ></app-camera>
         </div>
         <div class="message">
-            <h2>{{FieldsDialog.randomMessage}}</h2>
+            <div class="icons" style="margin-top: 5%;">
+                <div *ngIf="this.FieldsDialog.randomMessage == 'Vire o rosto para cima.'">
+                  <app-faces [direction]="'cima'"></app-faces>
+                </div>
+                <div *ngIf="this.FieldsDialog.randomMessage == 'Vire o rosto para baixo.'">
+                  <app-faces [direction]="'baixo'"></app-faces>
+                </div>
+                <div *ngIf="this.FieldsDialog.randomMessage == 'Vire o rosto para esquerda.'">
+                  <app-faces [direction]="'esq'"></app-faces>
+                </div>
+                <div *ngIf="this.FieldsDialog.randomMessage == 'Vire o rosto para direta.'">
+                  <app-faces [direction]="'dir'"></app-faces>
+                </div>
+            </div>
+            <div>
+                <h2>{{FieldsDialog.randomMessage}}</h2>
+            </div>
         </div>
     </div>
     <ng-template #text>

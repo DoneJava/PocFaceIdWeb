@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
   
   canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot): Observable<boolean> | boolean {
-    if(localStorage.getItem('token')){
+    if(localStorage.getItem(btoa('token'))){
       return true
     }
     else{

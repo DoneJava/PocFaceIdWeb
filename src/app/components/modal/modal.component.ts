@@ -1,3 +1,4 @@
+import { FacesComponent } from './../faces/faces.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -16,6 +17,9 @@ export class ModalComponent implements OnInit {
 
   @ViewChild(CameraComponent, { static: false })
   camera!: CameraComponent;
+  
+  @ViewChild(FacesComponent, { static: false })
+  face!: FacesComponent;
 
   FieldsDialog: any = {}
   Measures: any = { height: 500, width: 490 }
@@ -31,8 +35,7 @@ export class ModalComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.FieldsDialog.type == 'cam') {
-      this.http.getRandom().subscribe((data) => { this.FieldsDialog.randomMessage = data.mensagemResposta }, (error) => { })
-
+      this.http.getRandom().subscribe((data) => { this.FieldsDialog.randomMessage = data.mensagemResposta; console.log(this.FieldsDialog.randomMessage) }, (error) => { })
       let interval = setInterval(() => {
         this.camera.triggerSnapshot()
         this.data.Img = this.helper.webImg
@@ -41,20 +44,23 @@ export class ModalComponent implements OnInit {
         if (!this.helper.authLogin) {
           this.http.postVivacidade(this.data).subscribe((data) => {
             this.helper.authLogin = true
-            if(this.FieldsDialog.login){
+            if (this.FieldsDialog.login) {
               this.onLogin()
               this.dialogRef.close()
             }
           }, (error) => {
-            console.log(error)
+            if (error.error.etapa1 == true)
+              this.face.id1.style.fill = '#38FF1E'
+            if (error.error.etapa2 == true)
+              this.face.id2.style.fill = '#38FF1E'
+            if (error.error.etapa3 == true)
+              this.face.id3.style.fill = '#38FF1E'
           })
         }
-        else{
+        else {
           clearInterval(interval)
         }
       }, 1000)
-
-
     }
   }
 
@@ -62,8 +68,8 @@ export class ModalComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onLogin():void {
-    localStorage.setItem('token', 'true')
+  onLogin(): void {
+    localStorage.setItem(btoa('token'), btoa('true'))
     this.router.navigate(['/autenticar'])
     this.helper.isLoading.next(false)
   }
