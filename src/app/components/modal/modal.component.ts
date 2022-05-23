@@ -29,13 +29,13 @@ export class ModalComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,
     private http: HttpService,
-    private helper: HelperService,
+    public helper: HelperService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    console.log(this.helper.random)
     if (this.FieldsDialog.type == 'cam') {
-      this.http.getRandom().subscribe((data) => { this.FieldsDialog.randomMessage = data.mensagemResposta; console.log(this.FieldsDialog.randomMessage) }, (error) => { })
       let interval = setInterval(() => {
         this.camera.triggerSnapshot()
         this.data.Img = this.helper.webImg

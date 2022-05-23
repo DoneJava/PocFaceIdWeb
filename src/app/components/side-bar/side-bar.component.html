@@ -1,6 +1,57 @@
-<div class="main">
-    <div *ngFor="let icon of icons">
-        <div class="iconsDiv" matTooltip="Info about the action" [matTooltipPosition]="'right'"><mat-icon class="icons">{{icon}}</mat-icon></div>     
+<div *ngIf="!this.closed; else opened" class="main">
+    <div>
+        <div class="iconsDiv" (click)="this.openAndClose(true)" matTooltip="Abrir" [matTooltipPosition]="'right'">
+            <mat-icon class="icons">{{icons[0][0]}}</mat-icon>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="iconsDiv" matTooltip="Mapa de questões" [matTooltipPosition]="'right'">
+            <mat-icon class="icons">{{icons[1][0]}}</mat-icon>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="iconsDiv" matTooltip="Rascunho" [matTooltipPosition]="'right'">
+            <mat-icon class="icons">{{icons[2][0]}}</mat-icon>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="iconsDiv" matTooltip="Finalizar" [matTooltipPosition]="'right'">
+            <mat-icon class="icons">{{icons[3][0]}}</mat-icon>
+        </div>
         <mat-divider></mat-divider>
     </div>
 </div>
+<ng-template #opened>
+    <div class="opened">
+        <div>
+            <div >
+                <div (click)="this.openAndClose(false)">
+                    <div class="iconsDiv">
+                        <mat-icon style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[0][0]}}</mat-icon>
+                        {{icons[0][1]}}
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <div>
+                    <div class="iconsDiv">
+                        <mat-icon style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[1][0]}}</mat-icon>
+                        {{icons[1][1]}}
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <div>
+                    <div class="iconsDiv">
+                        <mat-icon style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[2][0]}}</mat-icon>
+                        {{icons[2][1]}}
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <div>
+                    <div class="iconsDiv">
+                        <mat-icon style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[3][0]}}</mat-icon>
+                        {{icons[3][1]}}
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+    </div>
+</ng-template>

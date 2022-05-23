@@ -14,6 +14,7 @@ export class HelperService {
 
   //Mensagem APi
   public messageToValidar: string = ''
+  public random: any = ''
 
   //Valida Loading
   public isDisable = new BehaviorSubject<Boolean>(false)

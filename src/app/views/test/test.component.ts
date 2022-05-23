@@ -1,4 +1,4 @@
-import { MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { HelperService } from './../../services/helper.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -38,7 +38,7 @@ export class TestComponent implements OnInit {
   arrQuestion: any[] = []
   pushed: boolean = false
   isFinished: boolean = false
-  nextEnd:boolean = false
+  nextEnd: boolean = false
   semAgradecimentos: boolean = true
 
   constructor(
@@ -54,7 +54,7 @@ export class TestComponent implements OnInit {
 
   onClick(mark: string, question: number): void {
     this.arrQuestion.forEach(element => {
-      if(element[1] == '' && element[0] == question){
+      if (element[1] == '' && element[0] == question) {
         element[1] = mark
         this.pushed = true
       }
@@ -64,28 +64,27 @@ export class TestComponent implements OnInit {
         element[1] = mark
         this.pushed = true
       }
-      else if(element[0] == question && element[1] == mark){
+      else if (element[0] == question && element[1] == mark) {
         this.pushed = true
       }
     });
-    
+
     if (this.pushed == false) {
       this.arrQuestion.push([question, mark])
     }
     this.pushed = false
 
+    this.cdr.detectChanges()
     document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
   }
 
   onUnMark(question: number): void {
-    for(let i = 0; i < this.arrQuestion.length; i++){
-      if(this.arrQuestion[i][0] == question){
+    for (let i = 0; i < this.arrQuestion.length; i++) {
+      if (this.arrQuestion[i][0] == question) {
         document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = 'none'
-        this.arrQuestion.splice(i,i)
+        this.arrQuestion.splice(i)
       }
     }
-
-    console.log(this.arrQuestion)
   }
 
   nextQuestion(): void {
@@ -95,7 +94,7 @@ export class TestComponent implements OnInit {
     if (this.numQuest < this.prova.length - 1) {
       this.numQuest++
     }
-    if(this.nextEnd) {
+    if (this.nextEnd) {
       this.isFinished = true
     }
     if (this.numQuest == this.prova.length - 1) {
@@ -104,6 +103,7 @@ export class TestComponent implements OnInit {
     }
 
     this.cdr.detectChanges()
+      
     document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
   }
 
@@ -124,7 +124,7 @@ export class TestComponent implements OnInit {
 
   backFromEnd(): void {
     this.isFinished = false
-    this.nextEnd = true    
+    this.nextEnd = true
     this.cdr.detectChanges()
     this.changeButton('next', true)
     document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
@@ -162,7 +162,7 @@ export class TestComponent implements OnInit {
     }
   }
 
-  endTest():void {
+  endTest(): void {
     this.router.navigate(['/'])
     localStorage.clear()
   }

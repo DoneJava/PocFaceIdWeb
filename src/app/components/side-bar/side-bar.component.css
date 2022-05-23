@@ -8,6 +8,9 @@
 .iconsDiv {
     height: 50px;
     cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .icons {
@@ -17,4 +20,11 @@
     justify-content: center;
     align-items: center;
     font-size: 35px;
+}
+
+.opened {
+    position: absolute;
+    height: 100%;
+    background-color: white;
+    width: 250px;
 }

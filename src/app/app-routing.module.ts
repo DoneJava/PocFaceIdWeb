@@ -11,7 +11,7 @@ import { TestComponent } from './views/test/test.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
-  { path: 'autenticar', component: SideBarComponent, canActivate: [AuthGuard] },
+  { path: 'autenticar', component: TestComponent, canActivate: [AuthGuard] },
   { path: '', component: LoginComponent, pathMatch: 'full' },
   { path: '**', pathMatch: 'full', component: NotFoundComponent}
 ];

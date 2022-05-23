@@ -38,17 +38,23 @@ export class FacesComponent implements OnInit {
 
 
   ngOnInit(): void {
+    console.log(this.direction)
+
     switch(this.direction){
       case 'Vire o rosto para cima.':
+        console.log('cima')
         this.ref = this.cima
         break;
       case 'Vire o rosto para esquerda.':
+        console.log('esquerda')
         this.ref = this.esq
         break;
       case 'Vire o rosto para baixo.':
+        console.log('baixo')
         this.ref = this.baixo
         break;
-      case 'Vire o rosto para direta.':
+      case 'Vire o rosto para direita.':
+        console.log('direita')
         this.ref = this.dir
         break;
     }

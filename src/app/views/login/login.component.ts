@@ -67,13 +67,18 @@ export class LoginComponent implements OnInit {
     if (event.valid) {
       this.helper.cpf = this.user.CPF = event.value.cpf;
       this.helper.senha = this.user.Senha = event.value.password
-      
+
       localStorage.setItem(btoa('CPF'), btoa(this.helper.cpf))
       localStorage.setItem(btoa('Senha'), btoa(this.helper.senha))
 
       this.helper.isLoading.next(true)
       this.http.putLogin(this.user).subscribe((data) => {
-        this.openDialog()
+        this.http.getRandom().subscribe((data) => {
+          this.helper.random = data.mensagemResposta;
+          this.helper.messageToValidar = data.mensagemResposta;
+          this.openDialog();
+        }, (error) => { })
+
       }, (error) => {
         this.helper.isLoading.next(false)
         if (error.status == 401) {
