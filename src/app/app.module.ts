@@ -24,7 +24,6 @@ import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { WebcamModule } from 'ngx-webcam';
-import { PainterLibraryModule } from 'shivs-angular4-painter';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,6 +42,7 @@ import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { TestComponent } from './views/test/test.component';
 import { CavasComponent } from './components/cavas/cavas.component';
+import { PaintableModule } from 'paintablejs/angular';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -93,7 +93,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     MatSidenavModule,
     MdbCheckboxModule,
     MatTooltipModule,
-    PainterLibraryModule
+    PaintableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

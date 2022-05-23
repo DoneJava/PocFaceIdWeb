@@ -1,4 +1,3 @@
-canvas {
-    position: absolute;
-    background-color: transparent;
+#canvas {
+    border: 2px solid black;
 }
