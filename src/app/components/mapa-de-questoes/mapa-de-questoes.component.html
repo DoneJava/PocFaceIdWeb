@@ -1,0 +1,25 @@
+<div *ngIf="onShow" class="fullPage">
+    <div (click)="this.ShowMe(false)" style="
+        cursor: pointer;
+        background-color: white;
+        position: absolute; 
+        right: 25%; top: 10%; 
+        width: 30px; 
+        height: 30px; 
+        border-radius: 15px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        font-weight: 700;">
+        X
+    </div>
+    <div class="container">
+        <div class="questions" *ngFor="let question of questions">
+            <strong>{{question[0] + 1}}</strong>
+            <div
+                style="background-color: transparent; border-radius: 20px; border: 1px solid black; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;">
+                <strong>{{question[1]}}</strong>
+            </div>
+        </div>
+    </div>
+</div>

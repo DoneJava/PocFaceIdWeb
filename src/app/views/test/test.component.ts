@@ -35,11 +35,12 @@ export class TestComponent implements OnInit {
 
   numQuest: number = 0
   isDisabled: boolean = false
-  arrQuestion: any[] = []
+  arrQuestion: any[] = [[0, ''], [1, ''], [2, ''], [3, '']]
   pushed: boolean = false
   isFinished: boolean = false
   nextEnd: boolean = false
   semAgradecimentos: boolean = true
+  mapShow: boolean = false
 
   constructor(
     public helper: HelperService,
@@ -50,39 +51,47 @@ export class TestComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeButton('back', true)
+    console.log(this.arrQuestion)
   }
 
   onClick(mark: string, question: number): void {
     this.arrQuestion.forEach(element => {
-      if (element[1] == '' && element[0] == question) {
+      if (element[0] == question && element[1] == '') {
         element[1] = mark
         this.pushed = true
+        let div2 = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
+        div2.style.border = '2px solid green'
       }
       else if (element[0] == question && element[1] != mark) {
         let div = document.getElementById(element[1]) as HTMLDivElement
         div.style.border = 'none'
         element[1] = mark
         this.pushed = true
+        let div2 = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
+        div2.style.border = '2px solid green'
       }
       else if (element[0] == question && element[1] == mark) {
+        let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
+        div.style.border = '2px solid green'
         this.pushed = true
       }
     });
-
     if (this.pushed == false) {
       this.arrQuestion.push([question, mark])
+      let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
+      div.style.border = '2px solid green'
     }
     this.pushed = false
 
     this.cdr.detectChanges()
-    document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
   }
 
   onUnMark(question: number): void {
     for (let i = 0; i < this.arrQuestion.length; i++) {
       if (this.arrQuestion[i][0] == question) {
         document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = 'none'
-        this.arrQuestion.splice(i)
+        this.arrQuestion[i][1] = ''
+        /* this.arrQuestion.splice(i) */
       }
     }
   }
@@ -103,8 +112,10 @@ export class TestComponent implements OnInit {
     }
 
     this.cdr.detectChanges()
-      
-    document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
+    if (this.arrQuestion[this.numQuest]) {
+      let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
+      div.style.border = '2px solid green'
+    }
   }
 
   backQuestion(): void {
@@ -119,7 +130,11 @@ export class TestComponent implements OnInit {
       this.numQuest--
     }
     this.cdr.detectChanges()
-    document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
+
+    if (this.arrQuestion.length - 1 >= this.numQuest) {
+      let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
+      div.style.border = '2px solid green'
+    }
   }
 
   backFromEnd(): void {
@@ -165,6 +180,14 @@ export class TestComponent implements OnInit {
   endTest(): void {
     this.router.navigate(['/'])
     localStorage.clear()
+  }
+
+  endFromSide(): void {
+    this.isFinished = true
+  }
+
+  onMapShow(event: boolean): void {
+    this.mapShow = event
   }
 
 }

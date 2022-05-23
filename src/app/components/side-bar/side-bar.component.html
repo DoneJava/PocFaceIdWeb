@@ -1,10 +1,11 @@
+<app-mapa-de-questoes [questions]="this.arrQuestion"></app-mapa-de-questoes>
 <div *ngIf="!this.closed; else opened" class="main">
     <div>
         <div class="iconsDiv" (click)="this.openAndClose(true)" matTooltip="Abrir" [matTooltipPosition]="'right'">
             <mat-icon class="icons">{{icons[0][0]}}</mat-icon>
         </div>
         <mat-divider></mat-divider>
-        <div class="iconsDiv" matTooltip="Mapa de questões" [matTooltipPosition]="'right'">
+        <div class="iconsDiv" (click)="this.showMap()" matTooltip="Mapa de questões" [matTooltipPosition]="'right'">
             <mat-icon class="icons">{{icons[1][0]}}</mat-icon>
         </div>
         <mat-divider></mat-divider>
@@ -12,7 +13,7 @@
             <mat-icon class="icons">{{icons[2][0]}}</mat-icon>
         </div>
         <mat-divider></mat-divider>
-        <div class="iconsDiv" matTooltip="Finalizar" [matTooltipPosition]="'right'">
+        <div class="iconsDiv" (click)="this.onEnd()" matTooltip="Finalizar" [matTooltipPosition]="'right'">
             <mat-icon class="icons">{{icons[3][0]}}</mat-icon>
         </div>
         <mat-divider></mat-divider>
@@ -30,8 +31,8 @@
                 </div>
                 <mat-divider></mat-divider>
                 <div>
-                    <div class="iconsDiv">
-                        <mat-icon style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[1][0]}}</mat-icon>
+                    <div (click)="this.showMap()" class="iconsDiv">
+                        <mat-icon  style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[1][0]}}</mat-icon>
                         {{icons[1][1]}}
                     </div>
                 </div>
