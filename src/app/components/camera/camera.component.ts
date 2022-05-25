@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter, Input, AfterViewInit } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WebcamImage, WebcamInitError, WebcamMirrorProperties, WebcamUtil } from 'ngx-webcam';
+import { Observable, Subject } from 'rxjs';
 import { Interceptor } from 'src/app/interceptors/interceptor.service';
 import { HelperService } from 'src/app/services/helper.service';
 
@@ -19,11 +19,11 @@ export class CameraComponent implements OnInit, AfterViewInit {
 
   }
   @Output() PicWasTaken = new EventEmitter();
-  
+
   @Input() needTitle: boolean = false
   @Input() isActivated: boolean = true
   @Input() Measusres: any = {}
-  
+
 
   public cont = 1
   public showWebcam = true;
@@ -42,7 +42,7 @@ export class CameraComponent implements OnInit, AfterViewInit {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       }
     );
-      
+
 
 
   }
@@ -52,14 +52,14 @@ export class CameraComponent implements OnInit, AfterViewInit {
 
   takeInLoop() {
     /* setTimeout(() => {this.triggerSnapshot()}, 5000)  */
-    
+
     if (this.helper.loopShoot) {
       setTimeout(() => {
         var shoot = setInterval(() => {
           if (this.wating.cont.getValue() === 0 && this.helper.loopShoot) {
             this.triggerSnapshot()
           }
-          else{
+          else {
             clearInterval(shoot)
           }
         }, 1000);

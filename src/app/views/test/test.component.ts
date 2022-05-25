@@ -1,7 +1,9 @@
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { HelperService } from './../../services/helper.service';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { HelperService } from '../../services/helper.service';
+import { CavasComponent } from './../../components/cavas/cavas.component';
 
 @Component({
   selector: 'app-test',
@@ -33,6 +35,9 @@ export class TestComponent implements OnInit {
     }
   ]
 
+  @ViewChild(CavasComponent, { static: false })
+  canvas!: CavasComponent;
+
   numQuest: number = 0
   isDisabled: boolean = false
   arrQuestion: any[] = [[0, ''], [1, ''], [2, ''], [3, '']]
@@ -41,6 +46,9 @@ export class TestComponent implements OnInit {
   nextEnd: boolean = false
   semAgradecimentos: boolean = true
   mapShow: boolean = false
+  imgFinal: string = this.helper.imgBD ? this.helper.imgBD : atob(String(localStorage.getItem(btoa('imgBD'))))
+  nomeFinal: string = this.helper.nome ? this.helper.nome : atob(String(localStorage.getItem(btoa('nome'))))
+  cpfFinal: string = this.helper.cpf ? this.helper.cpf : atob(String(localStorage.getItem(btoa('CPF'))))
 
   constructor(
     public helper: HelperService,
@@ -51,7 +59,9 @@ export class TestComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeButton('back', true)
-    console.log(this.arrQuestion)
+    this.helper.tracking = true
+
+
   }
 
   onClick(mark: string, question: number): void {
@@ -60,7 +70,7 @@ export class TestComponent implements OnInit {
         element[1] = mark
         this.pushed = true
         let div2 = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-        div2.style.border = '2px solid green'
+        div2.style.border = '2px solid #00fd00'
       }
       else if (element[0] == question && element[1] != mark) {
         let div = document.getElementById(element[1]) as HTMLDivElement
@@ -68,18 +78,18 @@ export class TestComponent implements OnInit {
         element[1] = mark
         this.pushed = true
         let div2 = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-        div2.style.border = '2px solid green'
+        div2.style.border = '2px solid #00fd00'
       }
       else if (element[0] == question && element[1] == mark) {
         let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-        div.style.border = '2px solid green'
+        div.style.border = '2px solid #00fd00'
         this.pushed = true
       }
     });
     if (this.pushed == false) {
       this.arrQuestion.push([question, mark])
       let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-      div.style.border = '2px solid green'
+      div.style.border = '2px solid #00fd00'
     }
     this.pushed = false
 
@@ -111,10 +121,13 @@ export class TestComponent implements OnInit {
       this.nextEnd = true
     }
 
+    this.onSkecth(0)
+    this.onSkecth(3)
+
     this.cdr.detectChanges()
     if (this.arrQuestion[this.numQuest]) {
       let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-      div.style.border = '2px solid green'
+      div.style.border = '2px solid #00fd00'
     }
   }
 
@@ -133,7 +146,7 @@ export class TestComponent implements OnInit {
 
     if (this.arrQuestion.length - 1 >= this.numQuest) {
       let div = document.getElementById(this.arrQuestion[this.numQuest][1]) as HTMLDivElement
-      div.style.border = '2px solid green'
+      div.style.border = '2px solid #00fd00'
     }
   }
 
@@ -142,7 +155,7 @@ export class TestComponent implements OnInit {
     this.nextEnd = true
     this.cdr.detectChanges()
     this.changeButton('next', true)
-    document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid green'
+    document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid #00fd00'
   }
 
 
@@ -178,6 +191,7 @@ export class TestComponent implements OnInit {
   }
 
   endTest(): void {
+    this.helper.tracking = false
     this.router.navigate(['/'])
     localStorage.clear()
   }
@@ -188,6 +202,29 @@ export class TestComponent implements OnInit {
 
   onMapShow(event: boolean): void {
     this.mapShow = event
+  }
+
+  onSkecth(event: any): void {
+    switch(event){
+      case 1:
+        this.canvas.toggleEdit()
+        break;
+      case 2:
+        this.canvas.toggleUseEraser()
+        break;
+      case 3:
+        this.canvas.clear()
+        break;
+      case 4:
+        this.canvas.redo()
+        break;
+      case 5:
+        this.canvas.undo()
+        break;
+      case 0:
+        this.canvas.manageImage(String(this.numQuest))
+        this.canvas.toggleEdit()
+    }
   }
 
 }

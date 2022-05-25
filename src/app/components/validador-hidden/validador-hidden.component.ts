@@ -34,8 +34,8 @@ export class ValidadorHiddenComponent implements OnInit {
   }
 
   hapyWay(): void {
-    setInterval(() => {
-      if (this.greenLight) {
+    let interval = setInterval(() => {
+      if (this.greenLight && this.helper.tracking) {
         this.camera.triggerSnapshot()
         this.user.Img = this.helper.webImg
         if (this.helper.cpf && this.helper.senha) {
@@ -55,6 +55,9 @@ export class ValidadorHiddenComponent implements OnInit {
               this.badWayTwo(error.error.mensagemResposta)
           }
         })
+      }
+      if(!this.helper.tracking){
+        clearInterval(interval)
       }
     }, 1000)
   }

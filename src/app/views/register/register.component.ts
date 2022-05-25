@@ -1,17 +1,18 @@
-import { FacesComponent } from './../../components/faces/faces.component';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Component, Output, OnInit, ViewChild } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { HttpService } from 'src/app/services/http.service';
-import { HelperService } from 'src/app/services/helper.service';
-import { CpfValidatorService } from 'src/app/services/cpf-validator.service';
 import { MatIconRegistry } from '@angular/material/icon';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
-import { vivacidade } from 'src/app/interfaces/user';
-import { CameraComponent } from 'src/app/components/camera/camera.component';
+import { Router } from '@angular/router';
 import { retry } from 'rxjs';
+import { CameraComponent } from 'src/app/components/camera/camera.component';
+import { vivacidade } from 'src/app/interfaces/user';
+import { CpfValidatorService } from 'src/app/services/cpf-validator.service';
+import { HelperService } from 'src/app/services/helper.service';
+import { HttpService } from 'src/app/services/http.service';
+
+import { FacesComponent } from './../../components/faces/faces.component';
 
 
 @Component({

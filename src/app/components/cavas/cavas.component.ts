@@ -1,7 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component, OnInit, ViewChild
-} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { PaintableComponent } from 'paintablejs/angular';
 
 
@@ -11,14 +8,15 @@ import { PaintableComponent } from 'paintablejs/angular';
   styleUrls: ['./cavas.component.css']
 })
 export class CavasComponent {
-  
-  @ViewChild (PaintableComponent) 
+
+  @ViewChild(PaintableComponent)
   paintable!: PaintableComponent;
 
   active = false;
   useEraser = false;
   thickness = 5;
   color = '#FF0000';
+  question: string = ''
 
   clear() {
     this.paintable?.clear();
@@ -46,11 +44,16 @@ export class CavasComponent {
   }
 
   onSave(image: string) {
-    localStorage.setItem('/', image);
+    localStorage.setItem(btoa(this.question), btoa(image));
   }
 
   onLongPress() {
     console.log('longpress');
+  }
+
+  manageImage(number: string): void {
+    this.question = number
+    this.onSave
   }
 
 }

@@ -1,6 +1,6 @@
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { Component, OnInit, AfterViewInit, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-faces',
@@ -23,24 +23,24 @@ export class FacesComponent implements OnInit {
     this.iconRegistry.addSvgIcon('baixo1', this.sanitize.bypassSecurityTrustResourceUrl('assets/img/svgs/baixo1.svg'))
     this.iconRegistry.addSvgIcon('baixo2', this.sanitize.bypassSecurityTrustResourceUrl('assets/img/svgs/baixo2.svg'))
   }
-  
+
   @Input() direction: string = ''
 
-  dir: any[] = [['front', 'id1'], ['dir1', 'id2'] , ['dir2', 'id3']]
-  esq: any[] = [['front', 'id1'], ['esq1', 'id2'] , ['esq2', 'id3']]
-  cima: any[] = [['front', 'id1'], ['cima1', 'id2'] , ['cima2', 'id3']]
-  baixo: any[] = [['front', 'id1'], ['baixo1', 'id2'] , ['baixo2', 'id3']]
+  dir: any[] = [['front', 'id1'], ['dir1', 'id2'], ['dir2', 'id3']]
+  esq: any[] = [['front', 'id1'], ['esq1', 'id2'], ['esq2', 'id3']]
+  cima: any[] = [['front', 'id1'], ['cima1', 'id2'], ['cima2', 'id3']]
+  baixo: any[] = [['front', 'id1'], ['baixo1', 'id2'], ['baixo2', 'id3']]
 
   ref: any[] = []
-  id1:any
-  id2:any
-  id3:any
+  id1: any
+  id2: any
+  id3: any
 
 
   ngOnInit(): void {
     console.log(this.direction)
 
-    switch(this.direction){
+    switch (this.direction) {
       case 'Vire o rosto para cima.':
         console.log('cima')
         this.ref = this.cima

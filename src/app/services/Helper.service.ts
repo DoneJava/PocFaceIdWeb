@@ -9,6 +9,9 @@ export class HelperService {
 
   constructor() { }
 
+  //Monitoramento
+  public tracking: boolean = false
+
   //Foto tirada
   public webImg: any;
 

@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,15 +7,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class HttpService {
-  urlResetSenha = 'https://localhost:44388/api/Face/ResetarSenha'//
-  urlEsqueciSenha = 'https://localhost:44388/api/Face/EsqueciSenha';//
-  urlApiCadastrar = 'https://localhost:44388/api/Face/Cadastrar';//
-  urlApiVivacidadeCad = 'https://localhost:44388/api/Face/VerificarVivacidadeCadastro'//
-  urlApiVerificarId = 'https://localhost:44388/api/Face/ConfirmarCadastro'//
-  urlApiLogin = 'https://localhost:44388/api/Face/Login';//
-  urlApiValidar = 'https://localhost:44388/api/Face/Validar';
-  urlApiVerificarVivacidade = 'https://localhost:44388/api/Face/VerificarVivacidade'//
-  urlRandomNumber = 'https://localhost:44388/api/Face/Random'//
+  urlResetSenha = `${environment.API}ResetarSenha`
+  urlEsqueciSenha = `${environment.API}EsqueciSenha`;
+  urlApiCadastrar = `${environment.API}Cadastrar`;
+  urlApiVivacidadeCad = `${environment.API}VerificarVivacidadeCadastro`
+  urlApiVerificarId = `${environment.API}ConfirmarCadastro`
+  urlApiLogin = `${environment.API}Face/Login`;
+  urlApiValidar = `${environment.API}Monitoramento`;
+  urlApiVerificarVivacidade = `${environment.API}VerificarVivacidade`
+  urlRandomNumber = `${environment.API}Face/Random`
 
  
 

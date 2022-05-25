@@ -1,10 +1,11 @@
-import { ModalComponent } from 'src/app/components/modal/modal.component';
-import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ModalComponent } from 'src/app/components/modal/modal.component';
 import { login } from 'src/app/interfaces/user';
 import { HelperService } from 'src/app/services/helper.service';
+
 import { HttpService } from '../../services/http.service';
 
 @Component({
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.helper.loopShoot = false
-
+    this.helper.tracking = false
   }
 
   openDialog(): void {
@@ -73,12 +74,16 @@ export class LoginComponent implements OnInit {
 
       this.helper.isLoading.next(true)
       this.http.putLogin(this.user).subscribe((data) => {
+        this.helper.nome =  data.nomeUsuario
+        localStorage.setItem(btoa('nome'), btoa(data.nomeUsuario))
+        this.helper.imgBD = "data:image/png;base64," + data.foto
+        localStorage.setItem(btoa('imgBD'), btoa("data:image/png;base64," +data.foto))
         this.http.getRandom().subscribe((data) => {
-          this.helper.random = data.mensagemResposta;
+          this.helper.random =  data.mensagemResposta;
           this.helper.messageToValidar = data.mensagemResposta;
           this.openDialog();
         }, (error) => { })
-
+        
       }, (error) => {
         this.helper.isLoading.next(false)
         if (error.status == 401) {

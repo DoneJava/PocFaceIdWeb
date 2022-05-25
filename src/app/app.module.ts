@@ -24,10 +24,12 @@ import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import { IConfig, NgxMaskModule } from 'ngx-mask';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { WebcamModule } from 'ngx-webcam';
+import { PaintableModule } from 'paintablejs/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CameraComponent } from './components/camera/camera.component';
+import { CavasComponent } from './components/cavas/cavas.component';
 import { FacesComponent } from './components/faces/faces.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { FormComponent } from './components/form/form.component';
@@ -41,8 +43,6 @@ import { InterceptorModule } from './interceptors/interceptor.module';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { TestComponent } from './views/test/test.component';
-import { CavasComponent } from './components/cavas/cavas.component';
-import { PaintableModule } from 'paintablejs/angular';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 

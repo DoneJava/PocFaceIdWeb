@@ -16,7 +16,6 @@ export class MapaDeQuestoesComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.questions)
   }
 
 

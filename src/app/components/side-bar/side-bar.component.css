@@ -5,6 +5,14 @@
     width: 55px;
 }
 
+.ifSketch {
+    background-color: rgb(240, 240, 240);
+    width: 150px;
+    height: 100%;
+    position: absolute;
+    left: 55px;
+}
+
 .iconsDiv {
     height: 50px;
     cursor: pointer;
@@ -19,7 +27,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 35px;
+    font-size: 30px;
 }
 
 .opened {
@@ -27,4 +35,24 @@
     height: 100%;
     background-color: white;
     width: 250px;
+}
+
+.divOpened {
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divIconsOpened {
+    width: 60%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.divIconsOpened > i {
+    font-size: 30px;
+    margin-right: 10%;
 }

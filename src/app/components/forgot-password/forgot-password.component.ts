@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { retry } from 'rxjs';
 import { User } from 'src/app/interfaces/user';
 
-import { HelperService } from './../../services/helper.service';
+import { HelperService } from '../../services/helper.service';
 import { HttpService } from './../../services/http.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class ForgotPasswordComponent implements OnInit {
       { show: 'Próximo', name: 'btn', type: 'submit', class: 'submit' },
     ]
   }
-  
+
   @Output() formFieldsChange: any = {
     inputs: [
       { show: 'Senha', name: 'password', type: 'password', class: 'password' },
@@ -129,14 +129,14 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   sendChange(event: any): void {
-    if(event.value.password === event.value.passwordConfirmation){
+    if (event.value.password === event.value.passwordConfirmation) {
       this.data.Senha = event.value.password
       this.http.putResetarSenha(this.data).subscribe((data) => {
         this._snackBar.open('Senha alterada com sucesso', 'Close', {
           duration: 5000,
           horizontalPosition: 'right',
           verticalPosition: 'top'
-          
+
         })
         this.callBack()
       }, (error) => {

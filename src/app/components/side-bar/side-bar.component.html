@@ -1,20 +1,53 @@
 <app-mapa-de-questoes [questions]="this.arrQuestion"></app-mapa-de-questoes>
 <div *ngIf="!this.closed; else opened" class="main">
+    <div *ngIf="this.sketchShow" class="ifSketch">
+        <div class="iconsDiv" (click)="openRascunho(1)">
+            <i style="font-size: 20px; margin: 0 5% 0 5%;"  class="fas fa-pencil-alt"></i>
+            <strong>RASCUNHO</strong>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="iconsDiv" (click)="openRascunho(2)">
+            <i style="font-size: 20px; margin: 0 5% 0 5%;"  class="fas fa-eraser"></i>
+            <strong>BORRACHA</strong>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="iconsDiv" (click)="openRascunho(3)">
+            <i style="font-size: 20px; margin: 0 5% 0 5%;" class="far fa-sticky-note"></i>
+            <strong>LIMPAR TUDO</strong>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="iconsDiv" (click)="openRascunho(4)">
+            <i style="font-size: 20px; margin: 0 5% 0 5%;" class="fas fa-redo"></i>
+            <strong>REFAZER</strong>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="iconsDiv" (click)="openRascunho(5)">
+            <i style="font-size: 20px; margin: 0 5% 0 5%;" class="fas fa-undo"></i>
+            <strong>DESFAZER</strong>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="iconsDiv" (click)="openRascunho(0)">
+            <i style="font-size: 20px; margin: 0 5% 0 5%;" class="far fa-times-circle"></i>
+            <strong>FECHAR</strong>
+        </div>
+        <mat-divider></mat-divider>
+        
+    </div>
     <div>
         <div class="iconsDiv" (click)="this.openAndClose(true)" matTooltip="Abrir" [matTooltipPosition]="'right'">
-            <mat-icon class="icons">{{icons[0][0]}}</mat-icon>
+            <i class="fas fa-bars icons"></i>
         </div>
         <mat-divider></mat-divider>
         <div class="iconsDiv" (click)="this.showMap()" matTooltip="Mapa de questões" [matTooltipPosition]="'right'">
-            <mat-icon class="icons">{{icons[1][0]}}</mat-icon>
+            <i class="fas fa-border-all icons"></i>
         </div>
         <mat-divider></mat-divider>
-        <div class="iconsDiv" matTooltip="Rascunho" [matTooltipPosition]="'right'">
-            <mat-icon class="icons">{{icons[2][0]}}</mat-icon>
+        <div class="iconsDiv" (click)="openRascunho(1)" matTooltip="Rascunho" [matTooltipPosition]="'right'">
+            <i class="far fa-edit icons"></i>
         </div>
         <mat-divider></mat-divider>
         <div class="iconsDiv" (click)="this.onEnd()" matTooltip="Finalizar" [matTooltipPosition]="'right'">
-            <mat-icon class="icons">{{icons[3][0]}}</mat-icon>
+            <i class="far fa-check-circle icons"></i>
         </div>
         <mat-divider></mat-divider>
     </div>
@@ -23,31 +56,31 @@
     <div class="opened">
         <div>
             <div >
-                <div (click)="this.openAndClose(false)">
-                    <div class="iconsDiv">
-                        <mat-icon style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[0][0]}}</mat-icon>
-                        {{icons[0][1]}}
+                <div class="divOpened" (click)="this.openAndClose(false)">
+                    <div class="divIconsOpened">
+                        <i class="fas fa-bars iconsOpened"></i>
+                        <strong>{{icons[0][1]}}</strong>
                     </div>
                 </div>
                 <mat-divider></mat-divider>
-                <div>
-                    <div (click)="this.showMap()" class="iconsDiv">
-                        <mat-icon  style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[1][0]}}</mat-icon>
-                        {{icons[1][1]}}
+                <div class="divOpened">
+                    <div class="divIconsOpened" (click)="this.showMap()" >
+                        <i class="fas fa-border-all iconsOpened"></i>
+                        <strong>{{icons[1][1]}}</strong>
                     </div>
                 </div>
                 <mat-divider></mat-divider>
-                <div>
-                    <div class="iconsDiv">
-                        <mat-icon style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[2][0]}}</mat-icon>
-                        {{icons[2][1]}}
+                <div class="divOpened">
+                    <div class="divIconsOpened" >
+                        <i class="far fa-edit iconsOpened"></i> 
+                        <strong>{{icons[2][1]}}</strong>
                     </div>
                 </div>
                 <mat-divider></mat-divider>
-                <div>
-                    <div class="iconsDiv">
-                        <mat-icon style="margin: 0 10% 0 15% ;" class="iconsOpened">{{icons[3][0]}}</mat-icon>
-                        {{icons[3][1]}}
+                <div class="divOpened">
+                    <div class="divIconsOpened" >
+                        <i class="far fa-check-circle iconsOpened"></i>
+                        <strong>{{icons[3][1]}}</strong>
                     </div>
                 </div>
                 <mat-divider></mat-divider>
