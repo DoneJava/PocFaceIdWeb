@@ -1,4 +1,4 @@
-<app-validador-hidden></app-validador-hidden>
+<!-- <app-validador-hidden></app-validador-hidden> -->
 <div style="position: absolute; top: 0; left: 0; height: 100%; width: 100%;" *ngIf="this.helper.isLoading.getValue()">
     <app-spinner [bg]="true"></app-spinner>
 </div>
@@ -6,7 +6,7 @@
     <div id="color25"></div>
     <div id="color75"></div>
 </div>
-<app-side-bar (skecth)="onSkecth($event)" [arrQuestion]="this.arrQuestion" (toEnd)="this.endFromSide()">
+<app-side-bar *ngIf="!isFinished" (skecth)="onSkecth($event)" [arrQuestion]="this.arrQuestion" (toEnd)="this.endFromSide()">
 </app-side-bar>
 <div class="fullPage">
     <div class="container">
@@ -40,7 +40,7 @@
                         {{this.prova[numQuest].titulo}}
                     </div>
                 </div>
-                <div style="position: absolute; bottom: 250px; left: 8%; width: 85%; z-index: 160">
+                <div style="position: absolute; bottom: 250px; left: 8%; width: 85%; z-index: 100">
                     <div *ngFor="let resposta of this.prova[numQuest].respostas"
                         style="background-color: #cccccc; border-radius: 6px; margin: 3% auto; width: 95%;cursor: pointer;"
                         (click)="this.onClick(resposta[0], numQuest)" class="resp" id={{resposta[0]}}>
@@ -102,10 +102,10 @@
                 <div
                     style="height: 50%; text-align: center; display: flex; justify-content: space-around; flex-direction: column; border: 1px solid #cccccc; border-radius: 5px;">
                     <div>
-                        <img style="width: 100px;" src="../../../assets/img/check.png" alt="">
+                        <i class="fa-regular fa-circle-check" style="font-size: 150px; color: #00FF7F"></i>
                     </div>
                     <div>
-                        <h1>Prova Concluida com sucesso!</h1>
+                        <h1><strong>Prova Concluida com sucesso!</strong></h1>
                         <h3>Ao Clicar no botão abaixo, você será redirecionado para a tela de login.</h3>
                     </div>
                 </div>

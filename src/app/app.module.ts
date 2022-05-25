@@ -43,6 +43,7 @@ import { InterceptorModule } from './interceptors/interceptor.module';
 import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 import { TestComponent } from './views/test/test.component';
+import { AdmSpaceComponent } from './views/adm-space/adm-space.component';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -62,7 +63,8 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
     FacesComponent,
     SideBarComponent,
     MapaDeQuestoesComponent,
-    CavasComponent
+    CavasComponent,
+    AdmSpaceComponent,
   ],
   imports: [
     BrowserModule,
