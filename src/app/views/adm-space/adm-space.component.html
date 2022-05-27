@@ -1,5 +1,135 @@
-<div class="fullPage">
-    <div class="container">
-        
+<div class="mainContainer">
+    <div class="containerSideBar">
+        <div class="sideBarIdContent">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                <i style="font-size: 40px; margin-right: 10%;" class="fa fa-light fa-user"></i>
+                <strong>ADMINISTRADOR</strong>
+            </div>
+        </div>
+        <div class="sideBarContent">
+            <div *ngFor="let i of side" style="color: white">
+                <div style="display: flex; height: 50px; align-items: center; justify-content: flex-start; cursor: pointer;"
+                    (click)="goToUser(i.name)">
+                    <div style="margin: 0 10% 0 5%; font-size: 30px">
+                        <div>
+                            <i class={{i.class}}></i>
+                        </div>
+                    </div>
+                    <strong style="font-size: 15px">{{i.name}}</strong>
+                </div>
+                <mat-divider style="background-color: white;"></mat-divider>
+            </div>
+        </div>
+    </div>
+    <div class="mainContent">
+        <div>
+            <div class="contentTop">
+                <div class="contentBoxTop">
+                    <div class="content">
+                        <div *ngIf="this.data.length == 0; else nodata"
+                            style="display: flex; justify-content: center; align-items: center; width: 100%; height: 50vh; color: white">
+                            <h3>No Data</h3>
+                        </div>
+                        <ng-template #nodata>
+                            <div *ngIf="!showUser; else isShowing" echarts [options]="chartOption" class="demo-chart">
+                            </div>
+
+                        </ng-template>
+                    </div>
+                    <ng-template #isShowing>
+                        <div style="display: flex; columns: 2; height: 100%; flex-wrap: wrap; overflow: auto;">
+                            <div style="
+                                display: flex;
+                                justify-content: center; 
+                                align-items: center; 
+                                height: 80px; 
+                                width: 40%; 
+                                border: solid 1px white; 
+                                color: white; 
+                                border-radius: 10px;
+                                margin: auto;
+                                cursor: pointer;" *ngFor="let folder of this.data" (click)="this.test(folder.name)">
+                                <strong style="text-transform: uppercase">{{folder.name}}</strong>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+                <div class="contentBoxTop">
+                    <div class="content">
+                        <div *ngIf="this.data.length == 0; else nodata2"
+                            style="display: flex; justify-content: center; align-items: center; width: 100%; height: 50vh; color: white">
+                            <h3>No Data</h3>
+                        </div>
+                        <ng-template #nodata2>
+                            <div *ngIf="!showLogs; else isShowing2" echarts [options]="chartOption2" class="demo-chart"></div>
+                        </ng-template>
+                    </div>
+                    <ng-template #isShowing2>
+                        <div style="display: flex; justify-content: space-around; align-items: center; height: 100%;">
+                            <div class="inStyle" (click)="this.select = 'warning'; this.showPhoto = true">Warnigs</div>
+                            <div class="inStyle" (click)="this.select = 'danger'; this.showPhoto = true">Dangerous</div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+            <div class="contentBottom">
+                <div class="contentBot">
+                    <div *ngIf="!showPhoto; else isShowing3">
+                        <div *ngIf="this.data.length == 0; else table"
+                            style="display: flex; justify-content: center; align-items: center; width: 100%; height: 50vh; color: white">
+                            <h3>No Data</h3>
+                        </div>
+                        <ng-template #table>
+                            <mat-table #table [dataSource]="this.data"
+                                style="background-color: rgb(38, 38, 66); border-radius: 10px;">
+                                <ng-container matColumnDef="position">
+                                    <mat-header-cell *matHeaderCellDef class="tableFont"> No. </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" class="tableFont"> {{element.position}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="name">
+                                    <mat-header-cell *matHeaderCellDef class="tableFont"> Nome </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" class="tableFont"> {{element.name}} </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="warnings">
+                                    <mat-header-cell *matHeaderCellDef class="tableFont"> Warnigs </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" class="tableFont"> {{element.warnings}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="dangerous">
+                                    <mat-header-cell *matHeaderCellDef class="tableFont"> Dangerous </mat-header-cell>
+                                    <mat-cell *matCellDef="let element" class="tableFont"> {{element.dangerous}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="this.dataConf.displayedColumns" class="tableFont"
+                                    style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                </mat-header-row>
+                                <mat-row *matRowDef="let row; columns: this.dataConf.displayedColumns;"
+                                    class="tableFont">
+                                </mat-row>
+                            </mat-table>
+                        </ng-template>
+                    </div>
+                    <ng-template #isShowing3>
+                        <div
+                            style="width: 100%; height: 100%; display: flex; flex-wrap: nowrap; padding: 3%; justify-content: space-around;">
+                            <div *ngIf="select == 'warning'; else danger" style="width: 100%; height: 100%">
+                                <img *ngFor="let i of this.imagesWarning"
+                                    style="width: 150px; border-radius: 5px; margin-left: 2%;" src={{i}} alt="">
+                            </div>
+                            <ng-template #danger>
+                                <div *ngFor="let i of this.imagesDanger">
+                                    <img style="width: 150px; border-radius: 5px;" src={{i}} alt="">
+                                </div>
+                            </ng-template>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

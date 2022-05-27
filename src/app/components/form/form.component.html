@@ -3,7 +3,8 @@
       <mat-form-field appearance="outline" class='input'>
          <mat-label>{{input.show}}</mat-label>
          <input matInput formControlName={{input.name}} type={{input.type}} mask={{input.mask}} autocomplete="off">
-         <mat-error *ngIf="formulario.invalid">Campo inválido</mat-error>
+         <mat-error *ngIf="formulario.invalid && input.name == 'Nome'">Ex.: Matheus Cardoso</mat-error>
+         <mat-error *ngIf="formulario.invalid && input.name != 'Nome'">Campo inválido</mat-error>
       </mat-form-field>
    </div>
    <div (click)="this.emitClick()" style="margin-top: -3%;" *ngFor="let link of formFields.link">

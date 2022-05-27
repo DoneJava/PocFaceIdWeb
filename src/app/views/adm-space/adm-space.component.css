@@ -1,0 +1,97 @@
+.mainContainer {
+    display: flex;
+    background-color: rgb(1, 0, 50);
+}
+
+.containerSideBar {
+    height: 100vh;
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sideBarIdContent {
+    width: 95%;
+    height: 10%;
+    background-color: rgb(43, 43, 75);
+    border-radius: 10px;
+    color: white;
+}
+
+.sideBarContent {
+    width: 95%;
+    height: 83%;
+    background-color: rgb(43, 43, 75);
+    border-radius: 10px;
+}
+
+.mainContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100vw - 300px);
+    height: 100%;
+}
+
+.contentTop {
+    width: calc(100vw - 300px);
+    display: flex;
+    height: 50vh;
+}
+
+.contentBoxTop {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contentBottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+.content {
+    width: 95%;
+    height: 92%;
+    background-color: rgb(43, 43, 75);
+    border-radius: 10px;
+}
+
+.contentBot {
+    width: 97.5%;
+    height: 92%;
+    background-color: rgb(43, 43, 75);
+    border-radius: 10px;
+}
+
+.tableFont {
+    color: white;
+    font-weight: bold;
+}
+
+.danger {
+    color: #CC3300;
+}
+
+.warning {
+    color: #FFCC00;
+}
+
+.inStyle {
+    border: 1px solid white;
+    border-radius: 10px;
+    width: 20%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+}

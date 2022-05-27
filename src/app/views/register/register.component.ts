@@ -1,3 +1,4 @@
+import { SnackBarService } from './../../services/snack-bar.service';
 import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -31,7 +32,7 @@ export class RegisterComponent implements OnInit {
       { show: 'Confirmação de senha', name: 'passwordConfimation', type: 'password', class: 'passwordConfimation' },
     ],
     formGroup: {
-      Nome: [null, [Validators.required, Validators.pattern('^[a-zA-Z\\u00C0-\\u017F´]+\\s+[a-zA-Z\\u00C0-\\u017F´]{0,}$')]],
+      Nome: [null, [Validators.required, Validators.pattern('([A-Z][a-z]* [A-Z][a-z]*)')]],
       cpf: [null, Validators.required],
       Senha: [null, Validators.required],
       passwordConfimation: [null, Validators.required]
@@ -56,6 +57,7 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private _snackBar: MatSnackBar,
+    private snack: SnackBarService,
     private http: HttpService,
     public router: Router,
     public dialog: MatDialog,
@@ -65,13 +67,9 @@ export class RegisterComponent implements OnInit {
     private sanitize: DomSanitizer
   ) {
     this.iconRegistry.addSvgIcon('arrow', this.sanitize.bypassSecurityTrustResourceUrl('assets/arrow.svg'))
-   }
+  }
 
   ngOnInit(): void {
-    //Informa ao componente camera que ele não precisa iniciar loop de fotos
-    this.helper.loopShoot = true
-
-    
   }
 
   turnOffAndCallRandom(): void {
@@ -80,18 +78,15 @@ export class RegisterComponent implements OnInit {
   }
 
   getRandom(): void {
-    this.http.getRandom().pipe(retry(5)).subscribe((data) => {
+    this.http.getRandom().subscribe((data) => {
       setTimeout(() => {
+        this.ValidaVivacidade()
         this.messageToUser = data.mensagemResposta
       }, 3000);
     }, (error) => {
       this.getError = true
-      if(error.status == 0){
-        this._snackBar.open("Talvez você esteja sem internet.", "Close", {
-          duration: 3000,
-          verticalPosition: 'top',
-          horizontalPosition: 'right'
-        })
+      if (error.status == 0) {
+        this.snack.showSnack({message: "Talvez você esteja sem internet.", duration: 3000})
       }
     })
   }
@@ -106,61 +101,56 @@ export class RegisterComponent implements OnInit {
 
   //Recebe formulário do app-formulário e envia para api
   listenerForm(event: any) {
+    
     if (event.valid) {
       if (!this.cpf.CpfValidator(event)) {
-        this._snackBar.open('CPF inválido.', 'X', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        })
+        this.snack.showSnack({message: 'CPF inválido.', duration: 3000})
       }
       else if (event.valid) {
         this.cadastro = event.value
         this.onSubmit = false
+       
       }
     }
   }
 
   ValidaVivacidade(): void {
-      this.user.Img = this.helper.webImg
-      this.http.postVivacidadeCadastro(this.user).subscribe((data) => {
-        this.VivacidadeNaoValidada = false
-        this.helper.loopShoot = false
-        console.log('off')
-        this.helper.webImg = ''
-        this.takePhoto()
-      }, (error) => {
-        this.helper.webImg = ''
-        console.log(error)
-        if (error.status == 401) {
-          this.helper.loopShoot = false
-          this._snackBar.open('Não possível validar a vivacidade, tente novamente.', 'Close', {
-            verticalPosition: 'top',
-            horizontalPosition: 'right',
-          })
-          this.helper.webImg = null
-        }
-        else if(error.status == 400){
-          console.log(error.error)
-          if(error.error.etapa1 == true)
-            this.face.id1.style.fill = '#38FF1E'
-          if(error.error.etapa2 == true)
-            this.face.id2.style.fill = '#38FF1E'
-          if(error.error.etapa3 == true)
-            this.face.id3.style.fill = '#38FF1E'
-        }
-      })
-  }
-
-  takePhoto():void {
-
+    let contador = 0;
+    console.log(contador)
     let interval = setInterval(() => {
-      if(this.contador > 0){
-        this.contador--
-      }else{
+      if (this.VivacidadeNaoValidada && contador != 5) {
+        contador++
         this.camera.triggerSnapshot()
+        this.user.Img = this.helper.webImg
+        this.http.postVivacidadeCadastro(this.user).subscribe((data) => { this.VivacidadeNaoValidada = false; this.helper.webImg = ''; this.takePhoto() },
+          (error) => {
+            this.helper.webImg = '';
+            if (error.status == 401) {
+              this.snack.showSnack({message: 'Não possível validar a vivacidade, tente novamente.'})
+              this.helper.webImg = null
+            }
+            else if (error.status == 400) {
+              if (error.error.etapa1 == true)
+                this.face.id1.style.fill = '#38FF1E'
+              if (error.error.etapa2 == true)
+                this.face.id2.style.fill = '#38FF1E'
+              if (error.error.etapa3 == true)
+                this.face.id3.style.fill = '#38FF1E'
+            }
+          })
+      } else {
+        this.onSubmit = true
+        this.cameraOff = true
+        this.snack.showSnack({message: "Não foi possível verificar a vivacidade! Tente novamente."})
         clearInterval(interval)
       }
+    }, 1000);
+  }
+
+  takePhoto(): void {
+    let intervalTake = setInterval(() => {
+      if (this.contador > 0) this.contador--;
+      else { this.camera.triggerSnapshot(); clearInterval(intervalTake) }
     }, 1000)
   }
 
@@ -175,27 +165,18 @@ export class RegisterComponent implements OnInit {
     this.helper.isLoading.next(true)
     this.http.putUser(this.cadastro).subscribe((data) => {
       this.helper.isLoading.next(false)
-      this._snackBar.open('Registro feito com sucesso!', 'X', {
-        duration: 3000,
-        horizontalPosition: 'right',
-        verticalPosition: 'top'
-      });
+      this.snack.showSnack({message: 'Registro feito com sucesso!', duration: 3000})
       this.router.navigate(['']);
       this.helper.webImg = ''
     }, (error) => {
       this.helper.isLoading.next(false)
-      console.log(error.status)
-      if(error.status == 409){
+      if (error.status == 409) {
         this.onSubmit = true
-        this._snackBar.open('Usuário já cadastrado na base.', 'Close', {
-          duration: 7000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        })
+        this.snack.showSnack({message: 'Usuário já cadastrado na base.', duration: 7000})
         this.helper.webImg = ''
         this.router.navigate(['/'])
       }
-      else{
+      else {
         this._snackBar.open('Erro ao efetuar registro.', 'X', {
           duration: 3000,
           horizontalPosition: 'right',
@@ -204,5 +185,5 @@ export class RegisterComponent implements OnInit {
       }
     })
   }
- 
+
 }

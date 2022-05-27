@@ -9,6 +9,10 @@ export class HelperService {
 
   constructor() { }
 
+  teste(): void {
+    console.log(123)
+  }
+
   //Monitoramento
   public tracking: boolean = false
 
@@ -41,3 +45,5 @@ export class HelperService {
   public authLogin: boolean = false
 
 }
+
+
