@@ -42,31 +42,9 @@ export class CameraComponent implements OnInit, AfterViewInit {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
       }
     );
-
-
-
   }
   ngAfterViewInit(): void {
-    this.takeInLoop()
   }
-
-  takeInLoop() {
-    /* setTimeout(() => {this.triggerSnapshot()}, 5000)  */
-
-    if (this.helper.loopShoot) {
-      setTimeout(() => {
-        var shoot = setInterval(() => {
-          if (this.wating.cont.getValue() === 0 && this.helper.loopShoot) {
-            this.triggerSnapshot()
-          }
-          else {
-            clearInterval(shoot)
-          }
-        }, 1000);
-      }, 2000)
-    }
-  }
-
 
   public triggerSnapshot(): void {
     this.trigger.next();

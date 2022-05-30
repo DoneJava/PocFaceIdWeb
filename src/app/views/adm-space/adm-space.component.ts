@@ -11,24 +11,25 @@ import { EChartsOption } from 'echarts';
 export class AdmSpaceComponent implements OnInit {
 
   constructor(private http: HttpService, private router: Router) { }
-
+  //icons e titulos da sideBar
   side: any = [
-    /* { name: 'WARNING',  class: "fa fa-light fa-triangle-exclamation warning" },
-    { name: "DANGEROUS",  class: 'fa fa-light fa-circle-exclamation danger' }, */
     { name: "HOME", class: 'fa fa-light fa-house' },
     { name: "FOTOS", class: 'fa fa-regular fa-image' },
     { name: "SAIR", class: 'fa fa-light fa-arrow-left-long' },
   ];
+
+  //variaveis de validacao
   toDangerous: boolean = false
   toWarning: boolean = false
-  imagesWarning: any[] = []
-  imagesDanger: any[] = []
-  select: string = ''
   showPhoto: boolean = false
   showUser: boolean = false
   showLogs: boolean = false
+  imagesWarning: any[] = []
+  imagesDanger: any[] = []
+  select: string = ''
 
   ngOnInit(): void {
+    //get na lista de ocorrencias durante a prova
     this.http.getList().subscribe((data) => {
       data.listaPessoaNaoAutorizada.forEach((element: string) => {
         this.imagesDanger.push("data:image/png;base64," + element)
@@ -50,6 +51,7 @@ export class AdmSpaceComponent implements OnInit {
       })
   }
 
+  //criacao do primeiro grafico de barras
   chartOption: EChartsOption = {
     legend: { show: false },
     tooltip: {},
@@ -59,6 +61,7 @@ export class AdmSpaceComponent implements OnInit {
     series: [{ type: 'bar', color: '#FFCC00' }, { type: 'bar', color: '#CC3300' }]
   };
 
+  //criacao do segundo grafico em pizza
   chartOption2: EChartsOption = {
     title: {
     },
@@ -90,17 +93,20 @@ export class AdmSpaceComponent implements OnInit {
     ]
   };
 
+  //configuracao das colunas da table
   dataConf: any = {
     displayedColumns: ['position', 'name', 'warnings', 'dangerous']
   }
-
+  //instanciando a lista da table
   data: Element[] = [
   ]
 
+  //metodo que validara quem foi clicado ao abrir as fotos do monitoramento
   test(value: string): void {
     this.showLogs = true
   }
 
+  //metodo que valida qual opcao foi selecionada na side bar
   goToUser(value: string): void {
     if (value == 'FOTOS')
       this.showUser = true
@@ -111,12 +117,13 @@ export class AdmSpaceComponent implements OnInit {
       this.showPhoto = false
     }
 
-    if(value == "SAIR"){
+    if (value == "SAIR") {
       this.router.navigate(['/'])
     }
   }
 }
 
+//interce para a data da table
 export interface Element {
   name: string;
   position: number;

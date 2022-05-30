@@ -11,7 +11,7 @@ import { CavasComponent } from './../../components/cavas/cavas.component';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-
+  //Criacao da prova mocada
   prova: any = [
     {
       numero: '01',
@@ -34,18 +34,20 @@ export class TestComponent implements OnInit {
       respostas: [["A", 'aids'], ["B", 'malária'], ["C", 'poliomielite'], ["D", 'varíola']]
     }
   ]
-
+  
+  //Instanciando decorator de propriedade para consulta de exibicao do canvas
   @ViewChild(CavasComponent, { static: false })
   canvas!: CavasComponent;
 
+  //Instanciando variveis de controle
   numQuest: number = 0
-  isDisabled: boolean = false
-  arrQuestion: any[] = [[0, ''], [1, ''], [2, ''], [3, '']]
   pushed: boolean = false
-  isFinished: boolean = false
-  nextEnd: boolean = false
-  semAgradecimentos: boolean = true
   mapShow: boolean = false
+  nextEnd: boolean = false
+  isDisabled: boolean = false
+  isFinished: boolean = false
+  semAgradecimentos: boolean = true
+  arrQuestion: any[] = [[0, ''], [1, ''], [2, ''], [3, '']]
   imgFinal: string = this.helper.imgBD ? this.helper.imgBD : atob(String(localStorage.getItem(btoa('imgBD'))))
   nomeFinal: string = this.helper.nome ? this.helper.nome : atob(String(localStorage.getItem(btoa('nome'))))
   cpfFinal: string = this.helper.cpf ? this.helper.cpf : atob(String(localStorage.getItem(btoa('CPF'))))
@@ -58,12 +60,13 @@ export class TestComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    //Travando o botao de volta
     this.changeButton('back', true)
+    //Dando inicio ao monitoramento
     this.helper.tracking = true
-
-
   }
 
+  //Metodo que realiza a marcacao da prova
   onClick(mark: string, question: number): void {
     this.arrQuestion.forEach(element => {
       if (element[0] == question && element[1] == '') {
@@ -96,16 +99,17 @@ export class TestComponent implements OnInit {
     this.cdr.detectChanges()
   }
 
+  //Metodo que desmarca a questão
   onUnMark(question: number): void {
     for (let i = 0; i < this.arrQuestion.length; i++) {
       if (this.arrQuestion[i][0] == question) {
         document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = 'none'
         this.arrQuestion[i][1] = ''
-        /* this.arrQuestion.splice(i) */
       }
     }
   }
 
+  //Metodo que passa de questao
   nextQuestion(): void {
     if (this.numQuest == 0) {
       this.changeButton('back', false)
@@ -131,6 +135,7 @@ export class TestComponent implements OnInit {
     }
   }
 
+  //Metodo que volta de questao
   backQuestion(): void {
     if (this.numQuest == this.prova.length - 1) {
       this.changeButton('next', false)
@@ -150,6 +155,7 @@ export class TestComponent implements OnInit {
     }
   }
 
+  //Metodo que volta a prova do final
   backFromEnd(): void {
     this.isFinished = false
     this.nextEnd = true
@@ -158,7 +164,7 @@ export class TestComponent implements OnInit {
     document.getElementById(this.arrQuestion[this.numQuest][1])!.style.border = '2px solid #00fd00'
   }
 
-
+  //Metodo que troca a cor e forma dos botões
   changeButton(button: string, color: boolean): void {
     switch (button) {
       case 'next':
@@ -190,20 +196,24 @@ export class TestComponent implements OnInit {
     }
   }
 
+  //Metodo que finaliza o modulo da prova
   endTest(): void {
     this.helper.tracking = false
     this.router.navigate(['/'])
     localStorage.clear()
   }
 
+  //Metodo de finalizacao pela sideBar
   endFromSide(): void {
     this.isFinished = true
   }
 
+  //Metodo para abrir o mapa de questoes
   onMapShow(event: boolean): void {
     this.mapShow = event
   }
 
+  //Metodo para utilizar o rascunho
   onSkecth(event: any): void {
     switch(event){
       case 1:

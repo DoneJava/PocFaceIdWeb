@@ -59,7 +59,7 @@ export class ValidadorHiddenComponent implements OnInit {
       if(!this.helper.tracking){
         clearInterval(interval)
       }
-    }, 1000)
+    }, 2000)
   }
 
   openDialog(ref?: any): void {

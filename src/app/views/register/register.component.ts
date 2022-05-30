@@ -39,28 +39,29 @@ export class RegisterComponent implements OnInit {
     },
   }
 
+  //Instanciando decorator de propriedade para consulta de exibicao da camera
   @ViewChild(CameraComponent, { static: false })
   camera!: CameraComponent;
 
+  //Instanciando decorator de propriedade para consulta de exibicao do componente dos rostos
   @ViewChild(FacesComponent, { static: false })
   face!: FacesComponent;
 
-  cadastro: any = ''
+  //Instanciando variveis de controle
   onSubmit: boolean = true
+  getError: boolean = false
   cameraOff: boolean = true
+  VivacidadeNaoValidada: boolean = true
+  cadastro: any = ''
   Measures: any = { height: 500, width: 490 }
   messageToUser: string = ''
   user: vivacidade = {}
-  VivacidadeNaoValidada: boolean = true
   contador: number = 10
-  getError: boolean = false
 
   constructor(
-    private _snackBar: MatSnackBar,
     private snack: SnackBarService,
     private http: HttpService,
     public router: Router,
-    public dialog: MatDialog,
     public helper: HelperService,
     private cpf: CpfValidatorService,
     private iconRegistry: MatIconRegistry,
@@ -72,11 +73,13 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  //Metodo responsavel por iniciar a camera e inicial o metodo do random da API
   turnOffAndCallRandom(): void {
     this.cameraOff = false
     this.getRandom()
   }
 
+  //Metodo responsavel por chamar o random da API e iniciar o metodo da validacao de vivacidade
   getRandom(): void {
     this.http.getRandom().subscribe((data) => {
       setTimeout(() => {
@@ -101,7 +104,6 @@ export class RegisterComponent implements OnInit {
 
   //Recebe formulário do app-formulário e envia para api
   listenerForm(event: any) {
-    
     if (event.valid) {
       if (!this.cpf.CpfValidator(event)) {
         this.snack.showSnack({message: 'CPF inválido.', duration: 3000})
@@ -114,11 +116,11 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  //Metodo responsavel por realizar a validacao de vivacidade
   ValidaVivacidade(): void {
     let contador = 0;
-    console.log(contador)
     let interval = setInterval(() => {
-      if (this.VivacidadeNaoValidada && contador != 5) {
+      if (this.VivacidadeNaoValidada && contador != 20) {
         contador++
         this.camera.triggerSnapshot()
         this.user.Img = this.helper.webImg
@@ -138,7 +140,8 @@ export class RegisterComponent implements OnInit {
                 this.face.id3.style.fill = '#38FF1E'
             }
           })
-      } else {
+      } else if(contador >= 20 && this.VivacidadeNaoValidada){
+        this.messageToUser = ''
         this.onSubmit = true
         this.cameraOff = true
         this.snack.showSnack({message: "Não foi possível verificar a vivacidade! Tente novamente."})
@@ -147,6 +150,7 @@ export class RegisterComponent implements OnInit {
     }, 1000);
   }
 
+  //Metodo responsavel por tirar foto apos o contador finalizar
   takePhoto(): void {
     let intervalTake = setInterval(() => {
       if (this.contador > 0) this.contador--;
@@ -154,12 +158,14 @@ export class RegisterComponent implements OnInit {
     }, 1000)
   }
 
+  //Metodo responsavel por zerar contador e chamar o metodo takePhoto()
   takeAgain(): void {
     this.helper.webImg = ''
     this.contador = 10
     this.takePhoto()
   }
 
+  //Metodo que finaliza e envia o formulário
   SendForm(): void {
     this.cadastro.img = this.helper.webImg
     this.helper.isLoading.next(true)
@@ -177,11 +183,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(['/'])
       }
       else {
-        this._snackBar.open('Erro ao efetuar registro.', 'X', {
-          duration: 3000,
-          horizontalPosition: 'right',
-          verticalPosition: 'top'
-        })
+        this.snack.showSnack({message: 'Erro ao efetuar registro.', duration: 3000})
       }
     })
   }

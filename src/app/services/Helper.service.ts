@@ -1,18 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HelperService {
 
-
   constructor() { }
-
-  teste(): void {
-    console.log(123)
-  }
-
   //Monitoramento
   public tracking: boolean = false
 
@@ -37,9 +31,6 @@ export class HelperService {
 
   //ordena para qual parametro a foto deve ser enviada
   public semafaro = new BehaviorSubject<Number>(0)
-
-  //habilita/desabilita o loop de fotos
-  public loopShoot: boolean = false
 
   //authLogin
   public authLogin: boolean = false
