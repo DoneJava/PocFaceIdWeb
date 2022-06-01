@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PaintableComponent } from 'paintablejs/angular';
 
 
@@ -7,11 +7,17 @@ import { PaintableComponent } from 'paintablejs/angular';
   templateUrl: './cavas.component.html',
   styleUrls: ['./cavas.component.css']
 })
-export class CavasComponent {
+export class CavasComponent implements OnInit{
 
   @ViewChild(PaintableComponent)
   paintable!: PaintableComponent;
 
+  ngOnInit(): void {
+    this.width = Number(window.innerWidth)
+    this.height = Number(window.innerHeight)
+  }
+  width: number = 0
+  height: number = 0
   active = false;
   useEraser = false;
   thickness = 5;

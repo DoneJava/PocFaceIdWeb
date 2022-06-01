@@ -1,6 +1,6 @@
 <form id="form" [formGroup]="formulario" (ngSubmit)="onSubmit()">
    <div *ngFor="let input of formFields.inputs" class={{input.class}}>
-      <mat-form-field appearance="outline" class='input'>
+      <mat-form-field appearance="outline" class='input' style="margin: -0.5% 0;">
          <mat-label>{{input.show}}</mat-label>
          <input matInput formControlName={{input.name}} type={{input.type}} mask={{input.mask}} autocomplete="off">
          <mat-error *ngIf="formulario.invalid && input.name == 'Nome'">Ex.: Matheus Cardoso</mat-error>

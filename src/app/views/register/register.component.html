@@ -9,9 +9,9 @@
   <div class="container">
     <div id="divForm">
       <!-- FORMULARIO -->
-      <div *ngIf="this.onSubmit; else submited">
+      <div *ngIf="this.onSubmit; else submited" >
         <h1 style="font-weight: 500;">Cadastro</h1>
-        <div style="margin-top: 10%;">
+        <div style="margin-top: 5%;">
           <app-form [formFields]="formFields" (FormEmiter)="listenerForm($event)"></app-form>
         </div>
         <div>
@@ -19,11 +19,10 @@
         </div>
         <div style="text-align: center; margin-top: 2%; height: 9%;">
           <button form="form" mat-raised-button type="submit"
-            style="border-radius: 25px; width: 55%; height: 100%; background-color: #00569f; color: white;">
+            style="border-radius: 10px; width: 55%; height: 100%; background-color: #00569f; color: white;">
             Próximo
           </button>
         </div>
-        <mat-divider style="margin: 20px 0 0 0;"></mat-divider>
         <div class="register">
           <h4 style="margin-right: 5px;">Já tem uma conta?</h4>
           <a href="/" style="color: #00569f;">
@@ -108,7 +107,6 @@
                   style="font-weight: 700; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">
                   Sem comunicação com a API
                 </h4>
-                <mat-divider></mat-divider>
                 <button style="margin: 3% auto; " mat-stroked-button (click)="this.router.navigate(['/'])">Home</button>
               </div>
               <ng-template #toError>
