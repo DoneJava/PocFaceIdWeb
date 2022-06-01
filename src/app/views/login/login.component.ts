@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     public helper: HelperService,
     public dialog: MatDialog,
     //roteamento
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -105,9 +105,9 @@ export class LoginComponent implements OnInit {
         }, (error) => {
           this.helper.isLoading.next(false)
           if (error.status == 401) {
-            this.snack.showSnack({message: 'Usuário ou senha inválido!', duration: 3000})
+            this.snack.showSnack({ message: 'Usuário ou senha inválido!', duration: 3000 })
           } else {
-            this.snack.showSnack({message: 'Erro ao tentar conexão com o servidor', duration: 3000})
+            this.snack.showSnack({ message: 'Erro ao tentar conexão com o servidor', duration: 3000 })
           }
         })
       }

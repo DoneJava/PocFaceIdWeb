@@ -206,6 +206,8 @@ export class TestComponent implements OnInit {
   //Metodo de finalizacao pela sideBar
   endFromSide(): void {
     this.isFinished = true
+    this.onSkecth(0)
+    this.onSkecth(3)
   }
 
   //Metodo para abrir o mapa de questoes

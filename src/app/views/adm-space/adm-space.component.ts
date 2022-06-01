@@ -1,7 +1,7 @@
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { HttpService } from 'src/app/services/http.service';
 import { EChartsOption } from 'echarts';
+import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-adm-space',

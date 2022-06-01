@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WebcamImage, WebcamInitError, WebcamMirrorProperties, WebcamUtil } from 'ngx-webcam';
 import { Observable, Subject } from 'rxjs';
-import { Interceptor } from 'src/app/interceptors/interceptor.service';
 import { HelperService } from 'src/app/services/helper.service';
 
 @Component({
@@ -14,7 +13,6 @@ export class CameraComponent implements OnInit, AfterViewInit {
 
   constructor(
     private helper: HelperService,
-    private wating: Interceptor
   ) {
 
   }
@@ -24,17 +22,15 @@ export class CameraComponent implements OnInit, AfterViewInit {
   @Input() isActivated: boolean = true
   @Input() Measusres: any = {}
 
-
-  public cont = 1
   public showWebcam = true;
   public allowCameraSwitch = false;
   public multipleWebcamsAvailable = false;
   public deviceId: string = '';
   public videoOptions: MediaTrackConstraints = {};
   public errors: WebcamInitError[] = [];
+  public mirrorImage: string | WebcamMirrorProperties = 'always'
   private trigger: Subject<void> = new Subject<void>();
   private nextWebcam: Subject<boolean | string> = new Subject<boolean | string>();
-  public mirrorImage: string | WebcamMirrorProperties = 'always'
 
   ngOnInit(): void {
     WebcamUtil.getAvailableVideoInputs().then(

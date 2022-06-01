@@ -29,17 +29,12 @@ export class ModalComponent implements OnInit {
 
 
   constructor(
-    public dialogRef: MatDialogRef<ModalComponent>,
-    private http: HttpService,
-    public helper: HelperService,
-    private router: Router,
-    private _snackBar: MatSnackBar
+    public dialogRef: MatDialogRef<ModalComponent>, private http: HttpService, public helper: HelperService, private router: Router, private _snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     if (this.contador != 15)
       this.contador = 15
-
     if (this.FieldsDialog.type == 'cam') {
       let interval = setInterval(() => {
         if (this.contador != 0) {

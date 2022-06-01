@@ -82,7 +82,7 @@
           </div>
           <ng-template #VivacidadeValidada>
             <div *ngIf="this.helper.webImg; else camera">
-              <img style="width: 500px" src={{this.helper.webImg}}>
+              <img style="width: 500px" [src]="this.helper.webImg">
               <div style="text-align: center; margin-top: 5%;">
                 <h1
                   style="font-weight: 700; font-size: large; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif; ">

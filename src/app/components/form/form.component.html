@@ -7,8 +7,8 @@
          <mat-error *ngIf="formulario.invalid && input.name != 'Nome'">Campo inválido</mat-error>
       </mat-form-field>
    </div>
-   <div (click)="this.emitClick()" style="margin-top: -3%;" *ngFor="let link of formFields.link">
-      <h4 style="color: #00569f; cursor: pointer;">{{link.show}}</h4>
+   <div style="display: flex; justify-content: flex-start;" *ngFor="let link of formFields.link">
+      <h4 (click)="this.emitClick()" style="color: #00569f; cursor: pointer;">{{link.show}}</h4>
    </div>
    <div>
       <div *ngFor="let btn of formFields.buttons" class={{btn.class}}>
